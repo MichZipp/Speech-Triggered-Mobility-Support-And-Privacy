@@ -1,0 +1,181 @@
+package ai.kitt.snowboy.audio;
+
+import java.io.IOException;
+import java.nio.ByteBuffer;
+import java.nio.ByteOrder;
+
+import ai.kitt.snowboy.Constants;
+import ai.kitt.snowboy.MsgEnum;
+import android.media.AudioFormat;
+import android.media.AudioRecord;
+import android.media.MediaRecorder;
+import android.media.MediaPlayer;
+import android.os.Handler;
+import android.os.Message;
+import android.util.Log;
+
+import ai.kitt.snowboy.SnowboyDetect;
+
+public class RecordingThread {
+    static { System.loadLibrary("snowboy-detect-android"); }
+
+    private static final String TAG = RecordingThread.class.getSimpleName();
+
+    private static final String ACTIVE_RES = Constants.ACTIVE_RES;
+    private static final String ACTIVE_UMDL_PRIVATE = Constants.ACTIVE_UMDL_PRIVATE;
+    private static final String ACTIVE_UMDL_PUBLIC = Constants.ACTIVE_UMDL_PUBLIC;
+    
+    private boolean shouldContinue;
+    private AudioDataReceivedListener listener = null;
+    private Handler handler = null;
+    private Thread thread;
+    
+    private static String strEnvWorkSpace = Constants.DEFAULT_WORK_SPACE;
+    private String activeModelPrivate = strEnvWorkSpace + ACTIVE_UMDL_PRIVATE;
+    private String activeModelPublic = strEnvWorkSpace + ACTIVE_UMDL_PUBLIC;
+    private String commonRes = strEnvWorkSpace+ACTIVE_RES;   
+    
+    private SnowboyDetect detectorPrivate = new SnowboyDetect(commonRes, activeModelPrivate);
+    private SnowboyDetect detectorPublic = new SnowboyDetect(commonRes, activeModelPublic);
+    private MediaPlayer player = new MediaPlayer();
+
+    public RecordingThread(Handler handler, AudioDataReceivedListener listener) {
+        this.handler = handler;
+        this.listener = listener;
+
+        detectorPrivate.SetSensitivity("0.6");
+        detectorPrivate.SetAudioGain(1);
+        detectorPrivate.ApplyFrontend(true);
+
+        detectorPublic.SetSensitivity("0.6");
+        detectorPublic.SetAudioGain(1);
+        detectorPublic.ApplyFrontend(true);
+        try {
+            player.setDataSource(strEnvWorkSpace+"ding.wav");
+            player.prepare();
+        } catch (IOException e) {
+            Log.e(TAG, "Playing ding sound error", e);
+        }
+    }
+
+    public void setSensitivityDetectorPrivate(final double sensitivity){
+        detectorPrivate.SetSensitivity(String.valueOf(sensitivity));
+    }
+
+    public void setSensitivityDetectorPublic(final double sensitivity){
+        detectorPublic.SetSensitivity(String.valueOf(sensitivity));
+    }
+
+    private void sendMessage(MsgEnum what, Object obj){
+        if (null != handler) {
+            Message msg = handler.obtainMessage(what.ordinal(), obj);
+            handler.sendMessage(msg);
+        }
+    }
+
+    public void startRecording() {
+        if (thread != null)
+            return;
+
+        shouldContinue = true;
+        thread = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                record();
+            }
+        });
+        thread.start();
+    }
+
+    public void stopRecording() {
+        if (thread == null)
+            return;
+
+        shouldContinue = false;
+        thread = null;
+    }
+
+    private void record() {
+        Log.v(TAG, "Start");
+        android.os.Process.setThreadPriority(android.os.Process.THREAD_PRIORITY_AUDIO);
+
+        // Buffer size in bytes: for 0.1 second of audio
+        int bufferSize = (int)(Constants.SAMPLE_RATE * 0.1 * 2);
+        if (bufferSize == AudioRecord.ERROR || bufferSize == AudioRecord.ERROR_BAD_VALUE) {
+            bufferSize = Constants.SAMPLE_RATE * 2;
+        }
+
+        byte[] audioBuffer = new byte[bufferSize];
+        AudioRecord record = new AudioRecord(
+            MediaRecorder.AudioSource.DEFAULT,
+            Constants.SAMPLE_RATE,
+            AudioFormat.CHANNEL_IN_MONO,
+            AudioFormat.ENCODING_PCM_16BIT,
+            bufferSize);
+
+        if (record.getState() != AudioRecord.STATE_INITIALIZED) {
+            Log.e(TAG, "Audio Record can't initialize!");
+            return;
+        }
+        record.startRecording();
+
+        /*
+        As I don't need the playback functionality, this code can be commented out
+        if (null != listener) {
+            listener.start();
+        }*/
+
+        Log.v(TAG, "Start recording");
+
+        long shortsRead = 0;
+        detectorPrivate.Reset();
+        detectorPublic.Reset();
+        while (shouldContinue) {
+            record.read(audioBuffer, 0, audioBuffer.length);
+
+            /*
+            As I don't need the playback functionality, this code can be commented out
+            if (null != listener) {
+                listener.onAudioDataReceived(audioBuffer, audioBuffer.length);
+            }*/
+            
+            // Converts to short array.
+            short[] audioData = new short[audioBuffer.length / 2];
+            ByteBuffer.wrap(audioBuffer).order(ByteOrder.LITTLE_ENDIAN).asShortBuffer().get(audioData);
+
+            shortsRead += audioData.length;
+
+            // Snowboy hotword detection.
+            int resultPrivate = detectorPrivate.RunDetection(audioData, audioData.length);
+            int resultPublic = detectorPublic.RunDetection(audioData, audioData.length);
+
+            if (resultPrivate  == -2 || resultPublic == -2) {
+                // post a higher CPU usage:
+                // sendMessage(MsgEnum.MSG_VAD_NOSPEECH, null);
+            } else if (resultPrivate  == -1 || resultPublic == -1) {
+                sendMessage(MsgEnum.MSG_ERROR, "Unknown Detection Error");
+            } else if (resultPrivate  == 0 || resultPublic == 0) {
+                // post a higher CPU usage:
+                // sendMessage(MsgEnum.MSG_VAD_SPEECH, null);
+            } else if (resultPrivate > 0) {
+                sendMessage(MsgEnum.MSG_ACTIVE, null);
+                Log.i("Snowboy: ", "Hotword " + Integer.toString(resultPrivate) + " detected!");
+                player.start();
+            } else if (resultPublic > 0) {
+                sendMessage(MsgEnum.MSG_ACTIVE, null);
+                Log.i("Snowboy: ", "Hotword " + Integer.toString(resultPublic) + " detected!");
+                player.start();
+            }
+        }
+
+        record.stop();
+        record.release();
+
+        /*
+        As I don't need the playback functionality, this code can be commented out
+        if (null != listener) {
+            listener.stop();
+        }*/
+        Log.v(TAG, String.format("Recording stopped. Samples read: %d", shortsRead));
+    }
+}

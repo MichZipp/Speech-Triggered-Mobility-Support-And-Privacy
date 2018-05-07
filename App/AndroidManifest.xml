@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    android:versionCode="1"
+    android:versionName="1.0"
+    package="de.sick.zipperle.android">
+    <application android:label="@string/app_name" android:icon="@mipmap/ic_launcher">
+        <activity android:name="de.sick.zipperle.android.MainActivity"
+            	  android:windowSoftInputMode="stateHidden"
+                  android:label="@string/app_name">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <service
+            android:name="de.sick.zipperle.amazon.sns.MessageReceivingService"
+            android:label="de.sick.zipperle.amazon.sns.MessageReceivingService" >
+            <intent-filter>
+                <action android:name="de.sick.zipperle.amazon.sns.MainActivity" />
+                <action android:name="de.sick.zipperle.amazon.sns.ExternalReceiver" />
+                <category android:name="de.sick.zipperle" />
+            </intent-filter>
+        </service>
+
+        <receiver
+            android:name="de.sick.zipperle.amazon.sns.ExternalReceiver"
+            android:permission="com.google.android.c2dm.permission.SEND" >
+            <intent-filter>
+                <action android:name="com.google.android.c2dm.intent.RECEIVE" />
+                <action android:name="com.google.android.c2dm.intent.REGISTRATION" />
+                <action android:name="com.google.android.c2dm.intent.REGISTER" />
+
+                <category android:name="de.sick.zipperle" />
+            </intent-filter>
+        </receiver>
+    </application>
+    <uses-sdk android:minSdkVersion="3" />
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE"></uses-permission>
+    <uses-permission android:name="android.permission.RECORD_AUDIO"></uses-permission>
+    <uses-permission android:name="android.permission.INTERNET"></uses-permission>
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"></uses-permission>
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"></uses-permission>
+    <!--<uses-permission android:name="android.permission.WAKE_LOCK"></uses-permission>-->
+    <uses-permission android:name="android.permission.GET_ACCOUNTS" />
+    <uses-permission android:name="com.google.android.c2dm.permission.RECEIVE" />
+    <uses-permission android:name="com.google.android.c2dm.permission.REGISTER" />
+    <uses-permission android:name="de.sick.zipperle.permission.C2D_MESSAGE" />
+
+    <permission
+        android:name="de.sick.zipperle.permission.C2D_MESSAGE"
+        android:protectionLevel="signature" />
+
+</manifest> 
