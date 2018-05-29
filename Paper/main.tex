@@ -1,32 +1,6 @@
-
-%% bare_jrnl.tex
-%% V1.3
-%% 2007/01/11
-%% by Michael Shell
-%% see http://www.michaelshell.org/
-%% for current contact information.
-%%
-%% This is a skeleton file demonstrating the use of IEEEtran.cls
-%% (requires IEEEtran.cls version 1.7 or later) with an IEEE journal paper.
-%%
-%% Support sites:
-%% http://www.michaelshell.org/tex/ieeetran/
-%% http://www.ctan.org/tex-archive/macros/latex/contrib/IEEEtran/
-%% and
-%% http://www.ieee.org/
-
-
-
-% *** Authors should verify (and, if needed, correct) their LaTeX system  ***
-% *** with the testflow diagnostic prior to trusting their LaTeX platform ***
-% *** with production work. IEEE's font choices can trigger bugs that do  ***
-% *** not appear when using other class files.                            ***
-% The testflow support page is at:
-% http://www.michaelshell.org/tex/testflow/
-
-
 \documentclass[journal]{IEEEtran}
 \usepackage{blindtext}
+\let\labelindent\relax
 \usepackage[inline]{enumitem}
 \usepackage{graphicx}
 \usepackage[acronym]{glossaries}
@@ -46,7 +20,7 @@
 
 
 \begin{document}
-\title{SmartOrders: An Offline Smartphone Ordering System for Restaurants}
+\title{Speech Triggered Mobility Support And Privacy}
 
 \author{\begin{center}
 \begin{tabular}{c c} 
@@ -66,8 +40,8 @@
 %\thanks{Manuscript received April 19, 2005; revised January 11, 2007.}}
 
 % The paper headers
-\markboth{KAIST CS442 - Mobile Computing and Applications, June 2017}%
-{KAIST CS442 - Mobile Computing and Applications, June 2017}
+\markboth{Hochschule Furtwangen - Mobilität und Innovation, Juli 2018}%
+{Hochschule Furtwangen - Mobilität und Innovation, Juli 2018}
 
 % make the title area
 \maketitle
@@ -75,7 +49,7 @@
 
 \begin{abstract}
 %\boldmath
-Ordering systems for restaurants offer a great way to offload work from restaurants, in taking orders, and lessens the burden of customers needing to acquire and interact with a waiter. In this paper we investigate the feasibility of an offline ordering system for restaurants that only uses commodity hardware (smartphones) and communicates entirely over BLE. This stands in contrast to current systems, which either require special hardware at the tables or that the customer uses a smartphone application that functions over the Internet.
+Orderings systems for restaurants offer a great way to offload work from restaurants, in taking orders, and lessens the burden of customers needing to acquire and interact with a waiter. In this paper we investigate the feasibility of an offline ordering system for restaurants that only uses commodity hardware (smartphones) and communicates entirely over BLE. This stands in contrast to current systems, which either require special hardware at the tables or that the customer uses a smartphone application that functions over the Internet.
 
 Using technology such as BLE and NFC we propose a system to handle the interaction between the restaurant and customer, along with a prototype implementation, \textit{SmartOrder}, that demonstrates the feasibility of the system. SmartOrder shows that common concerns such as the range and throughput of \gls{ble} are either not a concern or at least acceptable. The prototype implementation achieves a range of 71 meters with no obstacles and 12 meters around corners (6 meters on each side). Data throughput is shown to be somewhat slow, but this is acceptable since data transfers happen infrequently. Finally, both of these limitations are addressed with potential solutions.
 
