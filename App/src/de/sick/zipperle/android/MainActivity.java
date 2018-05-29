@@ -22,9 +22,6 @@ import android.widget.Toast;
 import android.content.Context;
 
 import ai.kitt.snowboy.audio.AudioDataSaver;
-import de.sick.zipperle.amazon.polly.PollyPlaybackThread;
-import de.sick.zipperle.amazon.sns.MessageReceivingService;
-
 
 public class MainActivity extends Activity {
 
@@ -38,7 +35,7 @@ public class MainActivity extends Activity {
     private static long activeTimes = 0;
 
     private RecordingThread recordingThread = null;
-    private PollyPlaybackThread pollyPlaybackThread = null;
+    //private PollyPlaybackThread pollyPlaybackThread = null;
 
     private Context appContext = null;
 
@@ -69,7 +66,7 @@ public class MainActivity extends Activity {
         activeTimes = 0;
         recordingThread = new RecordingThread(handle, new AudioDataSaver());
 
-        MessageReceivingService.setMessageListener(this);
+        //MessageReceivingService.setMessageListener(this);
 
         startRecording();
     }
