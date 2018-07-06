@@ -3,10 +3,12 @@
 \let\labelindent\relax
 \usepackage[inline]{enumitem}
 \usepackage{graphicx}
-\usepackage[acronym]{glossaries}
+\usepackage[acronym,toc,shortcuts]{glossaries}
 \usepackage{subcaption}
 \usepackage[bookmarksopen, bookmarksdepth=2, breaklinks=true]{hyperref}
-
+\usepackage[official]{eurosym}
+\usepackage{listings}
+\usepackage{multicol}
 % *** GRAPHICS RELATED PACKAGES ***
 %
 \ifCLASSINFOpdf
@@ -14,7 +16,9 @@
 \fi
 
 
-\newacronym{ble}{BLE}{Bluetooth Low Energy}
+\newacronym{stt}{STT}{Speech to Text}
+\newacronym{tts}{TTS}{Text to Speech}
+\newacronym{nlu}{NLU}{Natural Language Unterstanding}
 
 \hyphenation{op-tical net-works semi-conduc-tor}
 
