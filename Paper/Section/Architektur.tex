@@ -2,12 +2,12 @@
 Nun gilt es das in Kapitel \ref{sec:konzept} vorgestellte Konzept umzusetzen. Dazu haben wir eine Architektur für einen Sprachassistenten entwickelten, welche in Abbildung \ref{fig:infrastruktur-overview} zu sehen ist. Diese Architektur soll mehr Privatsphäre bieten und unterteilt sich in drei Hauptmodul: die mobile App, das Repository und die Cloud. Was auffällt, das es zweimal das Untermodul "Speech Processing" gibt. Dabei wird in der mobilen App einfache Sprachverarbeitung wie beispielsweise das Aufnehmen bzw. die Wiedergabe eines Audiofiles implementiert. Ressourcen intensive Sprachverarbeitungsprozesse wie beispielsweise die Umwandlung von Sprache zu Text werden in die Cloud ausgelagert. Im folgenden werden die drei Hauptmodule genauer beschrieben.
 \begin{figure}[h!]
 	\centering
-	\includegraphics[width=0.9\linewidth]{Picture/Infrastruktur-Overview.jpg}
+	\includegraphics[width=0.7\linewidth]{Picture/Infrastruktur-Overview.jpg}
 	\caption[Architektur Übersicht]{Architektur Übersicht}
 	\label{fig:infrastruktur-overview}
 \end{figure}
 
-\subsection{mobile App}
+\subsection{Mobile App}
 Die mobile App ist die Schnittstelle zum Nutzer und wie Abbildung \ref{fig:infrastruktur-app} zeigt, hat diese drei Module:
 
 \begin{itemize}
@@ -15,8 +15,6 @@ Die mobile App ist die Schnittstelle zum Nutzer und wie Abbildung \ref{fig:infra
 	\item \textsl{Speech Playback:} Abspielen eines Streams, der von der Cloud erzeugt wurde.
 	\item \textsl{Hotword Detection:} Die mobile App soll nicht ununterbrochen die Eingabe des Nutzers aufnehmen und streamen, denn diese könnte die Privatsphäre des Nutzer beeinträchtigen. Die App soll nur aufnehmen und streamen, wenn der Nutzer das will. Somit kommt die sogenannte "Hotword Detection" zum Einsatz. Dies belauscht den Nutzer durchgängig, jedoch nur lokal auf dem Endgerät und ohne Daten via Internetverbindung weiter zu senden. Eine Hotword Detection benötigt kaum Ressourcen, da sie für die Erkennung eines einzigen Signalwortes optimiert wurde. Somit lässt sich ein Signalwort definieren, sobald der Nutzer dieses Signalwort sagt, wird das Aufnehmen und streamen an die Cloud gestartet.
 \end{itemize}
-
-Die mobile App soll auf verschiedenen mobilen Plattform wie Android, iOS, Windows Phone und als Webanwendung implementiert werden. Des Weiteren wäre auch die Integration der mobilen App in einen Lautsprecher eine Überlegung Wert.
 
 \begin{figure}[h!]
 	\centering
@@ -41,8 +39,8 @@ Das Repository ist in Abbildung \ref{fig:infrastruktur-repository} dargestellt u
 	\label{fig:infrastruktur-repository}
 \end{figure}
 
-\subsection{Cloud}
-Die Cloud ist das Herzstück des Sprachassistenten und ist in Abbildung \ref{fig:infrastruktur-cloud} aufgezeigt. Sie beinhaltet die meisten Module sowie Funktionen.
+\subsection{Laufzeitumgebung}
+Die Laufzeitumgebung ist das Herzstück des Sprachassistenten und ist in Abbildung \ref{fig:infrastruktur-cloud} aufgezeigt. Sie beinhaltet die meisten Module sowie Funktionen.
 
 \begin{figure}[h!]
 	\centering
@@ -60,8 +58,11 @@ Die Cloud ist das Herzstück des Sprachassistenten und ist in Abbildung \ref{fig
 		\item \textsl{Language Translation:} Hierbei geht es um die Übersetzung von Text in eine andere Sprache. Somit kann ein Nutzer mit Nutzern, die eine andere Sprache sprechen, kommunizieren, ohne das dieser deren Sprache spricht. Des Weiteren kann es sein, dass eine App für den Sprachassistenten nicht in allen Sprachen zur Verfügung steht. Wird die Sprache eines Nutzers nicht unterstützt, so kann die Übersetzung genutzt werden, dass dieser die App nutzen kann.
 		\item \textsl{Speaker Identifikation:} Die Sprecherdidentifikation kann als Authentifizierungsmethode des Sprachassistenten dienen. Durch die Sprachinformation in einem Sprachsignal eines Nutzers kann dieser identifiziert werden. Somit kann geprüft werden, ob auch wirklich ein Nutzer die Berechtigungen hat, diesen Sprachassistenten zu nutzen.
 	\end{itemize}
-	\item \textsl{App Management: } Dieses Modul verwaltet alle Konfiguration des Nutzers. Hierbei kann der Nutzer die Apps festlegen, welche auf Sprachassistenten zur Verfügungen stehen. Des Weiteren kann der Nutzer seinen Kontext verwalten und bestimmten, welche App auf welche persönliche Daten zugreifen will. Will ein Nutzer nicht, dass seine persönlichen Daten zur Optimierung der Interaktion genutzt werden, so kann dieser auch ein Zufalls Kontext verwenden.
-	\item \textsl{Web Configuration Environment} Das Web Configuration Environment stellt eine zusätzliche Schnittstelle für den Nutzer dar. Durch diese Schnittstelle kann der Nutzer Konfiguration an der Laufzeitumgebung vornehmen und seine Apps verwalten. 
+	\item \textsl{Konfigurationsumgebung:} Über die Konfigurationsumgebung lassen sich die Apps und Privatsphäre Einstellungen  für den Sprachassistenten vornehmen.
+	\begin{itemize}
+		\item App Management: Dieses Modul verwaltet die vom Nutzer installierten Apps. Dabei können neue Apps aus dem App Repository installiert oder vorhandene Apps deinstalliert werden. 	
+		\item Privacy Management: Dieses Modul verwaltet den Kontext des Nutzers und erlaubt diesem, den Zugriff von Apps auf diesen Kontext festzulegen. Dabei kann bestimmt werden, welche Informationen des Nutzer von einer App zugänglich sind. Des Weiteren lassen sich auch Zufallskontexte erstellen, sodass der Nutzer ohne Preisgabe seines tatsächlichen Kontexts eine App nutzen kann.  
+	\end{itemize}	
 \end{itemize}
 
 
