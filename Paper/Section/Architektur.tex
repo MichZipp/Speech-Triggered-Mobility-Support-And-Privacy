@@ -1,5 +1,5 @@
 \section{Architektur}
-Nun gilt es das in Kapitel \ref{sec:konzept} vorgestellte Konzept umzusetzen. Dazu haben wir eine Architektur für einen Sprachassistenten entwickelten, welche in Abbildung \ref{fig:infrastruktur-overview} zu sehen ist. Diese Architektur soll mehr Privatsphäre bieten und unterteilt sich in drei Hauptmodul: die mobile App, das Repository und die Cloud. Was auffällt, das es zweimal das Untermodul "Speech Processing" gibt. Dabei wird in der mobilen App einfache Sprachverarbeitung wie beispielsweise das Aufnehmen bzw. die Wiedergabe eines Audiofiles implementiert. Ressourcen intensive Sprachverarbeitungsprozesse wie beispielsweise die Umwandlung von Sprache zu Text werden in die Cloud ausgelagert. Im folgenden werden die drei Hauptmodule genauer beschrieben.
+Nun gilt es das in Kapitel \ref{sec:konzept} vorgestellte Konzept umzusetzen. Dazu wurde eine Architektur für einen Sprachassistenten entwickelt, welche in Abbildung \ref{fig:infrastruktur-overview} zu sehen ist. Diese Architektur soll mehr Privatsphäre bieten und unterteilt sich in drei Hauptmodul: die mobile App, das Repository und die Cloud. Was auffällt, das es zweimal das Untermodul "Speech Processing" gibt. Dabei wird in der mobilen App einfache Sprachverarbeitung wie beispielsweise das Aufnehmen bzw. die Wiedergabe eines Audiofiles implementiert. Ressourcen intensive Sprachverarbeitungsprozesse wie beispielsweise die Umwandlung von Sprache zu Text werden in die Cloud ausgelagert. Im folgenden werden die drei Hauptmodule genauer beschrieben.
 \begin{figure}[h!]
 	\centering
 	\includegraphics[width=0.7\linewidth]{Picture/Infrastruktur-Overview.jpg}
@@ -50,7 +50,7 @@ Die Laufzeitumgebung ist das Herzstück des Sprachassistenten und ist in Abbildu
 \end{figure}
 
 \begin{itemize}
-	\item \textsl{Speech Processing:} Das Modul Speech Processing beinhaltet rechenintensiven Funktion der Sprachverarbeitung. Folgende Teilgebiete des Sprachverarbeitung können für den Sprachassistenten verwendet werden.
+	\item \textsl{Sprachverarbeitung:} Das Modul Speech Processing beinhaltet rechenintensiven Funktion der Sprachverarbeitung. Folgende Teilgebiete des Sprachverarbeitung können für den Sprachassistenten verwendet werden.
 	\begin{itemize}
 		\item \textsl{\ac{stt}:} \ac{stt} ist die Umwandlung eines Sprachsignals zu Text.
 		\item \textsl{\ac{tts}:} \ac{tts} ist die Umwandlung eines Text zu einem Sprachsignal.
