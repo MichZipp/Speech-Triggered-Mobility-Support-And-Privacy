@@ -1,8 +1,8 @@
 \section{Architektur}
-Nun gilt es das in Kapitel \ref{sec:konzept} vorgestellte Konzept umzusetzen. Dazu wurde eine Architektur für einen Sprachassistenten entwickelt, welche in Abbildung \ref{fig:infrastruktur-overview} zu sehen ist. Diese Architektur soll mehr Privatsphäre bieten und unterteilt sich in drei Hauptmodule: die Mobile App, das Repository und die Cloud. Auffällig ist das doppelte Untermodul "Speech Processing". Dabei wird in der Mobilen App eine einfache Sprachverarbeitung, wie beispielsweise das Aufnehmen bzw. die Wiedergabe eines Audiofiles, implementiert. Ressourcen intensive Sprachverarbeitungsprozesse, wie beispielsweise die Umwandlung von Sprache zu Text, werden in die Cloud ausgelagert. Im Folgenden werden die drei Hauptmodule genauer beschrieben.
+Nun gilt es das in Kapitel \ref{sec:konzept} vorgestellte Konzept umzusetzen. Dazu wurde eine Architektur für einen Sprachassistenten entwickelt, welche in Abbildung \ref{fig:infrastruktur-overview} zu sehen ist. Diese Architektur bietet mehr Privatsphäre und ist unterteilt in drei Hauptmodule: die Mobile App, das Repository und die Cloud. Dabei existiert das Modul \glqq Speech Processing\grqq{} in der Mobilen App und in der Cloud. In der Mobilen App wird einfache Sprachverarbeitung wie beispielsweise das Aufnehmen bzw. die Wiedergabe eines Audiofiles implementiert. Ressourcen intensive Sprachverarbeitungsprozesse, wie beispielsweise die Umwandlung von Sprache zu Text, werden in die Cloud ausgelagert. Im Folgenden werden die drei Hauptmodule genauer beschrieben.
 \begin{figure}[h!]
 	\centering
-	\includegraphics[width=0.7\linewidth]{Picture/Infrastruktur-Overview.jpg}
+	\includegraphics[width=0.8\linewidth]{Picture/Infrastruktur-Overview.jpg}
 	\caption[Architekturübersicht]{Architekturübersicht}
 	\label{fig:infrastruktur-overview}
 \end{figure}
@@ -11,9 +11,9 @@ Nun gilt es das in Kapitel \ref{sec:konzept} vorgestellte Konzept umzusetzen. Da
 Die Mobile App ist die Schnittstelle zum Nutzer und wie Abbildung \ref{fig:infrastruktur-app} zeigt, hat diese drei Module:
 
 \begin{itemize}
-	\item \textsl{Speech Recording:} aufnehmen und streamen der Nutzereingabe an die Cloud.
-	\item \textsl{Speech Playback:} Abspielen eines Streams, welcher von der Cloud erzeugt wurde.
-	\item \textsl{Hotword Detection:} Die Mobile App soll nicht fortlaufend die Eingabe des Nutzers aufnehmen und streamen, denn diese könnte die Privatsphäre des Nutzer beeinträchtigen. Die App soll nur aufnehmen und streamen, wenn der Nutzer das will. Somit kommt die sogenannte "Hotword Detection" zum Einsatz. Diese belauscht den Nutzer durchgängig, jedoch nur lokal auf dem Endgerät und ohne Daten via Internetverbindung weiter zu senden. Eine Hotword Detection benötigt kaum Ressourcen, da die Erkennung nur eines einzigen Signalwortes benötigt. Sobald der Nutzer das definierte Signalwort sagt, wird das Aufnehmen und Streaming an die Cloud gestartet.
+	\item \textsl{Speech Recording:} Aufnehmen und streamen der Eingabe eines Nutzers an die Cloud.
+	\item \textsl{Speech Playback:} Abspielen eines Streams, der von der Cloud erzeugt wurde, an den Nutzer.
+	\item \textsl{Hotword Detection:} Die Mobile App soll nicht ununterbrochen die Eingabe des Nutzers an die Cloud streamen, denn dies könnte die Privatsphäre des Nutzers beeinträchtigen. Die App soll nur aufnehmen und streamen, wenn der Nutzer das will. Somit kommt die sogenannte \glqq Hotword Detection\grqq{} zum Einsatz. Dies belauscht den Nutzer durchgängig lokal auf dem Endgerät. Eine Hotword Detection benötigt kaum Ressourcen, da sie für die Erkennung eines einzigen Signalwortes optimiert wurde. Somit lässt sich ein Signalwort definieren. Sobald der Nutzer dieses Signalwort sagt, wird das Aufnehmen und streamen an die Cloud gestartet.
 \end{itemize}
 
 \begin{figure}[h!]
@@ -27,8 +27,8 @@ Die Mobile App ist die Schnittstelle zum Nutzer und wie Abbildung \ref{fig:infra
 Das Repository ist in Abbildung \ref{fig:infrastruktur-repository} dargestellt und unterteilt sich nochmals in zwei Module: das Runtime Repository und das App Repository, welche im folgenden genauer beschrieben werden.
 
 \begin{itemize}
-	\item \textsl{Runtime Repository:} Das Runtime Repository stellt eine Laufzeitumgebungen für die Cloud bereit. Die Laufzeitumgebung beinhaltet das Betriebssystem und alle vom Sprachassistenten benötigten Pakete und wird in verschieden Formaten bereitgestellt. Ein Nutzer kann sich eine Laufzeitumgebung im Format seiner Wahl herunterladen und auf seiner privaten Cloud installieren. Dabei soll die Installation möglichst wenig Konfigurationsaufwand mit sich bringen, denn auch Nutzer ohne IT-Background sollen sich diese Umgebungen installieren können. 
-	\item \textsl{App Repository:} Das App Repository stellt alle Apps bereit, die auf dem Sprachassistenten genutzt werden können. Will ein Nutzer ein App nutzen, so muss er diese in seiner Laufzeitumgebung installieren.
+	\item \textsl{Runtime Repository:} Das Runtime Repository stellt eine Laufzeitumgebung für die Cloud bereit. Die Laufzeitumgebung beinhaltet das Betriebssystem und alle vom Sprachassistenten benötigten Pakete und wird in verschieden Formaten bereitgestellt. Ein Nutzer kann sich eine Laufzeitumgebung im Format seiner Wahl herunterladen und auf seiner privaten Cloud installieren. Dabei soll die Installation möglichst wenig Konfigurationsaufwand erfordern, denn auch Nutzer ohne IT-Background sollen sich diese Umgebungen installieren können. 
+	\item \textsl{App Repository:} Das App Repository stellt alle Apps bereit, die für den Sprachassistenten verfügbar sind. Will ein Nutzer ein App nutzen, so muss er diese in seiner Laufzeitumgebung installieren.
 \end{itemize}
 
 
@@ -40,7 +40,7 @@ Das Repository ist in Abbildung \ref{fig:infrastruktur-repository} dargestellt u
 \end{figure}
 
 \subsection{Laufzeitumgebung}
-Die Laufzeitumgebung ist das Herzstück des Sprachassistenten und ist in Abbildung \ref{fig:infrastruktur-cloud} aufgezeigt. Sie beinhaltet die meisten Module sowie Funktionen.
+Die Laufzeitumgebung ist das Herzstück des Sprachassistenten und ist in Abbildung \ref{fig:infrastruktur-cloud} aufgezeigt. Sie beinhaltet einen großen Umfang an Funktionen.
 
 \begin{figure}[h!]
 	\centering
@@ -50,18 +50,18 @@ Die Laufzeitumgebung ist das Herzstück des Sprachassistenten und ist in Abbildu
 \end{figure}
 
 \begin{itemize}
-	\item \textsl{Sprachverarbeitung:} Das Modul Speech Processing beinhaltet die  rechenintensiven Funktionen der Sprachverarbeitung. Folgende Teilgebiete der Sprachverarbeitung können für den Sprachassistenten verwendet werden:
+	\item \textsl{Sprachverarbeitung:} Das Modul Speech Processing beinhaltet rechenintensive Funktionen der Sprachverarbeitung. Folgende Teilgebiete der Sprachverarbeitung werden für den Sprachassistenten benötigt:
 	\begin{itemize}
 		\item \textsl{\ac{stt}:} \ac{stt} ist die Umwandlung eines Sprachsignals zu Text.
 		\item \textsl{\ac{tts}:} \ac{tts} ist die Umwandlung eines Text zu einem Sprachsignal.
-		\item \textsl{\ac{nlu}:} \ac{nlu} ist das Verständnis der natürlichen Sprache. Dies ist nötig, um die Eingabe eines Nutzers verstehen zu können. Es kann erkannt werden, ob ein Wort in einem Satz beispielsweise ein Nomen oder Verb ist. 
-		\item \textsl{Language Translation:} Hierbei geht es um die Übersetzung von Text in eine andere Sprache. Somit kann ein Nutzer mit anderen Personen, die eine unterschiedliche Sprache sprechen, kommunizieren. Des Weiteren kann es sein, dass eine App für den Sprachassistenten nicht in allen Sprachen zur Verfügung steht. Wird die Sprache eines Nutzers nicht unterstützt, so kann die Übersetzung genutzt werden, dass dieser die App nutzen kann.
-		\item \textsl{Speaker Identifikation:} Die Sprecherdidentifikation kann als Authentifizierungsmethode des Sprachassistenten dienen. Durch die Sprachinformation in einem Sprachsignal eines Nutzers kann dieser identifiziert werden. Hiermit kann geprüft werden, ob ein Nutzer die Berechtigungen hat, diesen Sprachassistenten zu nutzen.
+		\item \textsl{\ac{nlu}:} \ac{nlu} ist das Verständnis der natürlichen Sprache. Dies ist nötig, um die Eingabe eines Nutzers zu verstehen. Es kann beispielsweise erkannt werden, ob ein Wort in einem Satz ein Nomen oder Verb ist. 
+		\item \textsl{Language Translation:} Hierbei geht es um die Übersetzung eines Texts in eine andere Sprache. Damit kann ein Nutzer mit anderen Nutzern, die eine andere Sprache sprechen kommunizieren, ohne dass dieser deren Sprache spricht. Eine App für den Sprachassistenten kann nicht in der Sprache des Nutzer zur Verfügung stehen, jedoch können die Inhalte der App zur Laufzeit in die Sprache des Nutzers übersetzt werden. Dies minimiert den Entwicklungsaufwand für die Entwickler von Apps und erlaubt gleichzeitig das Erreichen einer große Zielgruppe an Nutzern, welche unterschiedlichste Sprachen sprechen. 
+		\item \textsl{Speaker Identifikation:} Die Sprecheridentifikation kann als Authentifizierungsmethode des Sprachassistenten dienen. Durch die Sprachinformation in einem Sprachsignal eines Nutzers kann dieser identifiziert werden. Somit kann geprüft werden, ob ein Nutzer die Berechtigung hat, diesen Sprachassistenten zu nutzen.
 	\end{itemize}
-	\item \textsl{Konfigurationsumgebung:} Über die Konfigurationsumgebung lassen sich die Apps und Privatsphäre Einstellungen für den Sprachassistenten vornehmen.
+	\item \textsl{Konfigurationsumgebung:} Über die Konfigurationsumgebung lassen sich die Apps- und Privatsphäre Einstellungen für den Sprachassistenten vornehmen.
 	\begin{itemize}
-		\item App Management: Dieses Modul verwaltet die vom Nutzer installierten Apps. Dabei können neue Apps aus dem App Repository installiert oder vorhandene Apps deinstalliert werden. 	
-		\item Privacy Management: Dieses Modul verwaltet den Kontext des Nutzers und erlaubt diesem, den Zugriff von Apps auf diesen Kontext festzulegen. Dabei kann bestimmt werden, welche Informationen des Nutzer von einer App zugänglich sind. Des Weiteren lassen sich auch Zufallskontexte erstellen, sodass der Nutzer ohne Preisgabe seines tatsächlichen Kontexts eine App nutzen kann.  
+		\item App Management: Dieses Modul verwaltet die vom Nutzer installierten Apps. Dabei können neue Apps aus dem App Repository installiert oder vorhandene Apps deinstalliert werden.
+		\item Privacy Management: Dieses Modul verwaltet den Kontext des Nutzers und erlaubt diesem, den Zugriff von Apps auf diesen Kontext festzulegen. Dabei kann bestimmt werden, welche Informationen des Nutzer von einer App zugänglich sind. Des Weiteren lassen sich auch Zufallskontexte erstellen, sodass der Nutzer ohne Preisgabe seines tatsächlichen Kontexts eine App nutzen kann. Durch dieses Modul kann eine durch den Nutzer bestimmte Privatsphäre erreicht werden. 
 	\end{itemize}	
 \end{itemize}
 
