@@ -13,7 +13,7 @@ Die Mobile App ist die Schnittstelle zum Nutzer und wie Abbildung \ref{fig:infra
 \begin{itemize}
 	\item \textsl{Speech Recording:} Aufnehmen und streamen der Eingabe eines Nutzers an die Cloud.
 	\item \textsl{Speech Playback:} Abspielen eines Streams, der von der Cloud erzeugt wurde, an den Nutzer.
-	\item \textsl{Hotword Detection:} Die Mobile App soll nicht ununterbrochen die Eingabe des Nutzers an die Cloud streamen, denn dies könnte die Privatsphäre des Nutzers beeinträchtigen. Die App soll nur aufnehmen und streamen, wenn der Nutzer das will. Somit kommt die sogenannte \glqq Hotword Detection\grqq{} zum Einsatz. Dies belauscht den Nutzer durchgängig lokal auf dem Endgerät. Eine Hotword Detection benötigt kaum Ressourcen, da sie für die Erkennung eines einzigen Signalwortes optimiert wurde. Somit lässt sich ein Signalwort definieren. Sobald der Nutzer dieses Signalwort sagt, wird das Aufnehmen und streamen an die Cloud gestartet.
+	\item \textsl{Hotword Detection:} Die Mobile App soll nicht ununterbrochen die Eingabe des Nutzers an die Cloud streamen, denn dies könnte die Privatsphäre des Nutzers beeinträchtigen. Die App soll nur aufnehmen und streamen, wenn der Nutzer das will. Somit kommt die sogenannte \glqq Hotword Detection\grqq{} zum Einsatz. Dies belauscht den Nutzer durchgängig lokal auf dem Endgerät. Eine Hotword Detection benötigt kaum Ressourcen, da sie für die Erkennung eines einzigen Signalwortes optimiert wurde. Somit lässt sich ein Signalwort definieren. Sobald der Nutzer dieses Signalwort sagt, wird das Aufnehmen und streamen an die Cloud gestartet. 
 \end{itemize}
 
 \begin{figure}[h!]
@@ -28,7 +28,7 @@ Das Repository ist in Abbildung \ref{fig:infrastruktur-repository} dargestellt u
 
 \begin{itemize}
 	\item \textsl{Runtime Repository:} Das Runtime Repository stellt eine Laufzeitumgebung für die Cloud bereit. Die Laufzeitumgebung beinhaltet das Betriebssystem und alle vom Sprachassistenten benötigten Pakete und wird in verschieden Formaten bereitgestellt. Ein Nutzer kann sich eine Laufzeitumgebung im Format seiner Wahl herunterladen und auf seiner privaten Cloud installieren. Dabei soll die Installation möglichst wenig Konfigurationsaufwand erfordern, denn auch Nutzer ohne IT-Background sollen sich diese Umgebungen installieren können. 
-	\item \textsl{App Repository:} Das App Repository stellt alle Apps bereit, die für den Sprachassistenten verfügbar sind. Will ein Nutzer ein App nutzen, so muss er diese in seiner Laufzeitumgebung installieren.
+	\item \textsl{App Repository:} Das App Repository stellt alle Apps bereit, die für den Sprachassistenten verfügbar sind. Will ein Nutzer ein App nutzen, so muss er diese in seiner Laufzeitumgebung installieren. Entwickler können Apps im App Repository für Nutzer bereitstellen. Jedoch müssen diese exakte Angaben über die Nutzung der Daten eines Nutzers tätigen. Des Weiteren wird vor einer Veröffentlichung einer App geprüft, ob die Angaben zum Datenschutz korrekt sind und ob diese die erfasste Daten überhaupt für die Verbesserung der Nutzerfreundlichkeit benötigt. Somit kann Datensparsamkeit für eine App sichergestellt werden.
 \end{itemize}
 
 
@@ -61,7 +61,7 @@ Die Laufzeitumgebung ist das Herzstück des Sprachassistenten und ist in Abbildu
 	\item \textsl{Konfigurationsumgebung:} Über die Konfigurationsumgebung lassen sich die Apps- und Privatsphäre Einstellungen für den Sprachassistenten vornehmen.
 	\begin{itemize}
 		\item App Management: Dieses Modul verwaltet die vom Nutzer installierten Apps. Dabei können neue Apps aus dem App Repository installiert oder vorhandene Apps deinstalliert werden.
-		\item Privacy Management: Dieses Modul verwaltet den Kontext des Nutzers und erlaubt diesem, den Zugriff von Apps auf diesen Kontext festzulegen. Dabei kann bestimmt werden, welche Informationen des Nutzer von einer App zugänglich sind. Des Weiteren lassen sich auch Zufallskontexte erstellen, sodass der Nutzer ohne Preisgabe seines tatsächlichen Kontexts eine App nutzen kann. Durch dieses Modul kann eine durch den Nutzer bestimmte Privatsphäre erreicht werden. 
+		\item Privacy Management: Dieses Modul verwaltet den Kontext des Nutzers und erlaubt diesem, den Zugriff von Apps auf diesen Kontext festzulegen. Dabei kann bestimmt werden, welche Informationen des Nutzer von einer App zugänglich sind. Des Weiteren lassen sich auch fiktive Kontexte erstellen, sodass der Nutzer ohne Preisgabe seines tatsächlichen Kontexts eine App nutzen kann. Durch dieses Modul kann User-Controlled-Privacy erreicht werden. 
 	\end{itemize}	
 \end{itemize}
 
