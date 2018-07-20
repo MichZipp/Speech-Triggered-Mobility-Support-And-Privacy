@@ -1,32 +1,32 @@
-\section{Konzept}\label{sec:konzept}
-Anhand der Umfrage wurde ein Konzept für einen Sprachassistenten entwickelt. Dabei wurden die Kosten für benötigte Ressourcen vernachlässigt. Eine wichtige Anforderung an das Konzept ist der Datenschutz. Die Entwurfsprinzipien für die mehrseitige Sicherheit von Daten nach Kai Rannenberg stellt folgende vier Punkte in den Vordergrund \cite{kairannenberg}:
+\section{Concept}\label{sec:konzept}
+Based on the survey, a concept for a voice assistant was developed. The costs for needed resources were neglected. An important requirement of the concept is data protection. The design principles for the multi-sided security of data according to Kai Rannenberg puts the following four points in the foreground \cite{kairannenberg}:
 
 \begin{enumerate}
-	\item Datensparsamkeit
-	\item Kontrollmöglichkeiten für den Nutzer 
-	\item Auswahlmöglichkeiten und Verhandlungsspielräume 
-	\item Dezentralisierung und Verteilung
+	\item Data Minimization
+	\item Control options for the user 
+	\item Choices and negotiation options 
+	\item Decentralization and Distribution
 \end{enumerate} 
 
-Im Rahmen dieses Konzepts erfolgt die Fokussierung auf die ersten drei Punkte. Oftmals erfassen Anwendungen Daten eines Nutzers, die nicht zur Verbesserung der Anwendungen sondern zur Analyse der Nutzer und dem Weiterverkauf verwendet werden. Deshalb soll durch das Konzept sichergestellt werden, dass eine Anwendung nur Daten von Nutzern bezieht, die diese auch tatsächlich benötigen. Des Weiteren sollen die erfassten Daten den Nutzern transparent dargestellt werden. Somit können Nutzer ihre erfassten Daten auch manipulieren bzw. anonymisieren. 
+As part of this concept, the focus is on the first three points. Often, applications capture data from a user that is not used to improve applications but to analyze users and resell them. Therefore, the concept should ensure that an application only obtains data from users who really need it. Furthermore, the collected data should be presented transparently to the users. Thus, users can also manipulate or anonymize their collected data.
 
-Daraus ergibt sich für den zu entwickelnden Sprachassistenten folgende Anforderungen:
+This results in the following requirements for the language assistant to be developed:
 \begin{itemize}
 	\item User-Controlled-Privacy
-	\item Funktionalität
+	\item Functionality
 	\item Performance
-	\item Nutzerfreundlichkeit	
+	\item User Friendliness	
 \end{itemize}
 
-Durch User-Controlled Privacy kann ein Nutzer bestimmen, welche Daten er von sich für bestimmte Anwendungen freigibt. Anwendungen benötigen jedoch auch Daten eines Nutzers, um dadurch Nutzerfreundlichkeit zu bieten. Ein Beispiel ist die Frage eines Sprachassistenten nach der Wettervorhersage. Weiß der Sprachassistent wo sich ein Nutzer gerade befindet, so kann dieser die Wettervorhersage für die aktuelle Position des Nutzer liefern. Sonst müsste der Sprachassistent zuerst den Nutzer Fragen, für welchen Ort dieser eine Wettervorhersage geben soll. Will ein Nutzer seine Daten für eine Anwendung nicht freigeben, so kann er einen fiktiven Kontext festlegen. Damit kann der Nutzer die Anwendungen nutzen, jedoch auf Kosten der Nutzerfreundlichkeit.
+User-Controlled Privacy allows a user to determine what data they share with them for specific applications. However, applications also require a user's data to provide usability. An example is the question of a language assistant according to the weather forecast. If the voice assistant knows where a user is currently located, he can provide the weather forecast for the current position of the user. Otherwise, the language assistant would first have to ask the user for which location to give them a weather forecast. If a user does not want to share his data with an application, he can set a fictitious context. This allows the user to use the applications, but at the expense of user-friendliness.
 
-Ein Kontext beschreibt die Eigenschaften eines Nutzers und ist sehr umfangreich, wie in Abbildung \ref{fig:kontext} zu sehen. Als Beispiele sind hierfür der kulturelle Hintergrund, die eigenen Interessen und Hobbys sowie das soziale Umfeld zu nennen.
+A context describes the properties of a user and is very extensive, as shown in Figure \ref{fig:context}. Examples include the cultural background, one's own interests and hobbies, as well as the social environment.
 
 \begin{figure}[!h]
 	\centering
 	\includegraphics[width=1\linewidth]{Picture/Kontext}
-	\caption[Nuzter Kontext]{Nuzter Kontext}
-	\label{fig:kontext}
+	\caption[User Context]{User Context}
+	\label{fig:context}
 \end{figure}
 
 
