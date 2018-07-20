@@ -2,3 +2,13 @@
 /Paper/*.pdf
 /Paper/*.aux
 /Paper/*.log
+/Paper - Deutsch/*.log
+/Paper - Deutsch/*.out
+/Paper - Deutsch/*.pdf
+/Paper - Deutsch/*.gz
+/Paper - Deutsch/*.aux
+*.log
+*.out
+*.pdf
+*.gz
+*.aux
