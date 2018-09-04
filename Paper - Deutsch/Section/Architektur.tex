@@ -1,11 +1,14 @@
 \section{Architektur}\label{sec:architecure}
-Nun gilt es das in Kapitel \ref{sec:konzept} vorgestellte Konzept umzusetzen. Dazu wurde eine Architektur für einen Sprachassistenten entwickelt, welche in Abbildung \ref{fig:infrastruktur-overview} zu sehen ist. Diese Architektur bietet mehr Privatsphäre und ist unterteilt in drei Hauptmodule: Die Mobile App, das Repository und die Cloud. Dabei existiert das Modul \glqq Speech Processing\grqq{} in der Mobilen App und in der Cloud. In der Mobilen App werden einfache Sprachverarbeitungsprozesse wie beispielsweise das Aufnehmen bzw. die Wiedergabe eines Audiofiles implementiert. Ressourcenintensive Sprachverarbeitungsprozesse, wie beispielsweise die Umwandlung von Sprache zu Text, werden in die Cloud ausgelagert. Im Folgenden sind die drei Hauptmodule genauer beschrieben.
-\begin{figure}[h!]
+
+\begin{figure*}[!h]
 	\centering
-	\includegraphics[width=0.8\linewidth]{Picture/Infrastruktur-Overview.jpg}
+	\includegraphics[width=0.7\linewidth]{Picture/Infrastruktur.jpg}
 	\caption[Architekturübersicht]{Architekturübersicht}
-	\label{fig:infrastruktur-overview}
-\end{figure}
+	\label{fig:infrastruktur}
+\end{figure*}
+
+Nun gilt es das in Kapitel \ref{sec:konzept} vorgestellte Konzept umzusetzen. Dazu wurde eine Architektur für einen Sprachassistenten entwickelt, welche in Abbildung \ref{fig:infrastruktur} zu sehen ist. 
+Diese Architektur bietet mehr Privatsphäre und ist unterteilt in drei Hauptmodule: Die Mobile App, das Repository und die Cloud. Dabei existiert das Modul \glqq Speech Processing\grqq{} in der Mobilen App und in der Cloud. In der Mobilen App werden einfache Sprachverarbeitungsprozesse wie beispielsweise das Aufnehmen bzw. die Wiedergabe eines Audiofiles implementiert. Ressourcenintensive Sprachverarbeitungsprozesse, wie beispielsweise die Umwandlung von Sprache zu Text, werden in die Cloud ausgelagert. Im Folgenden sind die drei Hauptmodule genauer beschrieben.
 
 \subsection{Mobile App}
 Die Mobile App ist die Schnittstelle zum Nutzer und wie Abbildung \ref{fig:infrastruktur-app} zeigt, hat diese drei Module:
