@@ -1,0 +1,266 @@
+\documentclass[journal]{IEEEtran}
+\usepackage{blindtext}
+\let\labelindent\relax
+\usepackage[inline]{enumitem}
+\usepackage{graphicx}
+\usepackage[utf8]{inputenc}
+\usepackage[acronym,toc,shortcuts]{glossaries}
+\usepackage{subcaption}
+
+\usepackage{url}
+\usepackage{breakurl}
+\def\UrlBreaks{\do\/\do-}
+\usepackage[bookmarksopen, bookmarksdepth=2, breaklinks=true]{hyperref}
+\usepackage[official]{eurosym}
+\usepackage{listings}
+\usepackage{multicol}
+%\usepackage[german]{babel}
+% *** GRAPHICS RELATED PACKAGES ***
+%
+\ifCLASSINFOpdf
+\else
+\fi
+
+
+\newacronym{stt}{STT}{Speech to Text}
+\newacronym{tts}{TTS}{Text to Speech}
+\newacronym{nlu}{NLU}{Natural Language Unterstanding}
+\newacronym{nlc}{NLC}{Natural Language Classification}
+\newacronym{sdk}{SDK}{Software Development Kit}
+\newacronym{cmu}{CMU}{Carnegie Mellon University}
+\newacronym{iso}{ISO}{Disk Image Optical}
+\newacronym{aws}{AWS}{Amazon Web Services}
+\newacronym{ai}{AI}{Artificial Intelligence}
+
+
+\hyphenation{op-tical net-works semi-conduc-tor}
+
+
+\begin{document}
+\title{Speech Triggered Mobility Support And Privacy}
+
+\author{\begin{center}
+\begin{tabular}{c c} 
+ Marius Becherer & Michael Zipperle \\ 
+ Furtwangen University & Furtwangen University\\ 
+ \textit{259158} & \textit{259564} \\
+ Marius.Becherer@hs-furtwangen.de & Michael.Zipperle@hs-furtwangen.de \\
+\end{tabular}
+\end{center}}%
+       
+%\thanks{M. Shell is with the Department
+%of Electrical and Computer Engineering, Georgia Institute of Technology, Atlanta,
+%GA, 30332 USA e-mail: (see http://www.michaelshell.org/contact.html).}% <-this % stops a space
+%\thanks{J. Doe and J. Doe are with Anonymous University.}% <-this % stops a space
+%\thanks{Manuscript received April 19, 2005; revised January 11, 2007.}}
+
+% The paper headers
+\markboth{Furtwangen University - Mobility and Innovation, July 2018}%
+{Furtwangen University - Mobility and Innovation, July  2018}
+
+% make the title area
+\maketitle
+
+
+\begin{abstract}
+\boldmath
+Current speech assistants are offered by cloud providers like Google, Amazon, Microsoft, Apple or Baidu. These include versatile functionalities. But what happens to the input data of users? The providers make only inaccurate information. Thus, users can assume that their data will be used for further purposes. This article contains the survey results that have been studied by speech assistant users. The result shows the frequency of use of speech assistants and the willingness to pay for data protection. Based on this survey, a concept has been developed that provides users with configurable privacy for voice assistants. An architecture shows how this concept can be realized. Furthermore, possible technologies are listed with which this architecture can be implemented.  
+\end{abstract}
+
+% Note that keywords are not normally used for peerreview papers.
+%\begin{IEEEkeywords}
+%IEEEtran, journal, \LaTeX, paper, template.
+%\end{IEEEkeywords}
+
+% For peerreview papers, this IEEEtran command inserts a page break and
+% creates the second title. It will be ignored for other modes.
+\IEEEpeerreviewmaketitle
+
+
+% *** START OF SECTIONS ***--------------------------------------------
+
+\input{Section/Einfuehrung}
+\input{Section/RelatedWork}
+\input{Section/Motivation}
+\input{Section/Konzept}
+\input{Section/Architektur}
+\input{Section/Umsetzung}
+\input{Section/ZukuenftigeArbeit}
+\input{Section/Zusammenfassung}
+\input{Section/Ackknowledgment}
+
+% *** END OF SECTIONS ***---------------------------------------------
+
+
+% Can use something like this to put references on a page
+% by themselves when using endfloat and the captionsoff option.
+\ifCLASSOPTIONcaptionsoff
+  \newpage
+\fi
+
+\begin{thebibliography}{1}
+\bibitem{Campaign}
+Christi Olson: "Just say it: The furture of search is voice and personal digital assistant", Campaign 25.04.2016 \url{https://www.campaignlive.co.uk/article/just-say-it-future-search-voice-personal-digital-assistants/1392459},
+Last visit: 13.07.2018
+
+\bibitem{prNewswire}
+OC\&C Strategy Consultants: "Voice Shopping Set to Jump to \$40 Billion By 2022, Rising From \$2 Billion Today", PR Newswire, 28.02.2018, \url{https://www.prnewswire.com/news-releases/voice-shopping-set-to-jump-to-40-billion-by-2022-rising-from-2-billion-today-300605596.html}, 
+Last visit: 13.07.2018
+
+\bibitem{highervisibility}
+Adam Heitzman: "How popular is voice search?", 07.02.2017, higervisibility.com, \url{https://www.highervisibility.com/blog/how-popular-is-voice-search/},
+Last visit: 13.07.2018
+
+\bibitem{homeVoiceAssistants}
+"Choosing The Best Voice Assistant For Your Home", Geeks of Technology, 16.01.2018, \url{https://geeksfl.com/blog/best-voice-assistant/}, Last visit: 20.07.2018
+.
+\bibitem{kairannenberg}
+Rannenberg, Kai. "Mehrseitige Sicherheit—Schutz für Unternehmen und ihre Partner im Internet." Wirtschaftsinformatik 42.6 (2000): 489-497.
+
+\bibitem{cortanaAssistant}
+Mircosoft Inc: "Cortana, Ihre persönliche digitale Assistentin", \url{https://privacy.microsoft.com/de-de/windows-10-cortana-and-privacy},
+Last visit: 05.06.2018
+
+\bibitem{siriAssistant}
+Apple Inc.: "Hey Siri, weck mich morgen früh um 7:00 Uhr.",
+\url{https://www.apple.com/de/ios/siri/},
+Last visit: 05.06.2018
+
+\bibitem{alexaAssitant}
+Amazon Inc.: "Alexa Assistant"
+\url{https://www.amazon.de/b?ie=UTF8&node=12775495031},
+Last visit: 06.06.2018
+
+\bibitem{alexaPrivacy}
+Amazon Inc.: "Alexa Internet Privacy Notice", 23.05.2018,
+\url{https://www.alexa.com/help/privacy},
+Last visit: 06.06.2018
+
+\bibitem{googleAssistant}
+Google LLC: "Google Assistant - Just say" ,
+\url{https://assistant.google.com/#?modal_active=none},
+Last visit: 06.06.2018
+
+\bibitem{googlePrivacy}
+Google LLC: "Datenschutzerklärung \& Nutzungsbedingungen", 25.05.2018, \url{https://policies.google.com/privacy#whycollect},
+Last visit: 06.06.2018
+
+\bibitem{baiduAssistant}
+Baidu Inc.: "What makes our Artificial Intelligence technology unique"  \url{https://dueros.baidu.com/en/index.html},
+Last visit: 06.06.2018
+
+\bibitem{baiduPrivacy}
+Baidu Inc.: "Baidu Statement of Privacy Protection", \url{http://ir.baidu.com/phoenix.zhtml?c=188488\&p=privacy},
+Last visit: 06.06.2018
+
+
+\bibitem{baiduAI}
+Jessi hemple: "How Baidu will win china's AI race - and, maybe, the world's", 08.09.2017, \url{https://www.wired.com/story/how-baidu-will-win-chinas-ai-raceand-maybe-the-worlds/},
+Last visit: 06.06.2018
+
+\bibitem{googleShare}
+Google LLC: "Choose what to share with your Google Assistant", \url{https://support.google.com/assistant/answer/7126196?hl=en},
+Last visit: 06.06.2018
+
+\bibitem{siriPrivacy}
+Apple Inc.: "Umgang mit Datenschutz", \url{https://www.apple.com/de/privacy/approach-to-privacy/},
+Last visit: 06.06.2018
+
+\bibitem{mycroftsmartspeaker}
+Jack Wallen: "Mycroft Mark II offers something its digital assistant competitors can't: Privacy and openness", 14.02.2018, \url{https://www.techrepublic.com/article/mycroft-mark-ii-offers-consumers-what-other-digital-assistants-cant-privacy/},
+Last visit: 06.06.2018	
+	
+\bibitem{SnowboyHotwordDetection}
+Kitt.ai: "Snowboy Hotword Detection",
+\url{https://snowboy.kitt.ai/},
+Last visit: 10.07.2018
+
+\bibitem{TrulyHandsfreeTM}
+Sensory: "TrulyHandsfreeTM",
+\url{http://www.sensory.com/products/embedded-software-and-sdks/},
+Last visit: 10.07.2018
+
+\bibitem{VMWare}
+"VMWare",
+\url{https://www.vmware.com/},
+Last visit: 11.07.2018
+
+\bibitem{Docker}
+"Docker",
+\url{https://www.docker.com/},
+Last visit: 11.07.2018
+
+\bibitem{IBMBluemix}
+IBM Bluemix: "Virtual Server",
+\url{https://www.ibm.com/cloud/virtual-servers},
+Last visit: 11.07.2018
+
+\bibitem{AWSAmazonEC2}
+Amazon: "Amazon EC2",
+\url{https://aws.amazon.com/de/ec2},
+Last visit: 11.07.2018
+
+\bibitem{MicrosoftAzure}
+Microsoft Azure: "Virtual Server",
+\url{https://azure.microsoft.com/en-us/services/virtual-machines/},
+Last visit: 11.07.2018
+
+\bibitem{AmazonComprehed}
+Amazon: "Amazon Comprehed",
+\url{https://aws.amazon.com/de/comprehend/},
+Last visit: 11.07.2018
+
+\bibitem{AmazonTranslate}
+Amazon: "Amazon Translate",
+\url{https://aws.amazon.com/de/translate/},
+Last visit: 11.07.2018
+
+\bibitem{AmazonTranscript}
+Amazon: "Amazon Transcript",
+\url{https://aws.amazon.com/de/transcribe/},
+Last visit: 11.07.2018
+
+\bibitem{AmazonPolly}
+Amazon: "Amazon Polly",
+\url{https://aws.amazon.com/de/polly/},
+Last visit: 11.07.2018
+
+\bibitem{AmazonLex}
+Amazon: "Amazon Lex",
+\url{https://aws.amazon.com/de/lex/},
+Last visit: 11.07.2018
+
+\bibitem{MicrosoftAzureCognitiveServices}
+Microsoft Azure: "Cognitive Services",
+\url{https://azure.microsoft.com/en-us/services/cognitive-services/directory/speech/},
+Last visit: 11.07.2018
+
+\bibitem{IBMWatsonSpeechServices}
+IBM Watson: "Speech Services",
+\url{https://www.ibm.com/watson/services/},
+Last visit: 11.07.2018
+
+\bibitem{Nuance}
+"Nuance",
+\url{https://www.nuance.com},
+Last visit: 12.07.2018
+
+\bibitem{MozillaCommonVoice}
+"Mozilla Common Voice",
+\url{https://voice.mozilla.org/de},
+Last visit: 12.07.2018
+
+\bibitem{Kaldi}
+"Kaldi",
+\url{http://kaldi-asr.org/},
+Last visit: 12.07.2018
+
+\bibitem{Pocketsphinx}
+CMUSphinx: "Pocketsphinx"
+\url{https://cmusphinx.github.io},
+Last visit: 12.07.2018
+\end{thebibliography}
+
+\end{document}
+
+
