@@ -1,17 +1,6 @@
- // Close dialog with the customer, reporting fulfillmentState of Failed or Fulfilled ("Thanks, your pizza will arrive in 20 minutes")
- function close(sessionAttributes, fulfillmentState, message) {
-    return {
-        sessionAttributes,
-        dialogAction: {
-            type: "Close",
-            fulfillmentState,
-            message,
-        },
-    };
-}
+import { close, elictSlot, delegate } from "./helpers";
 
-// --------------- Events ----------------------- 
-function dispatch(intentRequest, callback) {
+const dispatch = (intentRequest, callback) => {
     console.log("request received for userId=${intentRequest.userId}, intentName=${intentRequest.currentIntent.intentName}");
     const sessionAttributes = intentRequest.sessionAttributes;
     const intentName = intentRequest.currentIntent;
@@ -22,7 +11,6 @@ function dispatch(intentRequest, callback) {
     callback(close(sessionAttributes, "Fulfilled", {"contentType": "PlainText", "content": "Affe"}));
 }
 
-// --------------- Main handler ----------------------
 exports.handler = (event, context, callback) => {
     try {
         dispatch(event,
