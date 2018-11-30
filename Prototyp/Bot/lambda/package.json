@@ -1,0 +1,23 @@
+{
+  "name": "lambda",
+  "version": "1.0.0",
+  "description": "Lambda Function to fullfill AWS Lex responses",
+  "main": "index.js",
+  "dependencies": {
+    "loopback-nodejs-client": "^1.5.5"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/MichZipp/Speech-Triggered-Mobility-Support-And-Privacy.git"
+  },
+  "author": "Michael Zipperle",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/MichZipp/Speech-Triggered-Mobility-Support-And-Privacy/issues"
+  },
+  "homepage": "https://github.com/MichZipp/Speech-Triggered-Mobility-Support-And-Privacy#readme"
+}
