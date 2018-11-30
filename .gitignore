@@ -13,5 +13,5 @@
 *.gz
 *.aux
 /Prototyp/Bot/lambda/node_modules/*
-/Prototyp/Bot/index.zip
-/Prototyp/Bot/build/*
+/Prototyp/Bot/lambda/index.zip
+/Prototyp/Bot/lambda/build/*
