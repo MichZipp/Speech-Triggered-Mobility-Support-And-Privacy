@@ -1,5 +1,6 @@
-let { close, elictSlot, delegate } =  require("./helpers");
-let I = require("./constants");
+import { close, elictSlot, delegate } from "./helpers";
+import { getUserName } from "./api";
+import I from "./constants";
 
 const dispatch = (intentRequest, callback) => {
     console.log("request received for userId=${intentRequest.userId}, intentName=${intentRequest.currentIntent.intentName}");
@@ -11,13 +12,16 @@ const dispatch = (intentRequest, callback) => {
     
     switch(intentName){
         case I.NEWDOCAPPOINTMENT:
-            callback(close(sessionAttributes, "Fulfilled", {"contentType": "PlainText", "content": "Affe"}));
+            callback(close(sessionAttributes, "Fulfilled", {"contentType": "PlainText", "content": "Affe" }));
+            break;
+        case I.USERNAME:
+            callback(close(sessionAttributes, "Fulfilled", {"contentType": "PlainText", "content": getUserName }));
             break;
         default:
-            callback(close(sessionAttributes, "Fulfilled", {"contentType": "PlainText", "content": "Giraffe"}));
+            callback(close(sessionAttributes, "Fulfilled", {"contentType": "PlainText", "content": "Giraffe" }));
     }
     
-    callback(close(sessionAttributes, "Fulfilled", {"contentType": "PlainText", "content": "Affe"}));
+    callback(close(sessionAttributes, "Fulfilled", {"contentType": "PlainText", "content": "Affe" }));
 }
 
 exports.handler = (event, context, callback) => {

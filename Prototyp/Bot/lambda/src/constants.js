@@ -1,5 +1,8 @@
 const intents = {
-    NEWDOCAPPOINTMENT: "NewDocAppointment"
+    NEWDOCAPPOINTMENT: "NewDocAppointment",
+    USERNAME: "UserName",
+    USERLOCATION: "UserLocation",
+    USERPROFILE: "UserProfile"
 }
 
 export default intents;

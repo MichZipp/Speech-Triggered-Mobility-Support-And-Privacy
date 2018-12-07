@@ -1,11 +1,12 @@
 "use strict";
 
-var _require = require("./helpers"),
-    close = _require.close,
-    elictSlot = _require.elictSlot,
-    delegate = _require.delegate;
+var _helpers = require("./helpers");
 
-var I = require("./constants");
+var _api = require("./api");
+
+var _constants = _interopRequireDefault(require("./constants"));
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 var dispatch = function dispatch(intentRequest, callback) {
   console.log("request received for userId=${intentRequest.userId}, intentName=${intentRequest.currentIntent.intentName}");
@@ -15,21 +16,28 @@ var dispatch = function dispatch(intentRequest, callback) {
   console.log("Session: " + sessionAttributes);
 
   switch (intentName) {
-    case I.NEWDOCAPPOINTMENT:
-      callback(close(sessionAttributes, "Fulfilled", {
+    case _constants.default.NEWDOCAPPOINTMENT:
+      callback((0, _helpers.close)(sessionAttributes, "Fulfilled", {
         "contentType": "PlainText",
         "content": "Affe"
       }));
       break;
 
+    case _constants.default.USERNAME:
+      callback((0, _helpers.close)(sessionAttributes, "Fulfilled", {
+        "contentType": "PlainText",
+        "content": _api.getUserName
+      }));
+      break;
+
     default:
-      callback(close(sessionAttributes, "Fulfilled", {
+      callback((0, _helpers.close)(sessionAttributes, "Fulfilled", {
         "contentType": "PlainText",
         "content": "Giraffe"
       }));
   }
 
-  callback(close(sessionAttributes, "Fulfilled", {
+  callback((0, _helpers.close)(sessionAttributes, "Fulfilled", {
     "contentType": "PlainText",
     "content": "Affe"
   }));

@@ -5,7 +5,10 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.default = void 0;
 var intents = {
-  NEWDOCAPPOINTMENT: "NewDocAppointment"
+  NEWDOCAPPOINTMENT: "NewDocAppointment",
+  USERNAME: "UserName",
+  USERLOCATION: "UserLocation",
+  USERPROFILE: "UserProfile"
 };
 var _default = intents;
 exports.default = _default;
