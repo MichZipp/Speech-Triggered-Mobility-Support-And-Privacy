@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item android:id="@+id/createprofile"
+
+        android:title="Profil erstellen" />
+
+    <item android:id="@+id/editprofile"
+
+        android:title="Profil bearbeiten" />
+
+    <item android:id="@+id/hotword"
+
+        android:title="Befehl aufnehmen" />
+
+    <item android:id="@+id/help"
+
+        android:title="Hilfe" />
+
+    <item android:id="@+id/impressum"
+
+        android:title="Impressum" />
+</menu>

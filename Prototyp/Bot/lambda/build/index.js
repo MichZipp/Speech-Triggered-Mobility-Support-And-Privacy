@@ -12,8 +12,10 @@ var dispatch = function dispatch(intentRequest, callback) {
   console.log("request received for userId=${intentRequest.userId}, intentName=${intentRequest.currentIntent.intentName}");
   var sessionAttributes = intentRequest.sessionAttributes;
   var intentName = intentRequest.currentIntent;
+  console.log("request" + intentRequest);
   console.log("Intent: " + intentName);
   console.log("Session: " + sessionAttributes);
+  console.log("Constant: " + _constants.default.USERNAME);
 
   switch (intentName) {
     case _constants.default.NEWDOCAPPOINTMENT:
@@ -44,6 +46,9 @@ var dispatch = function dispatch(intentRequest, callback) {
 };
 
 exports.handler = function (event, context, callback) {
+  console.log("event: " + event);
+  console.log("context: " + context);
+
   try {
     dispatch(event, function (response) {
       callback(null, response);

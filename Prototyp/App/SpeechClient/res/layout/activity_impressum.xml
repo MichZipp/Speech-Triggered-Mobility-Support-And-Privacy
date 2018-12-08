@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:scrollHorizontally="false"
+        android:textSize="20dp"
+        android:text="Dies ist eine App, die durch Sprachsteuerung verwaltet werden kann. Sie beinhaltet Mobilitätsaspekte und gewährt dem User einen umfangreicheren Datenschutz als gewöhnliche Apps. Diese App entstand im Rahmen des Projekts Speech triggered mobility support and privacy und dient dem Nutzer als eine Möglichkeit, seine Daten schützen und verwalten zu können. Das Entwicklerteam besteht aus vier Studenten des Studiengangs Mobile Systeme an der Hochschule Furtwangen und zwar Jenni Belov, Marius Becherer, Michael Zipperle und Max Wannenmacher. Betreut wurde das Projekt vom Prof. Dr. Herr Karduck."
+        android:layout_marginTop="10dp" />
+
+</LinearLayout>

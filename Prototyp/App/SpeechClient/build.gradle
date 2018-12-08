@@ -11,13 +11,22 @@ apply plugin: 'android'
 
 dependencies {
     implementation fileTree(include: '*.jar', dir: 'libs')
+    //api 'com.strongloop:loopback-sdk-android:1.5.3'
+    //noinspection DuplicatePlatformClasses
+    api 'org.json:json:20160212'
+    //compile 'com.android.volley:volley:1.1.0'
+    api 'com.mcxiaoke.volley:library:1.0.19'
 }
 
 android {
     signingConfigs {
     }
-    compileSdkVersion 25
+    compileSdkVersion 26
     buildToolsVersion '28.0.3'
+    defaultConfig {
+        minSdkVersion 21
+        targetSdkVersion 26
+    }
     compileOptions.encoding = 'ISO-8859-1'
     sourceSets {
         main {
