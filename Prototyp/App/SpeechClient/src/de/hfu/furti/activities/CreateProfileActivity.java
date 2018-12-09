@@ -46,7 +46,7 @@ public class CreateProfileActivity extends Activity {
         button4.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(view.getContext(), PersonalProfile.class);
+                Intent intent = new Intent(view.getContext(), BusinessProfile.class);
                 view.getContext().startActivity(intent);
             }
         });
@@ -55,7 +55,7 @@ public class CreateProfileActivity extends Activity {
         button5.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(view.getContext(), PersonalProfile.class);
+                Intent intent = new Intent(view.getContext(), BusinessProfile.class);
                 view.getContext().startActivity(intent);
             }
         });
@@ -64,7 +64,7 @@ public class CreateProfileActivity extends Activity {
         button6.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(view.getContext(), PersonalProfile.class);
+                Intent intent = new Intent(view.getContext(), BusinessProfile.class);
                 view.getContext().startActivity(intent);
             }
         });
