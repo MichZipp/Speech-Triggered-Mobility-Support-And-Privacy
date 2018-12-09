@@ -20,6 +20,8 @@
 
         <activity android:name="ai.kitt.snowboy.Activities.PersonalProfile"/>
 
+        <activity android:name="ai.kitt.snowboy.Activities.BusinessProfile"/>
+
         <activity android:name="ai.kitt.snowboy.Activities.CreateProfileActivity"/>
 
         <activity android:name="ai.kitt.snowboy.Activities.ImpressumActivity"/>
