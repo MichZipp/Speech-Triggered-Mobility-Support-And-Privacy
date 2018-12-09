@@ -3,9 +3,10 @@ import { getUserName } from "./api";
 import I from "./constants";
 
 const dispatch = (intentRequest, callback) => {
+    // var request = JSON.parse(intentRequest);
     console.log("request received for userId=${intentRequest.userId}, intentName=${intentRequest.currentIntent.intentName}");
     const sessionAttributes = intentRequest.sessionAttributes;
-    const intentName = intentRequest.currentIntent;
+    const intentName = intentRequest.currentIntent.name;
     console.log("request" + intentRequest);
     console.log("Intent: " + intentName);
     console.log("Session: " + sessionAttributes);
@@ -15,7 +16,8 @@ const dispatch = (intentRequest, callback) => {
             callback(close(sessionAttributes, "Fulfilled", {"contentType": "PlainText", "content": "Affe" }));
             break;
         case I.USERNAME:
-            callback(close(sessionAttributes, "Fulfilled", {"contentType": "PlainText", "content": getUserName }));
+            console.log("Test");
+            callback(close(sessionAttributes, "Fulfilled", {"contentType": "PlainText", "content": getUserName() }));
             break;
         default:
             callback(close(sessionAttributes, "Fulfilled", {"contentType": "PlainText", "content": "Giraffe" }));

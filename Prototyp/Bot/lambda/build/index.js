@@ -9,9 +9,10 @@ var _constants = _interopRequireDefault(require("./constants"));
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 var dispatch = function dispatch(intentRequest, callback) {
+  // var request = JSON.parse(intentRequest);
   console.log("request received for userId=${intentRequest.userId}, intentName=${intentRequest.currentIntent.intentName}");
   var sessionAttributes = intentRequest.sessionAttributes;
-  var intentName = intentRequest.currentIntent;
+  var intentName = intentRequest.currentIntent.name;
   console.log("request" + intentRequest);
   console.log("Intent: " + intentName);
   console.log("Session: " + sessionAttributes);
@@ -26,9 +27,10 @@ var dispatch = function dispatch(intentRequest, callback) {
       break;
 
     case _constants.default.USERNAME:
+      console.log("Test");
       callback((0, _helpers.close)(sessionAttributes, "Fulfilled", {
         "contentType": "PlainText",
-        "content": _api.getUserName
+        "content": (0, _api.getUserName)()
       }));
       break;
 

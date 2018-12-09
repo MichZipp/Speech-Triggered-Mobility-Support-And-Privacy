@@ -4,7 +4,8 @@
   "description": "Lambda Function to fullfill AWS Lex responses",
   "main": "src/index.js",
   "dependencies": {
-    "loopback-nodejs-client": "^1.5.5"
+    "loopback-nodejs-client": "^1.5.5",
+    "node-fetch": "^2.3.0"
   },
   "devDependencies": {
     "@babel/cli": "^7.1.5",
