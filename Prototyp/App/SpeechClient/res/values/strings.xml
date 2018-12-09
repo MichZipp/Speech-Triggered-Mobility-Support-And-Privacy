@@ -5,4 +5,10 @@
     <string name="btn1_stop">Stop</string>
     <string name="btn2_start">Play</string>
     <string name="btn2_stop">Stop</string>
+
+    <string name="bot_name">MobiltySupportBot</string>
+    <string name="bot_alias">$LATEST</string>
+    <string name="identity_id">eu-west-1:4088056b-53f6-4a6d-bb29-cd38b18b55e0</string>
+    <string name="aws_region">eu-west-1</string>
+    <string name="screen_options_main_message">Amazon Lex</string>
 </resources>

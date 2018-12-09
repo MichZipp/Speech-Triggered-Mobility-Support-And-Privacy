@@ -1,4 +1,4 @@
-package ai.kitt.snowboy.Activities;
+package de.hfu.furti.activities;
 
 import android.app.Activity;
 import android.os.Bundle;

@@ -5,7 +5,7 @@
     <application android:label="@string/app_name" android:icon="@mipmap/ic_launcher">
 
         <activity
-            android:name="ai.kitt.snowboy.Activities.SplashActivity"
+            android:name="de.hfu.furti.activities.SplashActivity"
             android:label="@string/app_name">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -13,18 +13,17 @@
             </intent-filter>
         </activity>
 
-        <activity android:name="ai.kitt.snowboy.Activities.MainActivity"/>
+        <activity android:name="de.hfu.furti.MainActivity"/>
 
 
-        <activity android:name="ai.kitt.snowboy.Activities.TestActivity"/>
+        <activity android:name="de.hfu.furti.activities.TestActivity"/>
 
-        <activity android:name="ai.kitt.snowboy.Activities.PersonalProfile"/>
+        <activity android:name="de.hfu.furti.activities.PersonalProfile"/>
 
-        <activity android:name="ai.kitt.snowboy.Activities.CreateProfileActivity"/>
+        <activity android:name="de.hfu.furti.activities.CreateProfileActivity"/>
 
-        <activity android:name="ai.kitt.snowboy.Activities.ImpressumActivity"/>
+        <activity android:name="de.hfu.furti.activities.ImpressumActivity"/>
 
-        <activity android:name="ai.kitt.snowboy.Demo"/>
     </application>
 
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE"></uses-permission>

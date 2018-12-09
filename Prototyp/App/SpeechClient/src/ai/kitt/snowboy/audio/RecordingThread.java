@@ -51,6 +51,10 @@ public class RecordingThread {
         }
     }
 
+    public void setSensitivity(final double sensitivity){
+        detector.SetSensitivity(String.valueOf(sensitivity));
+    }
+
     private void sendMessage(MsgEnum what, Object obj){
         if (null != handler) {
             Message msg = handler.obtainMessage(what.ordinal(), obj);
@@ -103,9 +107,13 @@ public class RecordingThread {
             return;
         }
         record.startRecording();
+
+        /*
+        As I don't need the playback functionality, this code can be commented out
         if (null != listener) {
             listener.start();
-        }
+        }*/
+
         Log.v(TAG, "Start recording");
 
         long shortsRead = 0;
@@ -113,9 +121,11 @@ public class RecordingThread {
         while (shouldContinue) {
             record.read(audioBuffer, 0, audioBuffer.length);
 
+            /*
+            As I don't need the playback functionality, this code can be commented out
             if (null != listener) {
                 listener.onAudioDataReceived(audioBuffer, audioBuffer.length);
-            }
+            }*/
             
             // Converts to short array.
             short[] audioData = new short[audioBuffer.length / 2];
@@ -144,9 +154,11 @@ public class RecordingThread {
         record.stop();
         record.release();
 
+        /*
+        As I don't need the playback functionality, this code can be commented out
         if (null != listener) {
             listener.stop();
-        }
+        }*/
         Log.v(TAG, String.format("Recording stopped. Samples read: %d", shortsRead));
     }
 }

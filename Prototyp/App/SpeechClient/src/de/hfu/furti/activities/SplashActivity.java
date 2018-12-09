@@ -1,4 +1,4 @@
-package ai.kitt.snowboy.Activities;
+package de.hfu.furti.activities;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -20,7 +20,7 @@ public class SplashActivity extends Activity {
             @Override
             public void run() {
                 // This method will be executed once the timer is over
-                Intent i = new Intent(SplashActivity.this, MainActivity.class);
+                Intent i = new Intent(SplashActivity.this, de.hfu.furti.MainActivity.class);
                 startActivity(i);
                 finish();
             }
