@@ -20,6 +20,8 @@
 
         <activity android:name="de.hfu.furti.activities.PersonalProfile"/>
 
+        <activity android:name="de.hfu.furti.activities.BusinessProfile"/>
+
         <activity android:name="de.hfu.furti.activities.CreateProfileActivity"/>
 
         <activity android:name="de.hfu.furti.activities.ImpressumActivity"/>
