@@ -122,7 +122,7 @@ public class MainActivity extends Activity implements InteractionListener, Inter
     private void initHotwordDetechtion(){
         activeTimes = 0;
         recordingThread = new RecordingThread(handle, new AudioDataSaver());
-        recordingThread.setSensitivity(0.8);
+        recordingThread.setSensitivity(0.4);
     }
 
     private void initLex() {
