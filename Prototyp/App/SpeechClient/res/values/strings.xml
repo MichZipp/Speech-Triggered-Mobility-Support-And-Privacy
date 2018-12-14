@@ -11,4 +11,8 @@
     <string name="identity_id">eu-west-1:4088056b-53f6-4a6d-bb29-cd38b18b55e0</string>
     <string name="aws_region">eu-west-1</string>
     <string name="screen_options_main_message">Amazon Lex</string>
+
+    <color name="white">#FFFFFF</color>
+    <color name="black">#000000</color>
+
 </resources>

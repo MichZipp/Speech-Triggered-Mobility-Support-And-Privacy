@@ -1,9 +1,13 @@
 package de.hfu.furti.activities;
 
+import android.app.ActionBar;
 import android.app.Activity;
 import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.os.Handler;
+import android.widget.ProgressBar;
 
 import ai.kitt.snowboy.demo.R;
 
@@ -24,6 +28,9 @@ public class SplashActivity extends Activity {
                 startActivity(i);
                 finish();
             }
-        }, 5000);
+        }, 2000);
+
+        ActionBar bar = getActionBar();
+        bar.setBackgroundDrawable(new ColorDrawable(Color.BLACK));
     }
 }

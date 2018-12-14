@@ -1,13 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="fill_parent"
-    android:layout_height="fill_parent"
-    android:orientation="vertical">
-    xmlns:tools="http://schemas.android.com/tools"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@android:color/white"
-    tools:context="ai.kitt.snowboy.Activities.SplashActivity">
+    android:background="@color/black">
 
     <ImageView
         android:id="@+id/imageView"
@@ -15,10 +11,4 @@
         android:layout_height="fill_parent"
         android:src="@drawable/splashscreen" />
 
-
-    <ProgressBar
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:indeterminate="true" />
-
-</LinearLayout>
+</RelativeLayout>
