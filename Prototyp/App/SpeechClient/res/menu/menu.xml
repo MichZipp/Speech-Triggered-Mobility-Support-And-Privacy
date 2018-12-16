@@ -5,17 +5,10 @@
 
         android:title="Profil erstellen" />
 
-    <item android:id="@+id/editprofile"
+    <item android:id="@+id/showprofiles"
 
-        android:title="Profil bearbeiten" />
+        android:title="Profile einsehen" />
 
-    <item android:id="@+id/hotword"
-
-        android:title="Befehl aufnehmen" />
-
-    <item android:id="@+id/help"
-
-        android:title="Hilfe" />
 
     <item android:id="@+id/impressum"
 

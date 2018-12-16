@@ -16,8 +16,10 @@ import com.amazonaws.mobileconnectors.lex.interactionkit.listeners.MicrophoneLis
 import com.amazonaws.mobileconnectors.lex.interactionkit.ui.InteractiveVoiceView;
 import com.amazonaws.regions.Regions;
 
+import android.app.ActionBar;
 import android.app.Activity;
 import android.content.Intent;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -86,15 +88,19 @@ public class MainActivity extends Activity implements InteractionListener, Inter
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        ActionBar bar = getActionBar();
+        bar.setBackgroundDrawable(new ColorDrawable(Color.BLACK));
+
         appContext = getApplicationContext();
 
-        initUI();
-        initHotwordDetechtion();
-        initLex();
+//        initUI();
+//        initHotwordDetechtion();
+//        initLex();
+//
 
-        AppResCopy.copyResFromAssetsToSD(this);
-
-        startHotwordDetection();
+//        AppResCopy.copyResFromAssetsToSD(this);
+//
+//        startHotwordDetection();
     }
 
     private void initUI() {
@@ -434,14 +440,11 @@ public class MainActivity extends Activity implements InteractionListener, Inter
                 this.startActivity(intent);
                 return true;
 
-            case R.id.editprofile:
+            case R.id.showprofiles:
                 intent = new Intent(this, CreateProfileActivity.class);
                 this.startActivity(intent);
                 return true;
-            case R.id.help:
-                intent = new Intent(this, ImpressumActivity.class);
-                this.startActivity(intent);
-                return true;
+
 
             case R.id.impressum:
                 intent = new Intent(this, ImpressumActivity.class);

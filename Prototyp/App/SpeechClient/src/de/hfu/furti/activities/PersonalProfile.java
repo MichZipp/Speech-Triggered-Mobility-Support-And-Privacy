@@ -1,6 +1,9 @@
 package de.hfu.furti.activities;
 
+import android.app.ActionBar;
 import android.app.Activity;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.text.method.ScrollingMovementMethod;
 import android.util.Log;
@@ -75,14 +78,17 @@ public class PersonalProfile extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.personalprofile);
 
+        ActionBar bar = getActionBar();
+        bar.setBackgroundDrawable(new ColorDrawable(Color.BLACK));
+
         List<String> spinnerArray = new ArrayList<String>();
         spinnerArray.add("Persönliches Profil");
-        spinnerArray.add("Mit Kalenderzugriff");
-        spinnerArray.add("Mit Standortzugriff");
+        spinnerArray.add("Profil mit Kalenderzugriff");
+        spinnerArray.add("Profil mit Standortzugriff");
 
 
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,
-                android.R.layout.simple_spinner_item, spinnerArray);
+                R.layout.spinner_item, spinnerArray);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         Spinner spinner = (Spinner) findViewById(R.id.profileSpinner);
         spinner.setAdapter(adapter);
@@ -112,15 +118,9 @@ public class PersonalProfile extends Activity {
         cityView = (EditText) findViewById(R.id.city);
         postalCodeView = (EditText) findViewById(R.id.postalCode);
         countryView = (EditText) findViewById(R.id.country);
-        profileNameView = (EditText) findViewById(R.id.profileName);
+        //profileNameView = (EditText) findViewById(R.id.profileName);
         //idView = (EditText) findViewById(R.id.id);
-        this.btnGetRepos = (Button) findViewById(R.id.btn_get_repos);
-        btnGetRepos.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                getReposClicked(v);
-            }
-        });
+
         this.btnSendRepos = (Button) findViewById(R.id.btn_send_data);
         btnSendRepos.setOnClickListener(new View.OnClickListener() {
             @Override

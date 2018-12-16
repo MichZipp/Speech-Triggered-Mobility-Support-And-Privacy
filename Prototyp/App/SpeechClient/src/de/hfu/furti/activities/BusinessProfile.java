@@ -1,13 +1,20 @@
 package de.hfu.furti.activities;
 
+import android.app.ActionBar;
 import android.app.Activity;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.text.method.ScrollingMovementMethod;
 import android.util.Log;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -20,6 +27,9 @@ import com.android.volley.toolbox.Volley;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import ai.kitt.snowboy.demo.R;
 
@@ -68,28 +78,37 @@ public class BusinessProfile extends Activity {
         protected void onCreate(Bundle savedInstanceState) {
             super.onCreate(savedInstanceState);
             setContentView(R.layout.businessprofile);
-//        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,
-//                android.R.layout.simple_spinner_item, spinnerArray);
-//        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-//        Spinner spinner = (Spinner) findViewById(R.id.profileSpinner);
-//        spinner.setAdapter(adapter);
-//        spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-//            @Override
-//            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-//
-//            }
-//
-//            @Override
-//            public void onNothingSelected(AdapterView<?> parent) {
-//
-//            }
-//        });
-//        List<String> categories = new ArrayList<String>();
-//        categories.add("Persönliches Profil");
-//        categories.add("Kalenderzugriff");
-//        categories.add("Standortzugriff");
+
+            ActionBar bar = getActionBar();
+            bar.setBackgroundDrawable(new ColorDrawable(Color.BLACK));
+
+            List<String> spinnerArray = new ArrayList<String>();
+            spinnerArray.add("Persönliches Profil");
+            spinnerArray.add("Profil mit Kalenderzugriff");
+            spinnerArray.add("Profil mit Standortzugriff");
 
 
+            ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,
+                    R.layout.spinner_item, spinnerArray);
+            adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+            Spinner spinner = (Spinner) findViewById(R.id.profileSpinner);
+            spinner.setAdapter(adapter);
+
+            spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+                @Override
+                public void onItemSelected(AdapterView<?> adapterView, View view, int position, long id) {
+                    Object item = adapterView.getItemAtPosition(position);
+                    if (item != null) {
+                        Toast.makeText(BusinessProfile.this, item.toString(),
+                                Toast.LENGTH_SHORT).show();
+                    }
+                }
+
+                @Override
+                public void onNothingSelected(AdapterView<?> adapterView) {
+                    // TODO Auto-generated method stub
+                }
+            });
             firstNameView = (EditText) findViewById(R.id.firstName);
             lastNameView = (EditText) findViewById(R.id.lastName);
             birthDateView = (EditText) findViewById(R.id.birthDate);
@@ -98,15 +117,8 @@ public class BusinessProfile extends Activity {
             cityView = (EditText) findViewById(R.id.city);
             postalCodeView = (EditText) findViewById(R.id.postalCode);
             countryView = (EditText) findViewById(R.id.country);
-            profileNameView = (EditText) findViewById(R.id.profileName);
+            //profileNameView = (EditText) findViewById(R.id.profileName);
             //idView = (EditText) findViewById(R.id.id);
-            this.btnGetRepos = (Button) findViewById(R.id.btn_get_repos);
-            btnGetRepos.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    getReposClicked(v);
-                }
-            });
             this.btnSendRepos = (Button) findViewById(R.id.btn_send_data);
             btnSendRepos.setOnClickListener(new View.OnClickListener() {
                 @Override
