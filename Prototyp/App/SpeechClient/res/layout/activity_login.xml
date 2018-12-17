@@ -33,4 +33,22 @@
         android:text="Login"
         android:textSize="20dp"/>
 
+    <Button
+        android:id="@+id/loginHard"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/button"
+        android:textColor="@color/white"
+        android:text="LoginHard"
+        android:textSize="20dp"/>
+
+    <Button
+        android:id="@+id/getToken"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/button"
+        android:textColor="@color/white"
+        android:text="Token"
+        android:textSize="20dp"/>
+
 </LinearLayout>

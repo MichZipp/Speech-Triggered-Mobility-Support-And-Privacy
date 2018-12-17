@@ -1,6 +1,6 @@
-package de.hfu.furti.model;
+package de.hfu.furti.service;
 
-public class ResObj {
+public class User {
 
     private String id;
     private int ttl;
@@ -41,5 +41,4 @@ public class ResObj {
     public void setUserId(int userId) {
         this.userId = userId;
     }
-
 }
