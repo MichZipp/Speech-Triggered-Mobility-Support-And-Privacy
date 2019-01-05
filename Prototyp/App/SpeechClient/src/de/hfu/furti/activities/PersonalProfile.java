@@ -1,21 +1,27 @@
 package de.hfu.furti.activities;
 
-import android.app.ActionBar;
-import android.app.Activity;
-import android.graphics.Color;
-import android.graphics.drawable.ColorDrawable;
+import android.app.Fragment;
+import android.app.FragmentTransaction;
+import android.content.Intent;
 import android.os.Bundle;
-import android.text.method.ScrollingMovementMethod;
-import android.util.Log;
 import android.view.View;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.app.ActionBar;
+import android.app.Activity;
+import android.app.DialogFragment;
+import android.app.FragmentManager;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
+import android.text.method.ScrollingMovementMethod;
+import android.util.Log;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
@@ -29,9 +35,13 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import ai.kitt.snowboy.demo.R;
+import de.hfu.furti.Fragments.LocationFragment;
+import de.hfu.furti.Fragments.TimePickerFragment;
 
 public class PersonalProfile extends Activity {
 
@@ -65,10 +75,15 @@ public class PersonalProfile extends Activity {
     //String id;
     Button btnGetRepos;
     Button btnSendRepos;
+    Button location;
+    Button calendar;
     TextView tvRepoList;
     TextView serverResp;
     RequestQueue requestQueue;
     static final String REQ_TAG = "VACTIVITY";
+    FragmentManager fm = getFragmentManager();
+
+    String token;
 
     String baseUrl = "http://192.52.33.31:3000/api/";
     String url;
@@ -81,18 +96,18 @@ public class PersonalProfile extends Activity {
         ActionBar bar = getActionBar();
         bar.setBackgroundDrawable(new ColorDrawable(Color.BLACK));
 
+        token = getIntent().getStringExtra("KEY_AUTH_TOKEN");
+        Log.e("TOKENNNNN", token);
+
         List<String> spinnerArray = new ArrayList<String>();
         spinnerArray.add("Persönliches Profil");
         spinnerArray.add("Profil mit Kalenderzugriff");
         spinnerArray.add("Profil mit Standortzugriff");
 
-
-        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,
-                R.layout.spinner_item, spinnerArray);
+        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, R.layout.spinner_item, spinnerArray);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         Spinner spinner = (Spinner) findViewById(R.id.profileSpinner);
         spinner.setAdapter(adapter);
-
         spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int position, long id) {
@@ -100,6 +115,12 @@ public class PersonalProfile extends Activity {
                 if (item != null) {
                     Toast.makeText(PersonalProfile.this, item.toString(),
                             Toast.LENGTH_SHORT).show();
+                }
+                if (item.equals("Profil mit Standortzugriff")) {
+                    location.setVisibility(View.VISIBLE);
+                }
+                if (item.equals("Profil mit Kalenderzugriff")) {
+                    calendar.setVisibility(View.VISIBLE);
                 }
             }
 
@@ -109,7 +130,6 @@ public class PersonalProfile extends Activity {
             }
         });
 
-
         firstNameView = (EditText) findViewById(R.id.firstName);
         lastNameView = (EditText) findViewById(R.id.lastName);
         birthDateView = (EditText) findViewById(R.id.birthDate);
@@ -118,8 +138,6 @@ public class PersonalProfile extends Activity {
         cityView = (EditText) findViewById(R.id.city);
         postalCodeView = (EditText) findViewById(R.id.postalCode);
         countryView = (EditText) findViewById(R.id.country);
-        //profileNameView = (EditText) findViewById(R.id.profileName);
-        //idView = (EditText) findViewById(R.id.id);
 
         this.btnSendRepos = (Button) findViewById(R.id.btn_send_data);
         btnSendRepos.setOnClickListener(new View.OnClickListener() {
@@ -129,14 +147,49 @@ public class PersonalProfile extends Activity {
             }
         });
 
-        serverResp = (TextView)
+        this.location = (Button) findViewById(R.id.location);
+        location.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                showLocationDialog(v);
+            }
+        });
 
-                findViewById(R.id.server_resp);
-        serverResp.setMovementMethod(new
+//        this.calendar = (Button) findViewById(R.id.calendar);
+//        calendar.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                showLocationDialog(v);
+//            }
+//        });
 
-                ScrollingMovementMethod());
+        this.calendar = (Button) findViewById(R.id.calendar);
+        calendar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(PersonalProfile.this, CalendarActivity.class);
+                intent.putExtra("KEY_AUTH_TOKEN", token);
+                getApplicationContext().startActivity(intent);
+            }
+        });
+
+        serverResp = (TextView) findViewById(R.id.server_resp);
+        serverResp.setMovementMethod(new ScrollingMovementMethod());
         requestQueue = Volley.newRequestQueue(this);
 
+    }
+
+    public void showTimePickerDialog(View v) {
+        DialogFragment newFragment = new TimePickerFragment();
+        newFragment.show(fm, "timePicker");
+    }
+
+    public void showLocationDialog(View v) {
+        FragmentManager manager = getFragmentManager();
+        FragmentTransaction transaction = manager.beginTransaction();
+        transaction.add(R.id.frameLayout, new LocationFragment());
+        transaction.addToBackStack(null);
+        transaction.commit();
     }
 
     private void clearRepoList() {
@@ -154,35 +207,29 @@ public class PersonalProfile extends Activity {
     }
 
     private void sendRepoList() {
-        this.url = this.baseUrl + "/profiles";
+        this.url = this.baseUrl + "users/10/profiles";
         firstName = firstNameView.getText().toString();
         lastName = lastNameView.getText().toString();
         birthDate = birthDateView.getText().toString();
         streetName = streetNameView.getText().toString();
         houseNumber = houseNumberView.getText().toString();
-        //houseNumber1 = houseNumberView.getText().toString();
-        //houseNumber = Integer.parseInt(houseNumber1);
         city = cityView.getText().toString();
         postalCode = postalCodeView.getText().toString();
-        //postalCode1 = postalCodeView.getText().toString();
-        //postalCode = Integer.parseInt(postalCode1);
         country = countryView.getText().toString();
         Spinner spinner = (Spinner) findViewById(R.id.profileSpinner);
         profileName = spinner.getSelectedItem().toString();
-        //profileName = profileNameView.getText().toString();
-        //id = idView.getText().toString();
         profileType = "0";
 
         JSONObject json = new JSONObject();
         try {
-            json.put("firstname", firstName);
-            json.put("lastname", lastName);
-            json.put("birthdate", birthDate);
-            json.put("streetname", streetName);
-            json.put("housenumber", houseNumber);
-            json.put("city", city);
-            json.put("postalcode", postalCode);
-            json.put("country", country);
+            json.put("vorname", firstName);
+            json.put("name", lastName);
+            json.put("geburtsdatum", birthDate);
+            json.put("strasse", streetName);
+            json.put("hausnummer", houseNumber);
+            json.put("stadt", city);
+            json.put("postleitzahl", postalCode);
+            json.put("land", country);
             json.put("profilename", profileName);
             json.put("profiletype", profileType);
 
@@ -201,7 +248,14 @@ public class PersonalProfile extends Activity {
             public void onErrorResponse(VolleyError error) {
                 serverResp.setText("Error getting response");
             }
-        });
+        }) {
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                Map<String, String> headers = new HashMap<String, String>();
+                headers.put("Authorization", token);
+                return headers;
+            }
+        };
         jsonObjectRequest.setTag(REQ_TAG);
         requestQueue.add(jsonObjectRequest);
 

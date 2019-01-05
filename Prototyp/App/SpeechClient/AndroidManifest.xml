@@ -31,6 +31,10 @@
 
         <activity android:name="de.hfu.furti.activities.ImpressumActivity"/>
 
+        <activity android:name="de.hfu.furti.activities.ShowProfilesActivity"/>
+
+        <activity android:name="de.hfu.furti.activities.CalendarActivity"/>
+
     </application>
 
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE"></uses-permission>

@@ -2,7 +2,9 @@ package de.hfu.furti.activities;
 
 import android.app.ActionBar;
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
@@ -16,13 +18,10 @@ import java.io.IOException;
 
 import ai.kitt.snowboy.demo.R;
 import de.hfu.furti.MainActivity;
-import de.hfu.furti.service.Login;
-import de.hfu.furti.model.ResObj;
-import de.hfu.furti.service.User;
-import de.hfu.furti.remote.ApiUtils;
-import de.hfu.furti.remote.UserService;
-import de.hfu.furti.service.UserClient;
-import okhttp3.ResponseBody;
+import de.hfu.furti.login.ApiUtils;
+import de.hfu.furti.login.Login;
+import de.hfu.furti.login.ResObj;
+import de.hfu.furti.service.UserService;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -31,20 +30,18 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class LoginActivity extends Activity {
 
+    private static String token;
+
     Retrofit.Builder builder = new Retrofit.Builder()
             .baseUrl("http://192.52.33.31:3000/api/users/")
             .addConverterFactory(GsonConverterFactory.create());
 
     Retrofit retrofit = builder.build();
-
-    UserClient userClient = retrofit.create(UserClient.class);
-
     EditText editEmail;
     EditText editPassword;
     Button btnLogin;
-    Button loginHard;
-    Button getToken;
     UserService userService;
+    SharedPreferences pref;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,11 +51,11 @@ public class LoginActivity extends Activity {
         ActionBar bar = getActionBar();
         bar.setBackgroundDrawable(new ColorDrawable(Color.BLACK));
 
+        pref = getSharedPreferences("PREF", Context.MODE_PRIVATE);
+
         editEmail = (EditText) findViewById(R.id.editEmail);
         editPassword = (EditText) findViewById(R.id.editPassword);
         btnLogin = (Button) findViewById(R.id.btnLogin);
-        loginHard = (Button) findViewById(R.id.loginHard);
-        getToken = (Button) findViewById(R.id.getToken);
         userService = ApiUtils.getUserService();
 
         btnLogin.setOnClickListener(new View.OnClickListener(){
@@ -71,76 +68,6 @@ public class LoginActivity extends Activity {
                 }
             }
         });
-
-        loginHard.setOnClickListener(new View.OnClickListener(){
-            @Override
-            public void onClick(View v) {
-                loginHard();
-            }
-        });
-
-        getToken.setOnClickListener(new View.OnClickListener(){
-            @Override
-            public void onClick(View v) {
-                getToken();
-            }
-        });
-    }
-
-    private static String token;
-
-    private void loginHard() {
-        Login login = new Login("michael@zipperle.de", "privacy");
-        Call<User> call = userClient.login(login);
-
-        call.enqueue(new Callback<User>() {
-            @Override
-            public void onResponse(Call<User> call, Response<User> response) {
-                if (response.isSuccessful()) {
-                    Toast.makeText(getApplicationContext(), response.body().getId(), Toast.LENGTH_SHORT).show();
-                    token = response.body().getId();
-                } else {
-                    Toast.makeText(getApplicationContext(), "Error on Response", Toast.LENGTH_SHORT).show();
-                    try {
-                        Log.e("Error:", response.errorBody().string());
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                    }
-                }
-            }
-
-            @Override
-            public void onFailure(Call<User> call, Throwable t) {
-                Toast.makeText(getApplicationContext(), "Error on Failure", Toast.LENGTH_SHORT).show();
-            }
-        });
-    }
-
-    private void getToken() {
-
-        Call<ResponseBody> call = userClient.getToken(token);
-
-        call.enqueue(new Callback<ResponseBody>() {
-            @Override
-            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
-                if (response.isSuccessful()) {
-                    Toast.makeText(getApplicationContext(), response.body().toString(), Toast.LENGTH_SHORT).show();
-                } else {
-                    Toast.makeText(getApplicationContext(), "Error on Response", Toast.LENGTH_SHORT).show();
-                    try {
-                        Log.e("Error:", response.errorBody().string());
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                    }
-                }
-            }
-
-            @Override
-            public void onFailure(Call<ResponseBody> call, Throwable t) {
-                Toast.makeText(getApplicationContext(), "Error", Toast.LENGTH_SHORT).show();
-            }
-        });
-
 
     }
 
@@ -165,10 +92,19 @@ public class LoginActivity extends Activity {
                 if (response.isSuccessful()) {
                     Toast.makeText(getApplicationContext(), response.body().getId(), Toast.LENGTH_SHORT).show();
                     token = response.body().getId();
-                    Log.e("", response.body().getId());
-                    //start MainActivity
-                    Intent i = new Intent(getApplicationContext(), MainActivity.class);
-                    getApplicationContext().startActivity(i);
+                    SharedPreferences.Editor editor = pref.edit();
+                    editor.putString("TOKEN", token);
+                    editor.commit();
+                    pref = getSharedPreferences("PREF", Context.MODE_PRIVATE);
+                    String storedToken = pref.getString("TOKEN", "");
+                    Log.e("Token: ", storedToken);
+
+                    //start next Activity
+
+                    //Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+                    Intent intent = new Intent(LoginActivity.this, PersonalProfile.class);
+                    intent.putExtra("KEY_AUTH_TOKEN", token);
+                    getApplicationContext().startActivity(intent);
                 } else {
                     Toast.makeText(getApplicationContext(), "Email oder Passwort falsch!", Toast.LENGTH_SHORT).show();
                     try {

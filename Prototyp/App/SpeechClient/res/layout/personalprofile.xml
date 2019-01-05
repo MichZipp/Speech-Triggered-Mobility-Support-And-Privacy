@@ -13,6 +13,15 @@
     android:showDividers="middle"
     android:divider="@drawable/empty_tall_divider">
 
+    <Spinner
+        android:id="@+id/profileSpinner"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_x="11dp"
+        android:layout_y="118dp"
+        android:textColor="@color/white"
+        android:textColorHint="@color/white" />
+
 
     <EditText
         android:id="@+id/firstName"
@@ -102,14 +111,18 @@
         <!--android:ems="10"-->
         <!--android:id="@+id/profileName" />-->
 
-    <Spinner
-        android:id="@+id/profileSpinner"
+
+    <Button
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_x="11dp"
-        android:layout_y="118dp"
-        android:textColor="@color/white"
-        android:textColorHint="@color/white" />
+        android:id="@+id/location"
+        android:text="Standort" />
+
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/calendar"
+        android:text="Kalender" />
 
         <Button
             android:id="@+id/btn_send_data"

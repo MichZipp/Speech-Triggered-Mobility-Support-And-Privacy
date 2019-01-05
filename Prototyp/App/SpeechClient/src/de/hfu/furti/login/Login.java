@@ -1,4 +1,4 @@
-package de.hfu.furti.service;
+package de.hfu.furti.login;
 
 public class Login {
 

@@ -8,6 +8,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
+import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
@@ -19,13 +20,18 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import ai.kitt.snowboy.demo.R;
 
-public class TestActivity extends Activity {
+public class ShowProfilesActivity extends Activity {
 
     Button btnGetRepos;
     TextView tvRepoList;
     RequestQueue requestQueue;
+
+    String token;
 
     String baseUrl = "http://192.52.33.31:3000/api/";
     String url;
@@ -34,6 +40,8 @@ public class TestActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_test);
+
+        token = getIntent().getStringExtra("KEY_AUTH_TOKEN");
 
         this.btnGetRepos = (Button) findViewById(R.id.btn_get_repos);
         this.tvRepoList = (TextView) findViewById(R.id.tv_repo_list);
@@ -49,19 +57,18 @@ public class TestActivity extends Activity {
     }
 
     private void addToRepoList(String vorname, String name, String geburtsdatum, String strasse, String hausnummer, String stadt, String postleitzahl, String land, String profileName, String profilType, String id, String UserId) {
-        String strRow = vorname + " / " + name + " / " + geburtsdatum + " / " + strasse + " / " + hausnummer + " / " + land + " / " + postleitzahl + " / " + land + " / " + profileName + " / " + profilType + " / " + id + " / " + UserId;
+        String strRow = vorname + " / " + name + " / " + geburtsdatum + " / " + strasse + " / " + hausnummer + " / " + stadt + " / " + postleitzahl + " / " + land + " / " + profileName + " / " + profilType + " / " + id + " / " + UserId;
         String currentText = tvRepoList.getText().toString();
+        Log.e("tvRepoList ", tvRepoList.getText().toString());
         this.tvRepoList.setText(currentText + "\n\n" + strRow);
     }
 
     private void setRepoListText(String str) {
-        // This is used for setting the text of our repo list box to a specific string.
-        // We will use this to write a "No repos found" message if the user doens't have any.
         this.tvRepoList.setText(str);
     }
 
     private void getRepoList(String username) {
-        this.url = this.baseUrl + "/profiles";
+        this.url = this.baseUrl + "users/10/profiles/";
 
         JsonArrayRequest arrReq = new JsonArrayRequest(Request.Method.GET, url,
                 new Response.Listener<JSONArray>() {
@@ -83,8 +90,8 @@ public class TestActivity extends Activity {
                                     String profiletype = jsonObj.get("profiletype").toString();
                                     String id = jsonObj.get("id").toString();
                                     String userid = jsonObj.get("userId").toString();
-
                                     addToRepoList(vorname, name, geburtsdatum, strasse, hausnummer, stadt, postleitzahl, land, profilename, profiletype, id, userid);
+                                    Log.e("", response.toString());
                                 } catch (JSONException e) {
                                     Log.e("Volley", "Invalid JSON Object.");
                                 }
@@ -92,23 +99,27 @@ public class TestActivity extends Activity {
                             }
                         }
                     }
-                },
-
-                new Response.ErrorListener() {
-                    @Override
-                    public void onErrorResponse(VolleyError error) {
-                        // If there a HTTP error
-                        setRepoListText("Error while calling REST API");
-                        Log.e("Volley", error.toString());
-                    }
-                }
-        );
+                }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                // If there a HTTP error
+                setRepoListText("Error while calling REST API");
+                Log.e("Volley", error.toString());
+            }
+        }) {
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                Map<String, String> headers = new HashMap<String, String>();
+                headers.put("Authorization", token);
+                return headers;
+            }
+        };
         requestQueue.add(arrReq);
-    }
+        }
 
-    public void getReposClicked(View v) {
-        clearRepoList();
-        getRepoList(tvRepoList.getText().toString());
-    }
+        public void getReposClicked (View v){
+            clearRepoList();
+            getRepoList(tvRepoList.getText().toString());
+        }
 
-}
+    }

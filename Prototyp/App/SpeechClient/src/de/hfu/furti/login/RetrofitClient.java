@@ -1,4 +1,4 @@
-package de.hfu.furti.remote;
+package de.hfu.furti.login;
 
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
