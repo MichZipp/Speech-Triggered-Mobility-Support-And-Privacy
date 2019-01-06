@@ -1,5 +1,5 @@
 import { close, elictSlot, delegate } from "./helpers";
-import { getUserName } from "./api";
+import { getUserName, getUserLocation, getUserProfileName, getDocs } from "./api";
 import I from "./constants";
 
 const dispatch = (intentRequest, callback) => {
@@ -7,23 +7,28 @@ const dispatch = (intentRequest, callback) => {
     console.log("request received for userId=${intentRequest.userId}, intentName=${intentRequest.currentIntent.intentName}");
     const sessionAttributes = intentRequest.sessionAttributes;
     const intentName = intentRequest.currentIntent.name;
-    console.log("request" + intentRequest);
-    console.log("Intent: " + intentName);
-    console.log("Session: " + sessionAttributes);
-    console.log("Constant: " + I.USERNAME);
+
     switch(intentName){
         case I.NEWDOCAPPOINTMENT:
-            callback(close(sessionAttributes, "Fulfilled", {"contentType": "PlainText", "content": "Affe" }));
+            callback(close(sessionAttributes, "Affe" ));
             break;
         case I.USERNAME:
-            console.log("Test");
-            callback(close(sessionAttributes, "Fulfilled", {"contentType": "PlainText", "content": getUserName() }));
+            callback(close(sessionAttributes, "Are you kiddinng my, your name is: " + getUserName()));
+            break;
+        case I.USERLOCATION:
+            callback(close(sessionAttributes, "Actually you are in " + getUserLocation()));
+            break;
+        case I.USERPROFILE:
+            callback(close(sessionAttributes, "You Profile " + getUserProfileName() + "is currently activated!"));
+            break;
+        case I.DOCS:
+            callback(close(sessionAttributes, getDocs()));
             break;
         default:
-            callback(close(sessionAttributes, "Fulfilled", {"contentType": "PlainText", "content": "Giraffe" }));
+            callback(close(sessionAttributes, "Giraffe"));
     }
     
-    callback(close(sessionAttributes, "Fulfilled", {"contentType": "PlainText", "content": "Affe" }));
+    callback(close(sessionAttributes, "Affe"));
 }
 
 exports.handler = (event, context, callback) => {

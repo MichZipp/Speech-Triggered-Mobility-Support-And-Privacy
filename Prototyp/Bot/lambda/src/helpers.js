@@ -1,10 +1,10 @@
- export const close = (sessionAttributes, fulfillmentState, message) => {
+ export const close = (sessionAttributes, msg) => {
     return {
         sessionAttributes,
         dialogAction: {
             type: "Close",
-            fulfillmentState,
-            message,
+            fulfillmentState: "Fulfilled",
+            message: {"contentType": "PlainText", "content": msg}
         },
     };
 }

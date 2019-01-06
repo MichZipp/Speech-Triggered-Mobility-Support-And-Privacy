@@ -8,7 +8,8 @@ var intents = {
   NEWDOCAPPOINTMENT: "NewDocAppointment",
   USERNAME: "UserName",
   USERLOCATION: "UserLocation",
-  USERPROFILE: "UserProfile"
+  USERPROFILE: "UserProfile",
+  DOCS: "GetDocs"
 };
 var _default = intents;
 exports.default = _default;

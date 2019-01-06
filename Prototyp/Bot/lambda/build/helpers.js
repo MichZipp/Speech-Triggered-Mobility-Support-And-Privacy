@@ -5,13 +5,16 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.delegate = exports.elicitSlot = exports.close = void 0;
 
-var close = function close(sessionAttributes, fulfillmentState, message) {
+var close = function close(sessionAttributes, msg) {
   return {
     sessionAttributes: sessionAttributes,
     dialogAction: {
       type: "Close",
-      fulfillmentState: fulfillmentState,
-      message: message
+      fulfillmentState: "Fulfilled",
+      message: {
+        "contentType": "PlainText",
+        "content": msg
+      }
     }
   };
 };
