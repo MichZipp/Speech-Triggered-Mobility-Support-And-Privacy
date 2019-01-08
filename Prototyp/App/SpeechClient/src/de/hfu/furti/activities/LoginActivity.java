@@ -14,7 +14,10 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.google.gson.JsonObject;
+
 import java.io.IOException;
+import java.io.UnsupportedEncodingException;
 
 import ai.kitt.snowboy.demo.R;
 import de.hfu.furti.MainActivity;
@@ -42,6 +45,7 @@ public class LoginActivity extends Activity {
     Button btnLogin;
     UserService userService;
     SharedPreferences pref;
+    private static int userID;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -58,12 +62,12 @@ public class LoginActivity extends Activity {
         btnLogin = (Button) findViewById(R.id.btnLogin);
         userService = ApiUtils.getUserService();
 
-        btnLogin.setOnClickListener(new View.OnClickListener(){
+        btnLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 String email = editEmail.getText().toString();
                 String password = editPassword.getText().toString();
-                if(validateLogin(email, password)) {
+                if (validateLogin(email, password)) {
                     doLogin(email, password);
                 }
             }
@@ -77,21 +81,36 @@ public class LoginActivity extends Activity {
             return false;
         }
         if (password == null || password.trim().length() == 0) {
-            Toast.makeText(getApplicationContext(),"Password is required!", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getApplicationContext(), "Password is required!", Toast.LENGTH_SHORT).show();
             return false;
         }
         return true;
     }
 
     private void doLogin(String email, String password) {
-        Login login = new Login (email, password);
+        Login login = new Login(email, password);
         Call<ResObj> call = userService.login(login);
+
         call.enqueue(new Callback<ResObj>() {
+
             @Override
             public void onResponse(Call<ResObj> call, Response<ResObj> response) {
                 if (response.isSuccessful()) {
                     Toast.makeText(getApplicationContext(), response.body().getId(), Toast.LENGTH_SHORT).show();
+
+
+                    userID = response.body().getUserId();
                     token = response.body().getId();
+
+                    String userId = new String("userId");
+
+                    try {
+                        response.message().getBytes(userId);
+                    } catch (UnsupportedEncodingException e) {
+                        e.printStackTrace();
+                    }
+
+
                     SharedPreferences.Editor editor = pref.edit();
                     editor.putString("TOKEN", token);
                     editor.commit();
@@ -123,4 +142,9 @@ public class LoginActivity extends Activity {
         });
 
     }
+
+    public static int getUserID(){
+        return userID;
+    }
+
 }

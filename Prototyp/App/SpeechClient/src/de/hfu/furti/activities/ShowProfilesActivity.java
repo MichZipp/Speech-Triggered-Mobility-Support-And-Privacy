@@ -24,6 +24,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import ai.kitt.snowboy.demo.R;
+import de.hfu.furti.login.Login;
 
 public class ShowProfilesActivity extends Activity {
 
@@ -68,7 +69,7 @@ public class ShowProfilesActivity extends Activity {
     }
 
     private void getRepoList(String username) {
-        this.url = this.baseUrl + "users/10/profiles/";
+        this.url = this.baseUrl + "users/"+ LoginActivity.getUserID() +"/profiles/";
 
         JsonArrayRequest arrReq = new JsonArrayRequest(Request.Method.GET, url,
                 new Response.Listener<JSONArray>() {
