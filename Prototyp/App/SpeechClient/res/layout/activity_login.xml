@@ -43,7 +43,7 @@
         android:textColorHint="@color/gray" />
 
     <Button
-        android:id="@+id/btnLogin"
+        android:id="@+id/btnSignIn"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/editPassword"
@@ -53,10 +53,10 @@
         android:textSize="20dp" />
 
     <Button
-        android:id="@+id/button_reg"
+        android:id="@+id/btnSignUp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/btnLogin"
+        android:layout_below="@+id/btnSignIn"
         android:layout_alignParentStart="true"
         android:text="Registrieren"
         android:textSize="20dp" />

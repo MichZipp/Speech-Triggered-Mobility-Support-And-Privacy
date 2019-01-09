@@ -2,9 +2,7 @@ package de.hfu.furti.activities;
 
 import android.app.ActionBar;
 import android.app.Activity;
-import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
@@ -13,8 +11,6 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
-
-import com.google.gson.JsonObject;
 
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
@@ -39,12 +35,12 @@ public class LoginActivity extends Activity {
             .baseUrl("http://192.52.33.31:3000/api/users/")
             .addConverterFactory(GsonConverterFactory.create());
 
-    Retrofit retrofit = builder.build();
-    EditText editEmail;
-    EditText editPassword;
-    Button btnLogin;
-    UserService userService;
-    SharedPreferences pref;
+    private Retrofit retrofit = builder.build();
+    private EditText editEmail;
+    private EditText editPassword;
+    private Button btnSignIn;
+    private Button btnSignUp;
+    private UserService userService;
     private static int userID;
 
     @Override
@@ -55,14 +51,13 @@ public class LoginActivity extends Activity {
         ActionBar bar = getActionBar();
         bar.setBackgroundDrawable(new ColorDrawable(Color.BLACK));
 
-        pref = getSharedPreferences("PREF", Context.MODE_PRIVATE);
-
         editEmail = (EditText) findViewById(R.id.editEmail);
         editPassword = (EditText) findViewById(R.id.editPassword);
-        btnLogin = (Button) findViewById(R.id.btnLogin);
+        btnSignIn = (Button) findViewById(R.id.btnSignIn);
+        btnSignUp = (Button) findViewById(R.id.btnSignUp);
         userService = ApiUtils.getUserService();
 
-        btnLogin.setOnClickListener(new View.OnClickListener() {
+        btnSignIn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 String email = editEmail.getText().toString();
@@ -73,6 +68,12 @@ public class LoginActivity extends Activity {
             }
         });
 
+        btnSignUp.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // Open SignUp Activity
+            }
+        });
     }
 
     private boolean validateLogin(String email, String password) {
@@ -110,19 +111,10 @@ public class LoginActivity extends Activity {
                         e.printStackTrace();
                     }
 
-
-                    SharedPreferences.Editor editor = pref.edit();
-                    editor.putString("TOKEN", token);
-                    editor.commit();
-                    pref = getSharedPreferences("PREF", Context.MODE_PRIVATE);
-                    String storedToken = pref.getString("TOKEN", "");
-                    Log.e("Token: ", storedToken);
-
                     //start next Activity
                     Intent intent = new Intent(LoginActivity.this, MainActivity.class);
-                    // Intent intent = new Intent(LoginActivity.this, PersonalProfile.class);
                     intent.putExtra("access_token", token);
-                    intent.putExtra("user_id", userId);
+                    intent.putExtra("user_id", userID);
                     getApplicationContext().startActivity(intent);
                 } else {
                     Toast.makeText(getApplicationContext(), "Email oder Passwort falsch!", Toast.LENGTH_SHORT).show();
