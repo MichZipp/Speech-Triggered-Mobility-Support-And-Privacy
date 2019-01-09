@@ -1,11 +1,17 @@
 import { close, elictSlot, delegate } from "./helpers";
-import { getUserName, getUserLocation, getUserProfileName, getDocs } from "./api";
+import { getUserName, getUserLocation, getUserProfileName, getDocs } from "./responseBuilder";
+import { getUserSettings } from "./api";
 import I from "./constants";
 
 const dispatch = (intentRequest, callback) => {
     // var request = JSON.parse(intentRequest);
     console.log("request received for userId=${intentRequest.userId}, intentName=${intentRequest.currentIntent.intentName}");
     const sessionAttributes = intentRequest.sessionAttributes;
+    console.log(sessionAttributes);
+    const access_token = sessionAttributes.accessToken;
+    const user_id = sessionAttributes.userId;
+    const setting = getUserSettings(access_token, user_id);
+    const profile_id = settings.activeprofile;
     const intentName = intentRequest.currentIntent.name;
 
     switch(intentName){
@@ -13,13 +19,13 @@ const dispatch = (intentRequest, callback) => {
             callback(close(sessionAttributes, "Affe" ));
             break;
         case I.USERNAME:
-            callback(close(sessionAttributes, "Are you kiddinng my, your name is: " + getUserName()));
+            callback(close(sessionAttributes, getUserName(access_token, profile_id)));
             break;
         case I.USERLOCATION:
-            callback(close(sessionAttributes, "Actually you are in " + getUserLocation()));
+            callback(close(sessionAttributes, );
             break;
         case I.USERPROFILE:
-            callback(close(sessionAttributes, "You Profile " + getUserProfileName() + "is currently activated!"));
+            callback(close(sessionAttributes, getUserProfileName(access_token, profile_id)));
             break;
         case I.DOCS:
             callback(close(sessionAttributes, getDocs()));
