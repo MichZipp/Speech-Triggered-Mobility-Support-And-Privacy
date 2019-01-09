@@ -32,3 +32,33 @@ export const getUserProfileName = () => {
         });
     });  
 }
+
+export const getUserProfileLocation = () => { 
+    return new Promise(function(resolve, reject) {
+        fetch(url.concat(access_token))
+        .then( data => {
+            var user = data.json();
+            var location = user.location;
+            resolve(location);
+        })
+        .catch( error => {
+            reject(error);
+        });
+    });  
+}
+
+export const getDocs = () => {
+    /* return new Promise(function(resolve, reject) {
+        fetch(url.concat(access_token))
+        .then( data => {
+            var user = data.json();
+            var profile = user.profileName;
+            resolve(profile);
+        })
+        .catch( error => {
+            reject(error);
+        });
+    });  */
+
+    return "In Furtwangen you can find doc furti and doc else!";
+}

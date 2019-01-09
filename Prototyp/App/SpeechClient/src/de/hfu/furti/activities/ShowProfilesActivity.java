@@ -29,13 +29,17 @@ import java.util.HashMap;
 import java.util.Map;
 
 import ai.kitt.snowboy.demo.R;
+import de.hfu.furti.login.Login;
 import de.hfu.furti.MainActivity;
 
 public class ShowProfilesActivity extends Activity {
 
+    Button btnGetRepos;
     TextView tvRepoList;
     RequestQueue requestQueue;
+
     String token;
+
     String baseUrl = "http://192.52.33.31:3000/api/";
     String url;
 
@@ -53,7 +57,7 @@ public class ShowProfilesActivity extends Activity {
 
         requestQueue = Volley.newRequestQueue(this);
 
-        getRepoList(tvRepoList.getText().toString());
+        //getRepoList(tvRepoList.getText().toString());
 
         FloatingActionButton fab = findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
@@ -79,7 +83,7 @@ public class ShowProfilesActivity extends Activity {
     }
 
     private void getRepoList(String username) {
-        this.url = this.baseUrl + "users/10/profiles";
+        this.url = this.baseUrl + "users/"+ LoginActivity.getUserID() +"/profiles/";
 
         JsonArrayRequest arrReq = new JsonArrayRequest(Request.Method.GET, url,
                 new Response.Listener<JSONArray>() {
@@ -102,7 +106,7 @@ public class ShowProfilesActivity extends Activity {
                                     String id = jsonObj.get("id").toString();
                                     String userid = jsonObj.get("userId").toString();
                                     addToRepoList(vorname, name, geburtsdatum, strasse, hausnummer, stadt, postleitzahl, land, profilename, profiletype, id, userid);
-                                    Log.e("Response", response.toString());
+                                    Log.e("", response.toString());
                                 } catch (JSONException e) {
                                     Log.e("Volley", "Invalid JSON Object.");
                                 }
