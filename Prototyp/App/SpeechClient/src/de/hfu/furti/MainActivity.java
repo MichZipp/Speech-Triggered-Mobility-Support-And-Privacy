@@ -184,7 +184,11 @@ public class MainActivity extends Activity implements InteractionListener, Inter
                     stopHotwordDetection();
                     sleep(200);
                     //voiceView.callOnClick();
-                    lexClient.audioInForAudioOut(null);
+
+                    // Pass AccessToken as sessionAttribute
+                    Map<String, String> sessionAttributes = new HashMap();
+                    sessionAttributes.put("accessToken", "dwaidjiowanjioajdiowd");
+                    lexClient.audioInForAudioOut(sessionAttributes);
                     break;
                 case MSG_INFO:
                     updateLog(" ----> "+message);
