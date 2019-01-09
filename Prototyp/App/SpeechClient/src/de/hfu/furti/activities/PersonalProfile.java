@@ -97,7 +97,7 @@ public class PersonalProfile extends Activity {
         bar.setBackgroundDrawable(new ColorDrawable(Color.BLACK));
 
         token = getIntent().getStringExtra("KEY_AUTH_TOKEN");
-        Log.e("TOKENNNNN", token);
+//        Log.e("TOKENNNNN", token);
 
         List<String> spinnerArray = new ArrayList<String>();
         spinnerArray.add("Persönliches Profil");

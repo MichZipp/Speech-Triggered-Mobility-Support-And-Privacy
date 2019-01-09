@@ -19,6 +19,7 @@ import com.amazonaws.regions.Regions;
 import android.app.ActionBar;
 import android.app.Activity;
 import android.content.Intent;
+import android.content.res.Resources;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.view.Menu;
@@ -76,6 +77,8 @@ public class MainActivity extends Activity implements InteractionListener, Inter
     private boolean isPlaying = false;
     private boolean isAskResponse = false;
 
+    String token;
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
@@ -88,8 +91,19 @@ public class MainActivity extends Activity implements InteractionListener, Inter
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        token = getIntent().getStringExtra("KEY_AUTH_TOKEN");
+
         ActionBar bar = getActionBar();
-        bar.setBackgroundDrawable(new ColorDrawable(Color.BLACK));
+        int actionBarTitleId = Resources.getSystem().getIdentifier("action_bar_title", "id", "android");
+        bar.setTitle("Menü:");
+        //bar.setTitle(Html.fromHtml("<font color='#000000'> ActionBartitle </font>"));
+        bar.setBackgroundDrawable(new ColorDrawable(Color.GRAY));
+//        if (actionBarTitleId > 0) {
+//            TextView title = (TextView) findViewById(actionBarTitleId);
+//            if (title != null) {
+//                title.setTextColor(Color.BLACK);
+//            }
+//        }
 
         appContext = getApplicationContext();
 
@@ -440,21 +454,12 @@ public class MainActivity extends Activity implements InteractionListener, Inter
     public boolean onOptionsItemSelected(MenuItem item) {
         // Handle item selection
         switch (item.getItemId()) {
-            case R.id.createprofile:
-                Intent intent = new Intent(this, CreateProfileActivity.class);
+            case R.id.profile:
+                Intent intent = new Intent(this, ShowProfilesActivity.class);
+                intent.putExtra("KEY_AUTH_TOKEN", token);
                 this.startActivity(intent);
                 return true;
 
-            case R.id.showprofiles:
-                intent = new Intent(this, CreateProfileActivity.class);
-                this.startActivity(intent);
-                return true;
-
-
-            case R.id.impressum:
-                intent = new Intent(this, ImpressumActivity.class);
-                this.startActivity(intent);
-                return true;
 
             default:
                 return super.onOptionsItemSelected(item);

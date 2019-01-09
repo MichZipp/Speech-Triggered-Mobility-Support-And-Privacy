@@ -5,8 +5,7 @@
     <application android:label="@string/app_name" android:icon="@mipmap/ic_launcher">
 
         <activity
-            android:name="de.hfu.furti.activities.SplashActivity"
-            android:label="@string/app_name">
+            android:name="de.hfu.furti.activities.SplashActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
@@ -26,6 +25,8 @@
         <activity android:name="de.hfu.furti.activities.PersonalProfile"/>
 
         <activity android:name="de.hfu.furti.activities.BusinessProfile"/>
+
+        <activity android:name="de.hfu.furti.activities.SingleProfileActivity"/>
 
         <activity android:name="de.hfu.furti.activities.CreateProfileActivity"/>
 

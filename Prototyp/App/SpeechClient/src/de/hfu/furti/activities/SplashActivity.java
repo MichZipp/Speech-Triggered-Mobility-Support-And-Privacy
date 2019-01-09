@@ -24,13 +24,13 @@ public class SplashActivity extends Activity {
             @Override
             public void run() {
                 // This method will be executed once the timer is over
-                Intent i = new Intent(SplashActivity.this, de.hfu.furti.activities.StartActivity.class);
+                Intent i = new Intent(SplashActivity.this, de.hfu.furti.activities.LoginActivity.class);
                 startActivity(i);
                 finish();
             }
         }, 2000);
 
         ActionBar bar = getActionBar();
-        bar.setBackgroundDrawable(new ColorDrawable(Color.BLACK));
+        getActionBar().hide();
     }
 }

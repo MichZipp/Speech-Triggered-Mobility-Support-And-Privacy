@@ -1,16 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <item android:id="@+id/createprofile"
+    <item android:id="@+id/profile"
 
-        android:title="Profil erstellen" />
+        android:title="Profile" />
 
-    <item android:id="@+id/showprofiles"
-
-        android:title="Profile einsehen" />
-
-
-    <item android:id="@+id/impressum"
-
-        android:title="Impressum" />
 </menu>

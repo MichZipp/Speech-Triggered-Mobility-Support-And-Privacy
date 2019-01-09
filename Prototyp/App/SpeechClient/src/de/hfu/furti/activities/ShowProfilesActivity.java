@@ -1,7 +1,11 @@
 package de.hfu.furti.activities;
 
+import android.app.ActionBar;
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
+import android.support.design.widget.FloatingActionButton;
+import android.support.design.widget.Snackbar;
 import android.text.method.ScrollingMovementMethod;
 import android.util.Log;
 import android.view.View;
@@ -19,11 +23,14 @@ import com.android.volley.toolbox.Volley;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+import org.w3c.dom.Text;
 
 import java.util.HashMap;
 import java.util.Map;
 
 import ai.kitt.snowboy.demo.R;
+import de.hfu.furti.login.Login;
+import de.hfu.furti.MainActivity;
 
 public class ShowProfilesActivity extends Activity {
 
@@ -39,28 +46,36 @@ public class ShowProfilesActivity extends Activity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_test);
+        setContentView(R.layout.showprofiles);
+
+        ActionBar bar = getActionBar();
+        getActionBar().hide();
 
         token = getIntent().getStringExtra("KEY_AUTH_TOKEN");
 
-        this.btnGetRepos = (Button) findViewById(R.id.btn_get_repos);
-        this.tvRepoList = (TextView) findViewById(R.id.tv_repo_list);
-        this.tvRepoList.setMovementMethod(new ScrollingMovementMethod());
+        this.tvRepoList = (TextView) findViewById(R.id.profileView);
 
         requestQueue = Volley.newRequestQueue(this);
 
-    }
+        //getRepoList(tvRepoList.getText().toString());
 
-    private void clearRepoList() {
-        // This will clear the repo list (set it as a blank string).
-        this.tvRepoList.setText("");
+        FloatingActionButton fab = findViewById(R.id.fab);
+        fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(ShowProfilesActivity.this, PersonalProfile.class);
+                //intent.putExtra("KEY_AUTH_TOKEN", token);
+                getApplicationContext().startActivity(intent);
+            }
+        });
+
     }
 
     private void addToRepoList(String vorname, String name, String geburtsdatum, String strasse, String hausnummer, String stadt, String postleitzahl, String land, String profileName, String profilType, String id, String UserId) {
-        String strRow = vorname + " / " + name + " / " + geburtsdatum + " / " + strasse + " / " + hausnummer + " / " + stadt + " / " + postleitzahl + " / " + land + " / " + profileName + " / " + profilType + " / " + id + " / " + UserId;
+        String strProfilename = profileName;
         String currentText = tvRepoList.getText().toString();
-        Log.e("tvRepoList ", tvRepoList.getText().toString());
-        this.tvRepoList.setText(currentText + "\n\n" + strRow);
+        Log.e("ProfilName ", tvRepoList.getText().toString());
+        this.tvRepoList.setText(currentText + "\n\n" + profileName);
     }
 
     private void setRepoListText(String str) {
@@ -68,7 +83,7 @@ public class ShowProfilesActivity extends Activity {
     }
 
     private void getRepoList(String username) {
-        this.url = this.baseUrl + "users/10/profiles/";
+        this.url = this.baseUrl + "users/"+ LoginActivity.getUserID() +"/profiles/";
 
         JsonArrayRequest arrReq = new JsonArrayRequest(Request.Method.GET, url,
                 new Response.Listener<JSONArray>() {
@@ -115,11 +130,32 @@ public class ShowProfilesActivity extends Activity {
             }
         };
         requestQueue.add(arrReq);
-        }
-
-        public void getReposClicked (View v){
-            clearRepoList();
-            getRepoList(tvRepoList.getText().toString());
-        }
-
     }
+
+//        public void getReposClicked (View v){
+//            clearRepoList();
+//            getRepoList(tvRepoList.getText().toString());
+//        }
+
+    public void openProfile(View v) {
+        Intent intent = new Intent(ShowProfilesActivity.this, SingleProfileActivity.class);
+        //TO-DO: Werte speichern und übergeben
+        String vorname = "";
+        String nachname = "";
+        String geburtsdatum = "";
+        String strasse = "";
+        String hausnummer = "";
+        String stadt = "";
+        String land = "";
+        intent.putExtra("KEY_AUTH_TOKEN", token);
+        intent.putExtra("VORNAME", vorname);
+        intent.putExtra("NACHNAME", nachname);
+        intent.putExtra("GEBURTSDATUM", geburtsdatum);
+        intent.putExtra("STRASSE", strasse);
+        intent.putExtra("HAUSNUMMER", hausnummer);
+        intent.putExtra("STADT", stadt);
+        intent.putExtra("LAND", land);
+        getApplicationContext().startActivity(intent);
+    }
+
+}
