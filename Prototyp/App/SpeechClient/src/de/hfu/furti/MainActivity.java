@@ -188,6 +188,7 @@ public class MainActivity extends Activity implements InteractionListener, Inter
                     // Pass AccessToken as sessionAttribute
                     Map<String, String> sessionAttributes = new HashMap();
                     sessionAttributes.put("accessToken", "dwaidjiowanjioajdiowd");
+                    sessionAttributes.put("userId", 16);
                     lexClient.audioInForAudioOut(sessionAttributes);
                     break;
                 case MSG_INFO:
