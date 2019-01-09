@@ -1,11 +1,41 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
     android:layout_height="match_parent">
 
     <TextView
-        android:id="@+id/textView2"
+        android:id="@+id/profileView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="TextView" />
-</LinearLayout>
+        android:textSize="20dp"
+        android:clickable="true"
+        android:onClick="openProfile"/>
+
+
+    <!--<Button-->
+        <!--android:id="@+id/btn_get_repos"-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:layout_alignTop="@+id/fab"-->
+        <!--android:layout_alignParentStart="true"-->
+        <!--android:layout_marginStart="0dp"-->
+        <!--android:onClick="getReposClicked"-->
+        <!--android:text="Get Data" />-->
+
+
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/fab"
+        android:theme="@style/Theme.AppCompat"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginEnd="30dp"
+        android:layout_marginBottom="30dp"
+        app:srcCompat="@drawable/ic_add_white"
+        android:clickable="true"/>
+
+
+</RelativeLayout>

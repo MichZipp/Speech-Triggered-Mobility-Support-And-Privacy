@@ -14,6 +14,8 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import org.mortbay.jetty.Main;
+
 import java.io.IOException;
 
 import ai.kitt.snowboy.demo.R;
@@ -49,7 +51,7 @@ public class LoginActivity extends Activity {
         setContentView(R.layout.activity_login);
 
         ActionBar bar = getActionBar();
-        bar.setBackgroundDrawable(new ColorDrawable(Color.BLACK));
+        getActionBar().hide();
 
         pref = getSharedPreferences("PREF", Context.MODE_PRIVATE);
 
@@ -66,6 +68,15 @@ public class LoginActivity extends Activity {
                 if(validateLogin(email, password)) {
                     doLogin(email, password);
                 }
+            }
+        });
+
+        Button buttonReg = (Button)findViewById(R.id.button_reg);
+        buttonReg.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(view.getContext(), RegisterActivity.class);
+                view.getContext().startActivity(intent);
             }
         });
 
@@ -90,7 +101,7 @@ public class LoginActivity extends Activity {
             @Override
             public void onResponse(Call<ResObj> call, Response<ResObj> response) {
                 if (response.isSuccessful()) {
-                    Toast.makeText(getApplicationContext(), response.body().getId(), Toast.LENGTH_SHORT).show();
+                    //Toast.makeText(getApplicationContext(), response.body().getId(), Toast.LENGTH_SHORT).show();
                     token = response.body().getId();
                     SharedPreferences.Editor editor = pref.edit();
                     editor.putString("TOKEN", token);
@@ -102,7 +113,7 @@ public class LoginActivity extends Activity {
                     //start next Activity
 
                     //Intent intent = new Intent(LoginActivity.this, MainActivity.class);
-                    Intent intent = new Intent(LoginActivity.this, PersonalProfile.class);
+                    Intent intent = new Intent(LoginActivity.this, MainActivity.class);
                     intent.putExtra("KEY_AUTH_TOKEN", token);
                     getApplicationContext().startActivity(intent);
                 } else {
