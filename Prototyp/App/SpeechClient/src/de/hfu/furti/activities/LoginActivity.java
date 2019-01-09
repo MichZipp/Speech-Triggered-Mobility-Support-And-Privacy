@@ -119,10 +119,10 @@ public class LoginActivity extends Activity {
                     Log.e("Token: ", storedToken);
 
                     //start next Activity
-
-                    //Intent intent = new Intent(LoginActivity.this, MainActivity.class);
-                    Intent intent = new Intent(LoginActivity.this, PersonalProfile.class);
-                    intent.putExtra("KEY_AUTH_TOKEN", token);
+                    Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+                    // Intent intent = new Intent(LoginActivity.this, PersonalProfile.class);
+                    intent.putExtra("access_token", token);
+                    intent.putExtra("user_id", userId);
                     getApplicationContext().startActivity(intent);
                 } else {
                     Toast.makeText(getApplicationContext(), "Email oder Passwort falsch!", Toast.LENGTH_SHORT).show();
