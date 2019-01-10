@@ -45,6 +45,7 @@ import java.util.Locale;
 import java.util.Map;
 
 import de.hfu.furti.activities.*;
+import de.hfu.furti.service.SessionStorage;
 
 public class MainActivity extends Activity implements InteractionListener, InteractiveVoiceView.InteractiveVoiceListener, MicrophoneListener, AudioPlaybackListener {
 
@@ -75,9 +76,6 @@ public class MainActivity extends Activity implements InteractionListener, Inter
     private boolean isPlaying = false;
     private boolean isAskResponse = false;
 
-    private String access_token;
-    private String user_id;
-
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
@@ -89,9 +87,6 @@ public class MainActivity extends Activity implements InteractionListener, Inter
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
-        access_token = getIntent().getStringExtra("access_token");
-        user_id = getIntent().getStringExtra("user_id");
 
         ActionBar bar = getActionBar();
         int actionBarTitleId = Resources.getSystem().getIdentifier("action_bar_title", "id", "android");
@@ -199,10 +194,15 @@ public class MainActivity extends Activity implements InteractionListener, Inter
                     sleep(200);
                     //voiceView.callOnClick();
 
+                    // Get userID and access_token from storage
+                    SessionStorage storage = SessionStorage.getInstance();
+                    int user_id = storage.getUserId();
+                    String access_token = storage.getSessionToken();
+
                     // Pass AccessToken as sessionAttribute
                     Map<String, String> sessionAttributes = new HashMap();
                     sessionAttributes.put("accessToken", access_token);
-                    sessionAttributes.put("userId", user_id);
+                    sessionAttributes.put("userId", Integer.toString(user_id));
                     lexClient.audioInForAudioOut(sessionAttributes);
                     break;
                 case MSG_INFO:
@@ -456,7 +456,6 @@ public class MainActivity extends Activity implements InteractionListener, Inter
         switch (item.getItemId()) {
             case R.id.profile:
                 Intent intent = new Intent(this, ShowProfilesActivity.class);
-                intent.putExtra("access_token", access_token);
                 this.startActivity(intent);
                 return true;
             default:

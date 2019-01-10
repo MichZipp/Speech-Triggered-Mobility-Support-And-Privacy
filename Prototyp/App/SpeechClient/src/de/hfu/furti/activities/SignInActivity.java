@@ -20,6 +20,7 @@ import de.hfu.furti.MainActivity;
 import de.hfu.furti.login.ApiUtils;
 import de.hfu.furti.login.Login;
 import de.hfu.furti.login.ResObj;
+import de.hfu.furti.service.SessionStorage;
 import de.hfu.furti.service.UserService;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -28,10 +29,7 @@ import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
 public class SignInActivity extends Activity {
-
-    private static String token;
-
-    Retrofit.Builder builder = new Retrofit.Builder()
+    private Retrofit.Builder builder = new Retrofit.Builder()
             .baseUrl("http://192.52.33.31:3000/api/users/")
             .addConverterFactory(GsonConverterFactory.create());
 
@@ -41,7 +39,6 @@ public class SignInActivity extends Activity {
     private Button btnSignIn;
     private Button btnSignUp;
     private UserService userService;
-    private static int userID;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -101,8 +98,12 @@ public class SignInActivity extends Activity {
                     Toast.makeText(getApplicationContext(), response.body().getId(), Toast.LENGTH_SHORT).show();
 
 
-                    userID = response.body().getUserId();
-                    token = response.body().getId();
+                    int userID = response.body().getUserId();
+                    String token = response.body().getId();
+
+                    SessionStorage storage = SessionStorage.getInstance();
+                    storage.setUserId(userID);
+                    storage.setSessionToken(token);
 
                     String userId = new String("userId");
 
@@ -114,8 +115,6 @@ public class SignInActivity extends Activity {
 
                     //start next Activity
                     Intent intent = new Intent(SignInActivity.this, MainActivity.class);
-                    intent.putExtra("access_token", token);
-                    intent.putExtra("user_id", userID);
                     getApplicationContext().startActivity(intent);
                 } else {
                     Toast.makeText(getApplicationContext(), "Email oder Passwort falsch!", Toast.LENGTH_SHORT).show();
@@ -133,9 +132,5 @@ public class SignInActivity extends Activity {
                 Log.e("ERROR!", t.getMessage());
             }
         });
-    }
-
-    public static int getUserID() {
-        return userID;
     }
 }

@@ -26,6 +26,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import ai.kitt.snowboy.demo.R;
+import de.hfu.furti.service.SessionStorage;
 
 public class ShowProfilesActivity extends Activity {
 
@@ -78,7 +79,9 @@ public class ShowProfilesActivity extends Activity {
     }
 
     private void getRepoList(String username) {
-        this.url = this.baseUrl + "users/"+ SignInActivity.getUserID() +"/profiles/";
+        SessionStorage storage = SessionStorage.getInstance();
+        int user_id = storage.getUserId();
+        this.url = this.baseUrl + "users/"+ user_id +"/profiles/";
 
         JsonArrayRequest arrReq = new JsonArrayRequest(Request.Method.GET, url,
                 new Response.Listener<JSONArray>() {
