@@ -80,7 +80,7 @@ public class ShowProfilesActivity extends Activity {
 
     private void getRepoList(String username) {
         SessionStorage storage = SessionStorage.getInstance();
-        int user_id = storage.getUserId();
+        String user_id = storage.getUserId();
         this.url = this.baseUrl + "users/"+ user_id +"/profiles/";
 
         JsonArrayRequest arrReq = new JsonArrayRequest(Request.Method.GET, url,

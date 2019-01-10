@@ -1,7 +1,7 @@
 package de.hfu.furti.service;
 
 public class SessionStorage {
-    private int user_id;
+    private String user_id;
     private String session_token;
     private int active_profile;
 
@@ -20,11 +20,11 @@ public class SessionStorage {
         return single_instance;
     }
 
-    public int getUserId() {
+    public String getUserId() {
         return user_id;
     }
 
-    public void setUserId(int user_id) {
+    public void setUserId(String user_id) {
         this.user_id = user_id;
     }
 

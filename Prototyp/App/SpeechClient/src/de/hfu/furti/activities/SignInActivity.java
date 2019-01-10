@@ -23,6 +23,7 @@ import org.json.JSONObject;
 
 import ai.kitt.snowboy.demo.R;
 import de.hfu.furti.MainActivity;
+import de.hfu.furti.service.SessionStorage;
 
 public class SignInActivity extends Activity {
     private String baseUrl = "http://192.52.32.250:3000/api/users/login";
@@ -94,7 +95,19 @@ public class SignInActivity extends Activity {
             new com.android.volley.Response.Listener<JSONObject>() {
                 @Override
                 public void onResponse(JSONObject response) {
-                    Log.e("RESPONSE: ", response.toString());
+                    String userID, token;
+                    SessionStorage storage = SessionStorage.getInstance();
+
+                    try {
+                        userID = response.getString("userId");
+                        token = response.getString("id");
+                        storage.setUserId(userID);
+                        storage.setSessionToken(token);
+                    } catch(JSONException e){
+                        Log.e("RESPONSE: ", e.toString());                            ;
+                    }
+
+                    Log.i("RESPONSE: ", response.toString());
                     Intent i = new Intent(getApplicationContext(), MainActivity.class);
                     getApplicationContext().startActivity(i);
                 }

@@ -196,13 +196,13 @@ public class MainActivity extends Activity implements InteractionListener, Inter
 
                     // Get userID and access_token from storage
                     SessionStorage storage = SessionStorage.getInstance();
-                    int user_id = storage.getUserId();
+                    String user_id = storage.getUserId();
                     String access_token = storage.getSessionToken();
 
                     // Pass AccessToken as sessionAttribute
                     Map<String, String> sessionAttributes = new HashMap();
                     sessionAttributes.put("accessToken", access_token);
-                    sessionAttributes.put("userId", Integer.toString(user_id));
+                    sessionAttributes.put("userId", user_id);
                     lexClient.audioInForAudioOut(sessionAttributes);
                     break;
                 case MSG_INFO:
