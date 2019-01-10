@@ -14,9 +14,7 @@ dependencies {
     //noinspection DuplicatePlatformClasses
     implementation 'org.json:json:20160212'
     implementation 'com.mcxiaoke.volley:library:1.0.19'
-    implementation 'com.squareup.retrofit2:retrofit:2.1.0'
     implementation 'com.google.code.gson:gson:2.6.1'
-    implementation 'com.squareup.retrofit2:converter-gson:2.1.0'
     implementation 'com.google.apis:google-api-services-calendar:v3-rev364-1.25.0'
     implementation 'com.amazonaws:aws-android-sdk-lex:2.+'
     implementation ('com.amazonaws:aws-android-sdk-auth-core:2.6.+@aar')  {transitive = true;}

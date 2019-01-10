@@ -91,18 +91,19 @@ public class SignInActivity extends Activity {
         }
 
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.POST, this.baseUrl, json,
-                new com.android.volley.Response.Listener<JSONObject>() {
-                    @Override
-                    public void onResponse(JSONObject response) {
-                        Log.e("RESPONSE: ", response.toString());
-                        Intent i = new Intent(getApplicationContext(), MainActivity.class);
-                        getApplicationContext().startActivity(i);
-                    }
-                }, new com.android.volley.Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
+            new com.android.volley.Response.Listener<JSONObject>() {
+                @Override
+                public void onResponse(JSONObject response) {
+                    Log.e("RESPONSE: ", response.toString());
+                    Intent i = new Intent(getApplicationContext(), MainActivity.class);
+                    getApplicationContext().startActivity(i);
+                }
+            },
+            new com.android.volley.Response.ErrorListener() {
+                @Override
+                public void onErrorResponse(VolleyError error) {
 
-            }
+                }
         });
         requestQueue.add(jsonObjectRequest);
     }
