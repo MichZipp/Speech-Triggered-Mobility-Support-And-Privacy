@@ -12,33 +12,26 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import java.io.IOException;
-import java.io.UnsupportedEncodingException;
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonObjectRequest;
+import com.android.volley.toolbox.Volley;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import ai.kitt.snowboy.demo.R;
 import de.hfu.furti.MainActivity;
-import de.hfu.furti.login.ApiUtils;
-import de.hfu.furti.login.Login;
-import de.hfu.furti.login.ResObj;
-import de.hfu.furti.service.SessionStorage;
-import de.hfu.furti.service.UserService;
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
-import retrofit2.Retrofit;
-import retrofit2.converter.gson.GsonConverterFactory;
 
 public class SignInActivity extends Activity {
-    private Retrofit.Builder builder = new Retrofit.Builder()
-            .baseUrl("http://192.52.33.31:3000/api/users/")
-            .addConverterFactory(GsonConverterFactory.create());
+    private String baseUrl = "http://192.52.32.250:3000/api/users/login";
+    private RequestQueue requestQueue;
 
-    private Retrofit retrofit = builder.build();
     private EditText editEmail;
     private EditText editPassword;
     private Button btnSignIn;
     private Button btnSignUp;
-    private UserService userService;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,7 +45,6 @@ public class SignInActivity extends Activity {
         editPassword = (EditText) findViewById(R.id.editPassword);
         btnSignIn = (Button) findViewById(R.id.btnSignIn);
         btnSignUp = (Button) findViewById(R.id.btnSignUp);
-        userService = ApiUtils.getUserService();
 
         btnSignIn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -73,6 +65,8 @@ public class SignInActivity extends Activity {
                 getApplicationContext().startActivity(intent);
             }
         });
+
+        requestQueue = Volley.newRequestQueue(this);
     }
 
     private boolean validateLogin(String email, String password) {
@@ -88,49 +82,28 @@ public class SignInActivity extends Activity {
     }
 
     private void doLogin(String email, String password) {
-        Login login = new Login(email, password);
-        Call<ResObj> call = userService.login(login);
+        JSONObject json = new JSONObject();
+        try {
+            json.put("email", email);
+            json.put("password", password);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
 
-        call.enqueue(new Callback<ResObj>() {
-            @Override
-            public void onResponse(Call<ResObj> call, Response<ResObj> response) {
-                if (response.isSuccessful()) {
-                    Toast.makeText(getApplicationContext(), response.body().getId(), Toast.LENGTH_SHORT).show();
-
-
-                    int userID = response.body().getUserId();
-                    String token = response.body().getId();
-
-                    SessionStorage storage = SessionStorage.getInstance();
-                    storage.setUserId(userID);
-                    storage.setSessionToken(token);
-
-                    String userId = new String("userId");
-
-                    try {
-                        response.message().getBytes(userId);
-                    } catch (UnsupportedEncodingException e) {
-                        e.printStackTrace();
+        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.POST, this.baseUrl, json,
+                new com.android.volley.Response.Listener<JSONObject>() {
+                    @Override
+                    public void onResponse(JSONObject response) {
+                        Log.e("RESPONSE: ", response.toString());
+                        Intent i = new Intent(getApplicationContext(), MainActivity.class);
+                        getApplicationContext().startActivity(i);
                     }
-
-                    //start next Activity
-                    Intent intent = new Intent(SignInActivity.this, MainActivity.class);
-                    getApplicationContext().startActivity(intent);
-                } else {
-                    Toast.makeText(getApplicationContext(), "Email oder Passwort falsch!", Toast.LENGTH_SHORT).show();
-                    try {
-                        Log.e("Error:", response.errorBody().string());
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                    }
-                }
-            }
-
+                }, new com.android.volley.Response.ErrorListener() {
             @Override
-            public void onFailure(Call<ResObj> call, Throwable t) {
-                Toast.makeText(getApplicationContext(), t.getMessage(), Toast.LENGTH_SHORT).show();
-                Log.e("ERROR!", t.getMessage());
+            public void onErrorResponse(VolleyError error) {
+
             }
         });
+        requestQueue.add(jsonObjectRequest);
     }
 }

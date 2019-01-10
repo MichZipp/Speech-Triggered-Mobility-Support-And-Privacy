@@ -30,7 +30,7 @@ public class SignUpActivity extends Activity {
     private Button btnSignUp;
     private String email;
     private String password;
-    private String baseUrl = "http://192.52.33.31:3000/api/";
+    private String baseUrl = "http://192.52.32.250:3000/api/";
     private String url;
     private TextView serverResp;
     private RequestQueue requestQueue;
