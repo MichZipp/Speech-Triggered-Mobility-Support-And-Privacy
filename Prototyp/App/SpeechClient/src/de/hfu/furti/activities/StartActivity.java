@@ -8,7 +8,7 @@ import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
-import retrofit2.Call;
+
 import ai.kitt.snowboy.demo.R;
 
 public class StartActivity extends Activity {
@@ -25,7 +25,7 @@ public class StartActivity extends Activity {
         buttonReg.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(view.getContext(), RegisterActivity.class);
+                Intent intent = new Intent(view.getContext(), SignUpActivity.class);
                 view.getContext().startActivity(intent);
             }
         });
@@ -34,7 +34,7 @@ public class StartActivity extends Activity {
         buttonLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(view.getContext(), LoginActivity.class);
+                Intent intent = new Intent(view.getContext(), SignInActivity.class);
                 view.getContext().startActivity(intent);
             }
         });

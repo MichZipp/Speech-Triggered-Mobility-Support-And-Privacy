@@ -5,8 +5,6 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
-import android.text.method.ScrollingMovementMethod;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -23,14 +21,11 @@ import com.android.volley.toolbox.Volley;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-import org.w3c.dom.Text;
 
 import java.util.HashMap;
 import java.util.Map;
 
 import ai.kitt.snowboy.demo.R;
-import de.hfu.furti.login.Login;
-import de.hfu.furti.MainActivity;
 
 public class ShowProfilesActivity extends Activity {
 
@@ -83,7 +78,7 @@ public class ShowProfilesActivity extends Activity {
     }
 
     private void getRepoList(String username) {
-        this.url = this.baseUrl + "users/"+ LoginActivity.getUserID() +"/profiles/";
+        this.url = this.baseUrl + "users/"+ SignInActivity.getUserID() +"/profiles/";
 
         JsonArrayRequest arrReq = new JsonArrayRequest(Request.Method.GET, url,
                 new Response.Listener<JSONArray>() {

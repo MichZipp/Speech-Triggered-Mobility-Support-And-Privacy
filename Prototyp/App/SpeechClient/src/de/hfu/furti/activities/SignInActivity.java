@@ -27,7 +27,7 @@ import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
-public class LoginActivity extends Activity {
+public class SignInActivity extends Activity {
 
     private static String token;
 
@@ -46,7 +46,7 @@ public class LoginActivity extends Activity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_login);
+        setContentView(R.layout.activity_singin);
 
         ActionBar bar = getActionBar();
         bar.setBackgroundDrawable(new ColorDrawable(Color.BLACK));
@@ -71,7 +71,9 @@ public class LoginActivity extends Activity {
         btnSignUp.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // Open SignUp Activity
+                // Open SignUpActivity
+                Intent intent = new Intent(SignInActivity.this, SignUpActivity.class);
+                getApplicationContext().startActivity(intent);
             }
         });
     }
@@ -93,7 +95,6 @@ public class LoginActivity extends Activity {
         Call<ResObj> call = userService.login(login);
 
         call.enqueue(new Callback<ResObj>() {
-
             @Override
             public void onResponse(Call<ResObj> call, Response<ResObj> response) {
                 if (response.isSuccessful()) {
@@ -112,7 +113,7 @@ public class LoginActivity extends Activity {
                     }
 
                     //start next Activity
-                    Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+                    Intent intent = new Intent(SignInActivity.this, MainActivity.class);
                     intent.putExtra("access_token", token);
                     intent.putExtra("user_id", userID);
                     getApplicationContext().startActivity(intent);
@@ -132,11 +133,9 @@ public class LoginActivity extends Activity {
                 Log.e("ERROR!", t.getMessage());
             }
         });
-
     }
 
-    public static int getUserID(){
+    public static int getUserID() {
         return userID;
     }
-
 }

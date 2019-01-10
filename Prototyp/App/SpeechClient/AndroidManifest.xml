@@ -16,9 +16,9 @@
 
         <activity android:name="de.hfu.furti.activities.StartActivity"/>
 
-        <activity android:name="de.hfu.furti.activities.LoginActivity"/>
+        <activity android:name="de.hfu.furti.activities.SignInActivity"/>
 
-        <activity android:name="de.hfu.furti.activities.RegisterActivity"/>
+        <activity android:name="de.hfu.furti.activities.SignUpActivity"/>
 
         <activity android:name="de.hfu.furti.activities.TestActivity"/>
 

@@ -1,8 +1,5 @@
 package de.hfu.furti.activities;
 
-
-//FUNKTIONIERT, NICHT ANFASSEN!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-
 import android.app.ActionBar;
 import android.app.Activity;
 import android.content.Intent;
@@ -25,34 +22,35 @@ import org.json.JSONObject;
 
 import ai.kitt.snowboy.demo.R;
 
-public class RegisterActivity extends Activity {
-
-    EditText editEmail;
-    EditText editPassword;
-    EditText confirmPassword;
-    Button btnRegister;
-    String email;
-    String password;
-    String baseUrl = "http://192.52.33.31:3000/api/";
-    String url;
-    TextView serverResp;
-    RequestQueue requestQueue;
+public class SignUpActivity extends Activity {
+    private EditText editEmail;
+    private EditText editPassword;
+    private EditText confirmPassword;
+    private Button btnSignIn;
+    private Button btnSignUp;
+    private String email;
+    private String password;
+    private String baseUrl = "http://192.52.33.31:3000/api/";
+    private String url;
+    private TextView serverResp;
+    private RequestQueue requestQueue;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_register);
+        setContentView(R.layout.activity_signup);
 
         ActionBar bar = getActionBar();
         bar.setBackgroundDrawable(new ColorDrawable(Color.BLACK));
 
         editEmail = (EditText) findViewById(R.id.editEmail);
         editPassword = (EditText) findViewById(R.id.editPassword);
-        confirmPassword = (EditText) findViewById(R.id.confirmPassword);
-        btnRegister = (Button) findViewById(R.id.btnReg);
+        confirmPassword = (EditText) findViewById(R.id.editConfirmPassword);
+        btnSignUp = (Button) findViewById(R.id.btnSignUp);
+        btnSignIn = (Button) findViewById(R.id.btnSignIn);
         serverResp = (TextView) findViewById(R.id.server_resp);
 
-        btnRegister.setOnClickListener(new View.OnClickListener() {
+        btnSignUp.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 String email = editEmail.getText().toString();
@@ -61,6 +59,15 @@ public class RegisterActivity extends Activity {
                 if (validateRegister(email, password, password2)) {
                     doRegister(email, password);
                 }
+            }
+        });
+
+        btnSignIn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // Open SignInActivity
+                Intent intent = new Intent(SignUpActivity.this, SignInActivity.class);
+                getApplicationContext().startActivity(intent);
             }
         });
 
@@ -90,14 +97,7 @@ public class RegisterActivity extends Activity {
     }
 
     private void doRegister(String email, String password) {
-
-        sendRegData();
-    }
-
-    private void sendRegData() {
         this.url = this.baseUrl + "users";
-        email = editEmail.getText().toString();
-        password = editPassword.getText().toString();
 
         JSONObject json = new JSONObject();
         try {
@@ -114,7 +114,7 @@ public class RegisterActivity extends Activity {
                     public void onResponse(JSONObject response) {
                         serverResp.setText("String Response : " + response.toString());
                         Log.e("RESPONSE: ", response.toString());
-                        Intent i = new Intent(getApplicationContext(), LoginActivity.class);
+                        Intent i = new Intent(getApplicationContext(), SignInActivity.class);
                         getApplicationContext().startActivity(i);
                     }
                 }, new com.android.volley.Response.ErrorListener() {
@@ -124,7 +124,5 @@ public class RegisterActivity extends Activity {
             }
         });
         requestQueue.add(jsonObjectRequest);
-
     }
-
 }
