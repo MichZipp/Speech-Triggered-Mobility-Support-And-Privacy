@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
       android:versionCode="1"
-      android:versionName="1.0" package="ai.kitt.snowboy.demo" >
+      android:versionName="1.0" package="de.hfu.butler" >
     <application android:label="@string/app_name" android:icon="@mipmap/ic_launcher">
 
         <activity
@@ -14,27 +14,9 @@
 
         <activity android:name="de.hfu.butler.MainActivity"/>
 
-        <activity android:name="de.hfu.butler.activities.StartActivity"/>
-
         <activity android:name="de.hfu.butler.activities.SignInActivity"/>
 
         <activity android:name="de.hfu.butler.activities.SignUpActivity"/>
-
-        <activity android:name="de.hfu.butler.activities.TestActivity"/>
-
-        <activity android:name="de.hfu.butler.activities.PersonalProfile"/>
-
-        <activity android:name="de.hfu.butler.activities.BusinessProfile"/>
-
-        <activity android:name="de.hfu.butler.activities.SingleProfileActivity"/>
-
-        <activity android:name="de.hfu.butler.activities.CreateProfileActivity"/>
-
-        <activity android:name="de.hfu.butler.activities.ImpressumActivity"/>
-
-        <activity android:name="de.hfu.butler.activities.ShowProfilesActivity"/>
-
-        <activity android:name="de.hfu.butler.activities.CalendarActivity"/>
 
     </application>
 

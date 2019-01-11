@@ -3,7 +3,6 @@ package de.hfu.butler.service;
 public class SessionStorage {
     private String user_id;
     private String session_token;
-    private int active_profile;
     private int profile_type = 0;
 
     // static variable single_instance of type Singleton
@@ -35,14 +34,6 @@ public class SessionStorage {
 
     public void setSessionToken(String session_token) {
         this.session_token = session_token;
-    }
-
-    public int getActiveProfile() {
-        return active_profile;
-    }
-
-    public void setActiveProfile(int active_profile) {
-        this.active_profile = active_profile;
     }
 
     public int getProfileType() {

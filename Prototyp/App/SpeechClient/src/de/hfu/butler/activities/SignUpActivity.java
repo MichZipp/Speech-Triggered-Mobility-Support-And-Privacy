@@ -10,9 +10,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.RadioButton;
 import android.widget.RadioGroup;
-import android.widget.TextView;
 import android.widget.Toast;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -22,13 +20,12 @@ import com.android.volley.toolbox.Volley;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import ai.kitt.snowboy.demo.R;
+import de.hfu.butler.R;
 import de.hfu.butler.service.SessionStorage;
 
 public class SignUpActivity extends Activity {
     private final String LOG_TAG = "SignUpActivity";
     private final String userUrl = "http://192.52.32.250:3000/api/users";
-    private final String userSettingsUrl = "\"http://192.52.32.250:3000/api/usersettings";
 
     private EditText editEmail;
     private EditText editPassword;
@@ -122,57 +119,30 @@ public class SignUpActivity extends Activity {
 
     private void doRegister(String email, String password) {
         JSONObject signUpJson = new JSONObject();
+
         try {
+            signUpJson.put("Usertype", storage.getProfileType());
             signUpJson.put("email", email);
             signUpJson.put("password", password);
         } catch (JSONException e) {
             e.printStackTrace();
         }
 
-        final JSONObject userSettingsJson = new JSONObject();
-        try {
-            userSettingsJson.put("type", email);
-            userSettingsJson.put("userId", password);
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
-
-        final JsonObjectRequest setUserSettingsRequest = new JsonObjectRequest(Request.Method.POST, userUrl, userSettingsJson,
+        final JsonObjectRequest signUpRequest = new JsonObjectRequest(Request.Method.POST, userUrl, signUpJson,
                 new com.android.volley.Response.Listener<JSONObject>() {
                     @Override
                     public void onResponse(JSONObject response) {
-                        Log.i(LOG_TAG, response.toString());
+                        Log.i(LOG_TAG, "RESPONSE: " + response.toString());
                         Intent i = new Intent(getApplicationContext(), SignInActivity.class);
                         getApplicationContext().startActivity(i);
                     }
                 }, new com.android.volley.Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                Log.e(LOG_TAG,"Error getting response: " + error.toString());
+                Log.e(LOG_TAG,"ERROR: " + error.getMessage());
             }
         });
 
-        final JsonObjectRequest signUpRequest = new JsonObjectRequest(Request.Method.POST, userUrl, signUpJson,
-                new com.android.volley.Response.Listener<JSONObject>() {
-                    @Override
-                    public void onResponse(JSONObject response) {
-                        String userId;
-                        try {
-                            userId = response.getString("id");
-                            userSettingsJson.put("type", storage.getProfileType());
-                            userSettingsJson.put("userId", userId);
-                        } catch(JSONException e){
-                            Log.e(LOG_TAG, "JSONException: " + e.toString());                            ;
-                        }
-
-                        requestQueue.add(setUserSettingsRequest);
-                    }
-                }, new com.android.volley.Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-                Log.e(LOG_TAG,"Error getting response: " + error.toString());
-            }
-        });
         requestQueue.add(signUpRequest);
     }
 }

@@ -43,6 +43,7 @@ android {
     defaultConfig {
         minSdkVersion 21
         targetSdkVersion 26
+        applicationId "de.hfu.butler"
     }
     compileOptions.encoding = 'ISO-8859-1'
     sourceSets {

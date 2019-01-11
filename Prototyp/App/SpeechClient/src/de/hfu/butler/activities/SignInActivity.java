@@ -21,14 +21,16 @@ import com.android.volley.toolbox.Volley;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import ai.kitt.snowboy.demo.R;
 import de.hfu.butler.MainActivity;
+import de.hfu.butler.R;
 import de.hfu.butler.service.SessionStorage;
 
 public class SignInActivity extends Activity {
-    private final String LOG_TAG = "SignUpActivity";
-    private final String baseUrl = "http://192.52.32.250:3000/api/users/login";
+    private final String LOG_TAG = "SignInActivity";
+    private final String loginUrl = "http://192.52.32.250:3000/api/users/login";
+    private final String userSettingsUrl = "\"http://192.52.32.250:3000/api/usersettings";
     private RequestQueue requestQueue;
+    private SessionStorage storage;
 
     private EditText editEmail;
     private EditText editPassword;
@@ -39,6 +41,8 @@ public class SignInActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_singin);
+
+        storage = SessionStorage.getInstance();
 
         ActionBar bar = getActionBar();
         bar.setBackgroundDrawable(new ColorDrawable(Color.BLACK));
@@ -84,20 +88,20 @@ public class SignInActivity extends Activity {
     }
 
     private void doLogin(String email, String password) {
-        JSONObject json = new JSONObject();
+        JSONObject signInJson = new JSONObject();
         try {
-            json.put("email", email);
-            json.put("password", password);
+            signInJson.put("email", email);
+            signInJson.put("password", password);
         } catch (JSONException e) {
             e.printStackTrace();
         }
 
-        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.POST, this.baseUrl, json,
+        JsonObjectRequest signInRequest = new JsonObjectRequest(Request.Method.POST, this.loginUrl, signInJson,
             new com.android.volley.Response.Listener<JSONObject>() {
                 @Override
                 public void onResponse(JSONObject response) {
+                    Log.i(LOG_TAG, "RESPONSE: " + response.toString());
                     String userID, token;
-                    SessionStorage storage = SessionStorage.getInstance();
 
                     try {
                         userID = response.getString("userId");
@@ -107,8 +111,7 @@ public class SignInActivity extends Activity {
                     } catch(JSONException e){
                         Log.e(LOG_TAG, "JSONException: " + e.toString());                            ;
                     }
-
-                    Log.i(LOG_TAG, "RESPONESE: " + response.toString());
+                    Log.i(LOG_TAG, "RESPONSE: " + response.toString());
                     Intent i = new Intent(getApplicationContext(), MainActivity.class);
                     getApplicationContext().startActivity(i);
                 }
@@ -116,9 +119,10 @@ public class SignInActivity extends Activity {
             new com.android.volley.Response.ErrorListener() {
                 @Override
                 public void onErrorResponse(VolleyError error) {
-
+                    Log.e(LOG_TAG,"ERROR: " + error.toString());
                 }
         });
-        requestQueue.add(jsonObjectRequest);
+
+        requestQueue.add(signInRequest);
     }
 }

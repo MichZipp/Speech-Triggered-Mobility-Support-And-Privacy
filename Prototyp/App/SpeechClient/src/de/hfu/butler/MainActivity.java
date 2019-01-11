@@ -1,5 +1,6 @@
 package de.hfu.butler;
 
+import ai.kitt.snowboy.AppResCopy;
 import ai.kitt.snowboy.MsgEnum;
 import ai.kitt.snowboy.audio.RecordingThread;
 import ai.kitt.snowboy.audio.AudioDataSaver;
@@ -18,7 +19,6 @@ import com.amazonaws.regions.Regions;
 import android.app.ActionBar;
 import android.app.Activity;
 import android.content.Intent;
-import android.content.res.Resources;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.view.Menu;
@@ -38,8 +38,6 @@ import android.text.Html;
 import android.view.View.OnClickListener;
 import android.view.View;
 
-import ai.kitt.snowboy.demo.R;
-
 import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
@@ -48,7 +46,6 @@ import de.hfu.butler.activities.*;
 import de.hfu.butler.service.SessionStorage;
 
 public class MainActivity extends Activity implements InteractionListener, InteractiveVoiceView.InteractiveVoiceListener, MicrophoneListener, AudioPlaybackListener {
-
     private Button record_button;
     private Button play_button;
     private TextView log;
@@ -89,27 +86,20 @@ public class MainActivity extends Activity implements InteractionListener, Inter
         setContentView(R.layout.activity_main);
 
         ActionBar bar = getActionBar();
-        int actionBarTitleId = Resources.getSystem().getIdentifier("action_bar_title", "id", "android");
         bar.setTitle("Menü:");
-        //bar.setTitle(Html.fromHtml("<font color='#000000'> ActionBartitle </font>"));
         bar.setBackgroundDrawable(new ColorDrawable(Color.GRAY));
-//        if (actionBarTitleId > 0) {
-//            TextView title = (TextView) findViewById(actionBarTitleId);
-//            if (title != null) {
-//                title.setTextColor(Color.BLACK);
-//            }
-//        }
 
         appContext = getApplicationContext();
 
-//        initUI();
-//        initHotwordDetechtion();
-//        initLex();
-//
+        initUI();
 
-//        AppResCopy.copyResFromAssetsToSD(this);
-//
-//        startHotwordDetection();
+        AppResCopy.copyResFromAssetsToSD(this);
+        // initHotwordDetechtion();
+        //initLex();
+
+        // AppResCopy.copyResFromAssetsToSD(this);
+
+        //startHotwordDetection();
     }
 
     private void initUI() {
@@ -455,8 +445,8 @@ public class MainActivity extends Activity implements InteractionListener, Inter
         // Handle item selection
         switch (item.getItemId()) {
             case R.id.profile:
-                Intent intent = new Intent(this, ShowProfilesActivity.class);
-                this.startActivity(intent);
+                //Intent intent = new Intent(this, ShowProfilesActivity.class);
+                //this.startActivity(intent);
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
