@@ -1,4 +1,4 @@
-package de.hfu.furti;
+package de.hfu.butler;
 
 import ai.kitt.snowboy.MsgEnum;
 import ai.kitt.snowboy.audio.RecordingThread;
@@ -44,8 +44,8 @@ import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
 
-import de.hfu.furti.activities.*;
-import de.hfu.furti.service.SessionStorage;
+import de.hfu.butler.activities.*;
+import de.hfu.butler.service.SessionStorage;
 
 public class MainActivity extends Activity implements InteractionListener, InteractiveVoiceView.InteractiveVoiceListener, MicrophoneListener, AudioPlaybackListener {
 

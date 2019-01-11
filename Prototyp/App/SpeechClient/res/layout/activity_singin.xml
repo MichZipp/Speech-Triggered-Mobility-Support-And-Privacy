@@ -1,29 +1,32 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:orientation="vertical" >
 
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:gravity="center_horizontal">
 
-    <ImageView
-        android:id="@+id/imageview"
-        android:layout_width="100dp"
-        android:layout_height="100dp"
-        android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="19dp"
-        android:src="@drawable/logo" />
-
+        <ImageView
+            android:id="@+id/imageview"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:layout_marginTop="20dp"
+            android:layout_marginBottom="20dp"
+            android:gravity="center"
+            android:src="@drawable/logo" />
+    </LinearLayout>
 
     <EditText
         android:id="@+id/editEmail"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_above="@+id/editPassword"
-        android:layout_alignParentStart="true"
-        android:layout_marginBottom="-190dp"
         android:ems="10"
-        android:hint="E-Mail:"
+        android:hint="E-Mail eingeben:"
         android:inputType="textEmailAddress"
         android:textColor="@color/black"
         android:textColorHint="@color/gray" />
@@ -32,12 +35,8 @@
         android:id="@+id/editPassword"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentTop="true"
-        android:layout_marginStart="0dp"
-        android:layout_marginTop="190dp"
         android:ems="10"
-        android:hint="Password:"
+        android:hint="Passwort eingeben:"
         android:inputType="textPassword"
         android:textColor="@color/black"
         android:textColorHint="@color/gray" />
@@ -46,8 +45,6 @@
         android:id="@+id/btnSignIn"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/editPassword"
-        android:layout_alignParentStart="true"
         android:text="Login"
         android:textColor="@color/black"
         android:textSize="20dp" />
@@ -56,10 +53,6 @@
         android:id="@+id/btnSignUp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/btnSignIn"
-        android:layout_alignParentStart="true"
-        android:text="Sign Up"
+        android:text="Registrieren"
         android:textSize="20dp" />
-
-
-</RelativeLayout>
+</LinearLayout>

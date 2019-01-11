@@ -1,9 +1,10 @@
-package de.hfu.furti.service;
+package de.hfu.butler.service;
 
 public class SessionStorage {
     private String user_id;
     private String session_token;
     private int active_profile;
+    private int profile_type = 0;
 
     // static variable single_instance of type Singleton
     private static SessionStorage single_instance = null;
@@ -42,5 +43,13 @@ public class SessionStorage {
 
     public void setActiveProfile(int active_profile) {
         this.active_profile = active_profile;
+    }
+
+    public int getProfile_type() {
+        return profile_type;
+    }
+
+    public void setProfile_type(int profile_type) {
+        this.profile_type = profile_type;
     }
 }

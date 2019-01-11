@@ -1,4 +1,4 @@
-package de.hfu.furti.activities;
+package de.hfu.butler.activities;
 
 import android.app.ActionBar;
 import android.app.Activity;

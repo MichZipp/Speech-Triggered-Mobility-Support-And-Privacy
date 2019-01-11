@@ -1,4 +1,4 @@
-package de.hfu.furti.profile;
+package de.hfu.butler.profile;
 
 public class AccessToken {
 

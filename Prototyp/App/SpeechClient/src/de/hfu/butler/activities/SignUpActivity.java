@@ -1,4 +1,4 @@
-package de.hfu.furti.activities;
+package de.hfu.butler.activities;
 
 import android.app.ActionBar;
 import android.app.Activity;
@@ -10,6 +10,8 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 import com.android.volley.Request;
@@ -21,19 +23,20 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import ai.kitt.snowboy.demo.R;
+import de.hfu.butler.service.SessionStorage;
 
 public class SignUpActivity extends Activity {
+    private final String LOG_TAG = "SignUpActivity";
+    private final String baseUrl = "http://192.52.32.250:3000/api/users";
+
     private EditText editEmail;
     private EditText editPassword;
     private EditText confirmPassword;
     private Button btnSignIn;
     private Button btnSignUp;
-    private String email;
-    private String password;
-    private String baseUrl = "http://192.52.32.250:3000/api/";
-    private String url;
-    private TextView serverResp;
+    private RadioGroup radioGroupProfileType;
     private RequestQueue requestQueue;
+    private SessionStorage storage;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,7 +51,10 @@ public class SignUpActivity extends Activity {
         confirmPassword = (EditText) findViewById(R.id.editConfirmPassword);
         btnSignUp = (Button) findViewById(R.id.btnSignUp);
         btnSignIn = (Button) findViewById(R.id.btnSignIn);
-        serverResp = (TextView) findViewById(R.id.server_resp);
+        radioGroupProfileType = (RadioGroup) findViewById(R.id.radioGroupProfileType);
+
+        storage = SessionStorage.getInstance();
+        storage.setProfile_type(0);
 
         btnSignUp.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -68,6 +74,24 @@ public class SignUpActivity extends Activity {
                 // Open SignInActivity
                 Intent intent = new Intent(SignUpActivity.this, SignInActivity.class);
                 getApplicationContext().startActivity(intent);
+            }
+        });
+
+        radioGroupProfileType.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(RadioGroup group, int checkedId) {
+                Log.i(LOG_TAG, String.valueOf(checkedId));
+                switch(checkedId) {
+                    case R.id.radioButtonPrivat:
+                            storage.setProfile_type(0);
+                            break;
+                    case R.id.radioButtonDoctor:
+                            storage.setProfile_type(1);
+                            break;
+                    case R.id.radioButtonCarRental:
+                            storage.setProfile_type(2);
+                            break;
+                }
             }
         });
 
@@ -97,8 +121,6 @@ public class SignUpActivity extends Activity {
     }
 
     private void doRegister(String email, String password) {
-        this.url = this.baseUrl + "users";
-
         JSONObject json = new JSONObject();
         try {
             json.put("email", email);
@@ -108,19 +130,18 @@ public class SignUpActivity extends Activity {
             e.printStackTrace();
         }
 
-        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.POST, url, json,
+        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.POST, baseUrl, json,
                 new com.android.volley.Response.Listener<JSONObject>() {
                     @Override
                     public void onResponse(JSONObject response) {
-                        serverResp.setText("String Response : " + response.toString());
-                        Log.e("RESPONSE: ", response.toString());
+                        Log.i(LOG_TAG, response.toString());
                         Intent i = new Intent(getApplicationContext(), SignInActivity.class);
                         getApplicationContext().startActivity(i);
                     }
                 }, new com.android.volley.Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                serverResp.setText("Error getting response");
+                Log.e(LOG_TAG,"Error getting response: " + error.toString());
             }
         });
         requestQueue.add(jsonObjectRequest);

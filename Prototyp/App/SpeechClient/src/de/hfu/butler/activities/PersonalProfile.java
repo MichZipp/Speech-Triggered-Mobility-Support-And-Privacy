@@ -1,6 +1,5 @@
-package de.hfu.furti.activities;
+package de.hfu.butler.activities;
 
-import android.app.Fragment;
 import android.app.FragmentTransaction;
 import android.content.Intent;
 import android.os.Bundle;
@@ -40,8 +39,8 @@ import java.util.List;
 import java.util.Map;
 
 import ai.kitt.snowboy.demo.R;
-import de.hfu.furti.Fragments.LocationFragment;
-import de.hfu.furti.Fragments.TimePickerFragment;
+import de.hfu.butler.Fragments.LocationFragment;
+import de.hfu.butler.Fragments.TimePickerFragment;
 
 public class PersonalProfile extends Activity {
 

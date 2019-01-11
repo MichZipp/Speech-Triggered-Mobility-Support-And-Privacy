@@ -1,4 +1,4 @@
-package de.hfu.furti.activities;
+package de.hfu.butler.activities;
 
 import android.app.ActionBar;
 import android.app.Activity;
@@ -22,8 +22,8 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import ai.kitt.snowboy.demo.R;
-import de.hfu.furti.MainActivity;
-import de.hfu.furti.service.SessionStorage;
+import de.hfu.butler.MainActivity;
+import de.hfu.butler.service.SessionStorage;
 
 public class SignInActivity extends Activity {
     private String baseUrl = "http://192.52.32.250:3000/api/users/login";

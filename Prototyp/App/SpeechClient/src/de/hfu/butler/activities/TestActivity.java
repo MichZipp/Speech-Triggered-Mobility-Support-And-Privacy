@@ -1,16 +1,13 @@
-package de.hfu.furti.activities;
+package de.hfu.butler.activities;
 
-import android.app.ActionBar;
 import android.app.Activity;
-import android.content.Intent;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
+import android.text.method.ScrollingMovementMethod;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
-import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
@@ -22,19 +19,13 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.util.HashMap;
-import java.util.Map;
-
 import ai.kitt.snowboy.demo.R;
-import de.hfu.furti.service.SessionStorage;
 
-public class ShowProfilesActivity extends Activity {
+public class TestActivity extends Activity {
 
     Button btnGetRepos;
     TextView tvRepoList;
     RequestQueue requestQueue;
-
-    String token;
 
     String baseUrl = "http://192.52.33.31:3000/api/";
     String url;
@@ -42,46 +33,35 @@ public class ShowProfilesActivity extends Activity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.showprofiles);
+        setContentView(R.layout.activity_test);
 
-        ActionBar bar = getActionBar();
-        getActionBar().hide();
-
-        token = getIntent().getStringExtra("KEY_AUTH_TOKEN");
-
-        this.tvRepoList = (TextView) findViewById(R.id.profileView);
+        this.btnGetRepos = (Button) findViewById(R.id.btn_get_repos);
+        this.tvRepoList = (TextView) findViewById(R.id.tv_repo_list);
+        this.tvRepoList.setMovementMethod(new ScrollingMovementMethod());
 
         requestQueue = Volley.newRequestQueue(this);
 
-        //getRepoList(tvRepoList.getText().toString());
+    }
 
-        FloatingActionButton fab = findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(ShowProfilesActivity.this, PersonalProfile.class);
-                //intent.putExtra("KEY_AUTH_TOKEN", token);
-                getApplicationContext().startActivity(intent);
-            }
-        });
-
+    private void clearRepoList() {
+        // This will clear the repo list (set it as a blank string).
+        this.tvRepoList.setText("");
     }
 
     private void addToRepoList(String vorname, String name, String geburtsdatum, String strasse, String hausnummer, String stadt, String postleitzahl, String land, String profileName, String profilType, String id, String UserId) {
-        String strProfilename = profileName;
+        String strRow = vorname + " / " + name + " / " + geburtsdatum + " / " + strasse + " / " + hausnummer + " / " + land + " / " + postleitzahl + " / " + land + " / " + profileName + " / " + profilType + " / " + id + " / " + UserId;
         String currentText = tvRepoList.getText().toString();
-        Log.e("ProfilName ", tvRepoList.getText().toString());
-        this.tvRepoList.setText(currentText + "\n\n" + profileName);
+        this.tvRepoList.setText(currentText + "\n\n" + strRow);
     }
 
     private void setRepoListText(String str) {
+        // This is used for setting the text of our repo list box to a specific string.
+        // We will use this to write a "No repos found" message if the user doens't have any.
         this.tvRepoList.setText(str);
     }
 
     private void getRepoList(String username) {
-        SessionStorage storage = SessionStorage.getInstance();
-        String user_id = storage.getUserId();
-        this.url = this.baseUrl + "users/"+ user_id +"/profiles/";
+        this.url = this.baseUrl + "/profiles";
 
         JsonArrayRequest arrReq = new JsonArrayRequest(Request.Method.GET, url,
                 new Response.Listener<JSONArray>() {
@@ -103,8 +83,8 @@ public class ShowProfilesActivity extends Activity {
                                     String profiletype = jsonObj.get("profiletype").toString();
                                     String id = jsonObj.get("id").toString();
                                     String userid = jsonObj.get("userId").toString();
+
                                     addToRepoList(vorname, name, geburtsdatum, strasse, hausnummer, stadt, postleitzahl, land, profilename, profiletype, id, userid);
-                                    Log.e("", response.toString());
                                 } catch (JSONException e) {
                                     Log.e("Volley", "Invalid JSON Object.");
                                 }
@@ -112,48 +92,23 @@ public class ShowProfilesActivity extends Activity {
                             }
                         }
                     }
-                }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-                // If there a HTTP error
-                setRepoListText("Error while calling REST API");
-                Log.e("Volley", error.toString());
-            }
-        }) {
-            @Override
-            public Map<String, String> getHeaders() throws AuthFailureError {
-                Map<String, String> headers = new HashMap<String, String>();
-                headers.put("Authorization", token);
-                return headers;
-            }
-        };
+                },
+
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        // If there a HTTP error
+                        setRepoListText("Error while calling REST API");
+                        Log.e("Volley", error.toString());
+                    }
+                }
+        );
         requestQueue.add(arrReq);
     }
 
-//        public void getReposClicked (View v){
-//            clearRepoList();
-//            getRepoList(tvRepoList.getText().toString());
-//        }
-
-    public void openProfile(View v) {
-        Intent intent = new Intent(ShowProfilesActivity.this, SingleProfileActivity.class);
-        //TO-DO: Werte speichern und übergeben
-        String vorname = "";
-        String nachname = "";
-        String geburtsdatum = "";
-        String strasse = "";
-        String hausnummer = "";
-        String stadt = "";
-        String land = "";
-        intent.putExtra("KEY_AUTH_TOKEN", token);
-        intent.putExtra("VORNAME", vorname);
-        intent.putExtra("NACHNAME", nachname);
-        intent.putExtra("GEBURTSDATUM", geburtsdatum);
-        intent.putExtra("STRASSE", strasse);
-        intent.putExtra("HAUSNUMMER", hausnummer);
-        intent.putExtra("STADT", stadt);
-        intent.putExtra("LAND", land);
-        getApplicationContext().startActivity(intent);
+    public void getReposClicked(View v) {
+        clearRepoList();
+        getRepoList(tvRepoList.getText().toString());
     }
 
 }
