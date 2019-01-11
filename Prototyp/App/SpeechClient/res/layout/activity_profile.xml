@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical" >
@@ -11,7 +10,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="10dp"
-        android:text="Profil"
+        android:text="Profile"
         android:textSize="30sp"
         android:textStyle="bold" />
 
@@ -64,9 +63,20 @@
         android:inputType="textPersonName" />
 
     <Button
+        android:id="@+id/buttonUpdateLocation"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Update Location" />
+
+    <Button
+        android:id="@+id/buttonUpdateCalendar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Update Calendar" />
+
+    <Button
         android:id="@+id/buttonUpdateProfile"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Update Profil" />
-
+        android:text="Update Profile" />
 </LinearLayout>

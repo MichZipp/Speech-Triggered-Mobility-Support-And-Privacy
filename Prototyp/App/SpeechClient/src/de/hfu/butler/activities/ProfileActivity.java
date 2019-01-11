@@ -1,7 +1,7 @@
 package de.hfu.butler.activities;
 
+import android.app.Activity;
 import android.content.Intent;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -11,69 +11,132 @@ import android.widget.EditText;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import de.hfu.butler.MainActivity;
 import de.hfu.butler.R;
+import de.hfu.butler.service.SessionStorage;
 
-public class ProfileActivity extends AppCompatActivity {
+public class ProfileActivity extends Activity {
     private final String LOG_TAG = "ProfileActivity";
-    private final String profileUpdateUrl = "";
+    private final String baseUrl = "http://192.52.32.250:3000/api/customers/";
     private RequestQueue requestQueue;
 
     private EditText editFirstname;
     private EditText editLastname;
     private EditText editLocation;
     private Button btnUpdateProfile;
+    private Button btnUpdateLocation;
+    private Button btnUpdateCalendar;
 
+    private SessionStorage storage;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_profile);
 
+        storage = SessionStorage.getInstance();
+
         editFirstname = (EditText) findViewById(R.id.editTextFirstname);
         editLastname = (EditText) findViewById(R.id.editTextLastname);
         editLocation = (EditText) findViewById(R.id.editTextLocation);
         btnUpdateProfile = (Button) findViewById(R.id.buttonUpdateProfile);
+        btnUpdateLocation = (Button) findViewById(R.id.buttonUpdateLocation);
+        btnUpdateCalendar = (Button) findViewById(R.id.buttonUpdateCalendar);
 
         btnUpdateProfile.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                doProfileUpdate();
+                updateProfile();
+            }
+        });
+
+        btnUpdateLocation.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // set editLocation text based on current position!
+            }
+        });
+
+        btnUpdateCalendar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // send calendar to API
             }
         });
 
         requestQueue = Volley.newRequestQueue(this);
+
+        getProfile();
     }
 
-    private void doProfileUpdate() {
+    private void getProfile(){
+        String url = baseUrl + storage.getUserId() + "/profiles?access_token=" + storage.getSessionToken();
+
+        JsonArrayRequest getProfileRequest = new JsonArrayRequest(Request.Method.GET, url,
+            new com.android.volley.Response.Listener<JSONArray>() {
+                @Override
+                public void onResponse(JSONArray response) {
+                    Log.i(LOG_TAG, "RESPONSE: " + response.toString());
+                    String firstname, lastname, location, id;
+                    try {
+                    JSONObject profile = (JSONObject) response.get(0);
+                    firstname = profile.getString("vorname");
+                    lastname = profile.getString("name");
+                    location = profile.getString("location");
+                    id = profile.getString("id");
+                    storage.setProfileId(id);
+
+                    editFirstname.setText(firstname);
+                    editLastname.setText(lastname);
+                    editLocation.setText(location);
+
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                }
+            },
+            new com.android.volley.Response.ErrorListener() {
+                @Override
+                public void onErrorResponse(VolleyError error) {
+                    Log.e(LOG_TAG,"ERROR: " + error.toString());
+                }
+            });
+
+        requestQueue.add(getProfileRequest);
+    }
+
+    private void updateProfile() {
+        String url = baseUrl + storage.getUserId() + "/profiles/" + storage.getProfileId() + "?access_token=" + storage.getSessionToken();
+
         String firstname = editFirstname.getText().toString();
         String lastname = editLastname.getText().toString();
         String location = editLocation.getText().toString();
 
         JSONObject profileJson = new JSONObject();
         try {
-            profileJson.put("email", firstname);
-            profileJson.put("password", lastname);
-            profileJson.put("password", location);
+            profileJson.put("vorname", firstname);
+            profileJson.put("name", lastname);
+            profileJson.put("location", location);
         } catch (JSONException e) {
             e.printStackTrace();
         }
 
-        JsonObjectRequest signInRequest = new JsonObjectRequest(Request.Method.POST, profileUpdateUrl, profileJson,
+        JsonObjectRequest updateProfileRequest = new JsonObjectRequest(Request.Method.PUT, url, profileJson,
                 new com.android.volley.Response.Listener<JSONObject>() {
                     @Override
                     public void onResponse(JSONObject response) {
                         Log.i(LOG_TAG, "RESPONSE: " + response.toString());
-                        String userID, token;
-                        Log.i(LOG_TAG, "RESPONSE: " + response.toString());
                         Intent i = new Intent(getApplicationContext(), MainActivity.class);
                         getApplicationContext().startActivity(i);
+                        finish();
                     }
                 },
                 new com.android.volley.Response.ErrorListener() {
@@ -83,7 +146,7 @@ public class ProfileActivity extends AppCompatActivity {
                     }
                 });
 
-        requestQueue.add(signInRequest);
+        requestQueue.add(updateProfileRequest);
     }
 }
 

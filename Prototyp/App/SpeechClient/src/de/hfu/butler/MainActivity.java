@@ -125,7 +125,7 @@ public class MainActivity extends Activity implements InteractionListener, Inter
     private void initHotwordDetechtion(){
         activeTimes = 0;
         recordingThread = new RecordingThread(handle, new AudioDataSaver());
-        recordingThread.setSensitivity(0.6);
+        recordingThread.setSensitivity(0.5);
     }
 
     private void initLex() {
@@ -443,8 +443,8 @@ public class MainActivity extends Activity implements InteractionListener, Inter
         // Handle item selection
         switch (item.getItemId()) {
             case R.id.profile:
-                Intent intent = new Intent(this, ProfileActivity.class);
-                this.startActivity(intent);
+                Intent intent = new Intent(getApplicationContext(), ProfileActivity.class);
+                getApplicationContext().startActivity(intent);
                 return true;
             default:
                 return super.onOptionsItemSelected(item);

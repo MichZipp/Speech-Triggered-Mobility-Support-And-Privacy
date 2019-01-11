@@ -4,6 +4,7 @@ public class SessionStorage {
     private String user_id;
     private String session_token;
     private int profile_type = 0;
+    private String profile_id;
 
     // static variable single_instance of type Singleton
     private static SessionStorage single_instance = null;
@@ -42,5 +43,13 @@ public class SessionStorage {
 
     public void setProfileType(int profile_type) {
         this.profile_type = profile_type;
+    }
+
+    public String getProfileId() {
+        return profile_id;
+    }
+
+    public void setProfileId(String profile_id) {
+        this.profile_id = profile_id;
     }
 }
