@@ -27,8 +27,8 @@ import de.hfu.butler.service.SessionStorage;
 
 public class SignInActivity extends Activity {
     private final String LOG_TAG = "SignInActivity";
-    private final String loginUrl = "http://192.52.32.250:3000/api/users/login";
-    private final String userSettingsUrl = "\"http://192.52.32.250:3000/api/usersettings";
+    private final String loginUrl = "http://192.52.32.250:3000/api/customers/login";
+    private final String profileUrl = "http://192.52.32.250:3000/api/customers/";
     private RequestQueue requestQueue;
     private SessionStorage storage;
 
@@ -96,6 +96,15 @@ public class SignInActivity extends Activity {
             e.printStackTrace();
         }
 
+        final JSONObject basicProfileJson = new JSONObject();
+        try {
+            basicProfileJson.put("vorname", "Max");
+            basicProfileJson.put("name", "Mustermann");
+            basicProfileJson.put("location", "Furtwangen");
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
         JsonObjectRequest signInRequest = new JsonObjectRequest(Request.Method.POST, this.loginUrl, signInJson,
             new com.android.volley.Response.Listener<JSONObject>() {
                 @Override
@@ -108,12 +117,52 @@ public class SignInActivity extends Activity {
                         token = response.getString("id");
                         storage.setUserId(userID);
                         storage.setSessionToken(token);
+                        Log.i(LOG_TAG, "Userid: " + storage.getUserId());
+                        requestQueue.add(new JsonObjectRequest(Request.Method.GET, getProfileCountUrl(),
+                                new com.android.volley.Response.Listener<JSONObject>() {
+                                    @Override
+                                    public void onResponse(JSONObject response) {
+                                        Log.i(LOG_TAG, "RESPONSE: " + response.toString());
+                                        int count = 0;
+
+                                        try {
+                                            count = response.getInt("count");
+                                            if(count == 0){
+                                                requestQueue.add(new JsonObjectRequest(Request.Method.POST, getProfilePostUrl(), basicProfileJson,
+                                                    new com.android.volley.Response.Listener<JSONObject>() {
+                                                        @Override
+                                                        public void onResponse(JSONObject response) {
+                                                            Log.i(LOG_TAG, "RESPONSE: " + response.toString());
+                                                            Intent i = new Intent(getApplicationContext(), MainActivity.class);
+                                                            getApplicationContext().startActivity(i);
+                                                            finish();
+                                                        }
+                                                    },
+                                                    new com.android.volley.Response.ErrorListener() {
+                                                        @Override
+                                                        public void onErrorResponse(VolleyError error) {
+                                                            Log.e(LOG_TAG,"ERROR: " + error.toString());
+                                                        }
+                                                    }));
+                                            }else{
+                                                Intent i = new Intent(getApplicationContext(), MainActivity.class);
+                                                getApplicationContext().startActivity(i);
+                                                finish();
+                                            }
+                                        } catch(JSONException e){
+                                            Log.e(LOG_TAG, "JSONException: " + e.toString());                            ;
+                                        }
+                                    }
+                                },
+                                new com.android.volley.Response.ErrorListener() {
+                                    @Override
+                                    public void onErrorResponse(VolleyError error) {
+                                        Log.e(LOG_TAG,"ERROR: " + error.toString());
+                                    }
+                                }));
                     } catch(JSONException e){
-                        Log.e(LOG_TAG, "JSONException: " + e.toString());                            ;
+                        Log.e(LOG_TAG, "JSONException: " + e.toString());
                     }
-                    Log.i(LOG_TAG, "RESPONSE: " + response.toString());
-                    Intent i = new Intent(getApplicationContext(), MainActivity.class);
-                    getApplicationContext().startActivity(i);
                 }
             },
             new com.android.volley.Response.ErrorListener() {
@@ -124,5 +173,16 @@ public class SignInActivity extends Activity {
         });
 
         requestQueue.add(signInRequest);
+
+    }
+
+    private String getProfileCountUrl(){
+        String url = profileUrl + storage.getUserId() + "/profiles/count?access_token=" + storage.getSessionToken();
+        return url;
+    }
+
+    private String getProfilePostUrl(){
+        String url = profileUrl + storage.getUserId() + "/profiles?access_token=" + storage.getSessionToken();
+        return url;
     }
 }

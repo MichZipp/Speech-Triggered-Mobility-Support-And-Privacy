@@ -20,12 +20,13 @@ import com.android.volley.toolbox.Volley;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import de.hfu.butler.MainActivity;
 import de.hfu.butler.R;
 import de.hfu.butler.service.SessionStorage;
 
 public class SignUpActivity extends Activity {
     private final String LOG_TAG = "SignUpActivity";
-    private final String userUrl = "http://192.52.32.250:3000/api/users";
+    private final String userUrl = "http://192.52.32.250:3000/api/customers";
 
     private EditText editEmail;
     private EditText editPassword;
@@ -119,28 +120,29 @@ public class SignUpActivity extends Activity {
 
     private void doRegister(String email, String password) {
         JSONObject signUpJson = new JSONObject();
-
         try {
-            signUpJson.put("Usertype", storage.getProfileType());
+            //signUpJson.put("Usertype", storage.getProfileType());
             signUpJson.put("email", email);
             signUpJson.put("password", password);
         } catch (JSONException e) {
             e.printStackTrace();
         }
 
-        final JsonObjectRequest signUpRequest = new JsonObjectRequest(Request.Method.POST, userUrl, signUpJson,
-                new com.android.volley.Response.Listener<JSONObject>() {
-                    @Override
-                    public void onResponse(JSONObject response) {
-                        Log.i(LOG_TAG, "RESPONSE: " + response.toString());
-                        Intent i = new Intent(getApplicationContext(), SignInActivity.class);
-                        getApplicationContext().startActivity(i);
-                    }
-                }, new com.android.volley.Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-                Log.e(LOG_TAG,"ERROR: " + error.getMessage());
-            }
+        JsonObjectRequest signUpRequest = new JsonObjectRequest(Request.Method.POST, userUrl, signUpJson,
+            new com.android.volley.Response.Listener<JSONObject>() {
+                @Override
+                public void onResponse(JSONObject response) {
+                    Log.i(LOG_TAG, "RESPONSE: " + response.toString());
+                    Intent i = new Intent(getApplicationContext(), SignInActivity.class);
+                    getApplicationContext().startActivity(i);
+                    finish();
+                }
+            },
+            new com.android.volley.Response.ErrorListener() {
+                @Override
+                public void onErrorResponse(VolleyError error) {
+                    Log.e(LOG_TAG,"ERROR: " + error.getMessage());
+                }
         });
 
         requestQueue.add(signUpRequest);

@@ -86,7 +86,7 @@ public class MainActivity extends Activity implements InteractionListener, Inter
         setContentView(R.layout.activity_main);
 
         ActionBar bar = getActionBar();
-        bar.setTitle("Menü:");
+        // bar.setTitle("Menü:");
         bar.setBackgroundDrawable(new ColorDrawable(Color.GRAY));
 
         appContext = getApplicationContext();
@@ -94,12 +94,10 @@ public class MainActivity extends Activity implements InteractionListener, Inter
         initUI();
 
         AppResCopy.copyResFromAssetsToSD(this);
-        // initHotwordDetechtion();
-        //initLex();
 
-        // AppResCopy.copyResFromAssetsToSD(this);
-
-        //startHotwordDetection();
+        initHotwordDetechtion();
+        initLex();
+        startHotwordDetection();
     }
 
     private void initUI() {
@@ -127,7 +125,7 @@ public class MainActivity extends Activity implements InteractionListener, Inter
     private void initHotwordDetechtion(){
         activeTimes = 0;
         recordingThread = new RecordingThread(handle, new AudioDataSaver());
-        recordingThread.setSensitivity(0.4);
+        recordingThread.setSensitivity(0.6);
     }
 
     private void initLex() {
@@ -445,8 +443,8 @@ public class MainActivity extends Activity implements InteractionListener, Inter
         // Handle item selection
         switch (item.getItemId()) {
             case R.id.profile:
-                //Intent intent = new Intent(this, ShowProfilesActivity.class);
-                //this.startActivity(intent);
+                Intent intent = new Intent(this, ProfileActivity.class);
+                this.startActivity(intent);
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
