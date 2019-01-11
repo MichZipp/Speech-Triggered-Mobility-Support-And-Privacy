@@ -26,7 +26,8 @@ import de.hfu.butler.MainActivity;
 import de.hfu.butler.service.SessionStorage;
 
 public class SignInActivity extends Activity {
-    private String baseUrl = "http://192.52.32.250:3000/api/users/login";
+    private final String LOG_TAG = "SignUpActivity";
+    private final String baseUrl = "http://192.52.32.250:3000/api/users/login";
     private RequestQueue requestQueue;
 
     private EditText editEmail;
@@ -104,10 +105,10 @@ public class SignInActivity extends Activity {
                         storage.setUserId(userID);
                         storage.setSessionToken(token);
                     } catch(JSONException e){
-                        Log.e("RESPONSE: ", e.toString());                            ;
+                        Log.e(LOG_TAG, "JSONException: " + e.toString());                            ;
                     }
 
-                    Log.i("RESPONSE: ", response.toString());
+                    Log.i(LOG_TAG, "RESPONESE: " + response.toString());
                     Intent i = new Intent(getApplicationContext(), MainActivity.class);
                     getApplicationContext().startActivity(i);
                 }

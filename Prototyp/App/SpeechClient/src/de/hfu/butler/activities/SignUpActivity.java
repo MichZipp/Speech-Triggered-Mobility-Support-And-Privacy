@@ -27,7 +27,8 @@ import de.hfu.butler.service.SessionStorage;
 
 public class SignUpActivity extends Activity {
     private final String LOG_TAG = "SignUpActivity";
-    private final String baseUrl = "http://192.52.32.250:3000/api/users";
+    private final String userUrl = "http://192.52.32.250:3000/api/users";
+    private final String userSettingsUrl = "\"http://192.52.32.250:3000/api/usersettings";
 
     private EditText editEmail;
     private EditText editPassword;
@@ -54,7 +55,6 @@ public class SignUpActivity extends Activity {
         radioGroupProfileType = (RadioGroup) findViewById(R.id.radioGroupProfileType);
 
         storage = SessionStorage.getInstance();
-        storage.setProfile_type(0);
 
         btnSignUp.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -83,13 +83,13 @@ public class SignUpActivity extends Activity {
                 Log.i(LOG_TAG, String.valueOf(checkedId));
                 switch(checkedId) {
                     case R.id.radioButtonPrivat:
-                            storage.setProfile_type(0);
+                            storage.setProfileType(0);
                             break;
                     case R.id.radioButtonDoctor:
-                            storage.setProfile_type(1);
+                            storage.setProfileType(1);
                             break;
                     case R.id.radioButtonCarRental:
-                            storage.setProfile_type(2);
+                            storage.setProfileType(2);
                             break;
                 }
             }
@@ -121,16 +121,23 @@ public class SignUpActivity extends Activity {
     }
 
     private void doRegister(String email, String password) {
-        JSONObject json = new JSONObject();
+        JSONObject signUpJson = new JSONObject();
         try {
-            json.put("email", email);
-            json.put("password", password);
-
+            signUpJson.put("email", email);
+            signUpJson.put("password", password);
         } catch (JSONException e) {
             e.printStackTrace();
         }
 
-        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.POST, baseUrl, json,
+        final JSONObject userSettingsJson = new JSONObject();
+        try {
+            userSettingsJson.put("type", email);
+            userSettingsJson.put("userId", password);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+        final JsonObjectRequest setUserSettingsRequest = new JsonObjectRequest(Request.Method.POST, userUrl, userSettingsJson,
                 new com.android.volley.Response.Listener<JSONObject>() {
                     @Override
                     public void onResponse(JSONObject response) {
@@ -144,6 +151,28 @@ public class SignUpActivity extends Activity {
                 Log.e(LOG_TAG,"Error getting response: " + error.toString());
             }
         });
-        requestQueue.add(jsonObjectRequest);
+
+        final JsonObjectRequest signUpRequest = new JsonObjectRequest(Request.Method.POST, userUrl, signUpJson,
+                new com.android.volley.Response.Listener<JSONObject>() {
+                    @Override
+                    public void onResponse(JSONObject response) {
+                        String userId;
+                        try {
+                            userId = response.getString("id");
+                            userSettingsJson.put("type", storage.getProfileType());
+                            userSettingsJson.put("userId", userId);
+                        } catch(JSONException e){
+                            Log.e(LOG_TAG, "JSONException: " + e.toString());                            ;
+                        }
+
+                        requestQueue.add(setUserSettingsRequest);
+                    }
+                }, new com.android.volley.Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Log.e(LOG_TAG,"Error getting response: " + error.toString());
+            }
+        });
+        requestQueue.add(signUpRequest);
     }
 }

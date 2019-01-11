@@ -45,11 +45,11 @@ public class SessionStorage {
         this.active_profile = active_profile;
     }
 
-    public int getProfile_type() {
+    public int getProfileType() {
         return profile_type;
     }
 
-    public void setProfile_type(int profile_type) {
+    public void setProfileType(int profile_type) {
         this.profile_type = profile_type;
     }
 }
