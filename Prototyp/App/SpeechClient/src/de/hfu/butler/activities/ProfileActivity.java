@@ -170,9 +170,8 @@ public class ProfileActivity extends Activity {
             return;
         }
 
-        Location location = locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
+        //Location location = locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
         locationManager.requestSingleUpdate(LocationManager.GPS_PROVIDER, locationListener, null);
-
     }
 
     private void updateCalendar(){

@@ -71,7 +71,10 @@ public class MainActivity extends Activity implements InteractionListener, Inter
     private Context appContext = null;
 
     private boolean isPlaying = false;
+    private boolean isRecording = false;
     private boolean isAskResponse = false;
+
+    private SessionStorage storage = null;
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -91,6 +94,8 @@ public class MainActivity extends Activity implements InteractionListener, Inter
 
         appContext = getApplicationContext();
 
+        storage = SessionStorage.getInstance();
+
         initUI();
 
         AppResCopy.copyResFromAssetsToSD(this);
@@ -102,25 +107,24 @@ public class MainActivity extends Activity implements InteractionListener, Inter
 
     private void initUI() {
         record_button = (Button) findViewById(R.id.btn_test1);
-        record_button.setOnClickListener(record_button_handle);
-        record_button.setEnabled(true);
+        record_button.setOnClickListener(new OnClickListener() {
+            // @Override
+            public void onClick(View arg0) {
+                if(record_button.getText().equals(getResources().getString(R.string.btn1_start))) {
+                    sleep();
+                    startHotwordDetection();
+                } else {
+                    lexClient.cancel();
+                    stopHotwordDetection();
+                    sleep();
+                }
+            }
+        });
 
+        record_button.setEnabled(true);
         log = (TextView)findViewById(R.id.log);
         logView = (ScrollView)findViewById(R.id.logView);
     }
-
-    private OnClickListener record_button_handle = new OnClickListener() {
-        // @Override
-        public void onClick(View arg0) {
-            if(record_button.getText().equals(getResources().getString(R.string.btn1_start))) {
-                sleep();
-                startHotwordDetection();
-            } else {
-                stopHotwordDetection();
-                sleep();
-            }
-        }
-    };
 
     private void initHotwordDetechtion(){
         activeTimes = 0;
@@ -132,14 +136,6 @@ public class MainActivity extends Activity implements InteractionListener, Inter
         credentialsProvider = new CognitoCredentialsProvider(
                 appContext.getResources().getString(R.string.identity_id),
                 Regions.fromName(appContext.getResources().getString(R.string.aws_region)));
-        voiceView = (InteractiveVoiceView) findViewById(R.id.voiceInterface);
-        voiceView.setInteractiveVoiceListener(this);
-        voiceView.getViewAdapter().setCredentialProvider(credentialsProvider);
-        voiceView.getViewAdapter().setInteractionConfig(
-                new InteractionConfig(appContext.getString(R.string.bot_name),
-                        appContext.getString(R.string.bot_alias)));
-        voiceView.getViewAdapter().setAwsRegion(appContext.getString(R.string.aws_region));
-        voiceView.setBackgroundColor(Color.TRANSPARENT);
 
         lexClient = new InteractionClient(appContext,
                 credentialsProvider,
@@ -149,6 +145,39 @@ public class MainActivity extends Activity implements InteractionListener, Inter
         lexClient.setInteractionListener(this);
         lexClient.setAudioPlaybackListener(this);
         lexClient.setMicrophoneListener(this);
+
+        voiceView = (InteractiveVoiceView) findViewById(R.id.voiceInterface);
+        voiceView.setInteractiveVoiceListener(this);
+        voiceView.getViewAdapter().setCredentialProvider(credentialsProvider);
+        voiceView.getViewAdapter().setInteractionConfig(
+                new InteractionConfig(appContext.getString(R.string.bot_name),
+                        appContext.getString(R.string.bot_alias)));
+        voiceView.getViewAdapter().setAwsRegion(appContext.getString(R.string.aws_region));
+        voiceView.setBackgroundColor(Color.TRANSPARENT);
+
+        voiceView.setOnClickListener(new OnClickListener() {
+            // @Override
+            public void onClick(View arg0) {
+                Log.i(TAG, "isRecording: " + isRecording);
+                if(isRecording == false){
+                    stopHotwordDetection();
+                    Log.i(TAG, "Test");
+                    // Get userID and access_token from storage
+                    String user_id = storage.getUserId();
+                    String access_token = storage.getSessionToken();
+
+                    // Pass AccessToken as sessionAttribute
+                    Map<String, String> sessionAttributes = new HashMap();
+                    sessionAttributes.put("accessToken", access_token);
+                    sessionAttributes.put("userId", user_id);
+                    lexClient.audioInForAudioOut(sessionAttributes);
+                }else{
+                    lexClient.cancel();
+                    startHotwordDetection();
+                }
+                Log.i(TAG, "Microphone Click");
+            }
+        });
     }
 
     @Override
@@ -183,7 +212,6 @@ public class MainActivity extends Activity implements InteractionListener, Inter
                     //voiceView.callOnClick();
 
                     // Get userID and access_token from storage
-                    SessionStorage storage = SessionStorage.getInstance();
                     String user_id = storage.getUserId();
                     String access_token = storage.getSessionToken();
 
@@ -398,7 +426,15 @@ public class MainActivity extends Activity implements InteractionListener, Inter
         Log.d(TEST, "onAudioPlayBackCompleted");
         isPlaying = false;
         if(isAskResponse){
-            lexClient.audioInForAudioOut(null);
+            // Get userID and access_token from storage
+            String user_id = storage.getUserId();
+            String access_token = storage.getSessionToken();
+
+            // Pass AccessToken as sessionAttribute
+            Map<String, String> sessionAttributes = new HashMap();
+            sessionAttributes.put("accessToken", access_token);
+            sessionAttributes.put("userId", user_id);
+            lexClient.audioInForAudioOut(sessionAttributes);
         }else{
             startHotwordDetection();
         }
@@ -416,11 +452,13 @@ public class MainActivity extends Activity implements InteractionListener, Inter
 
     @Override
     public void startedRecording() {
+        isRecording = true;
         Log.d(TEST, "startedRecording");
     }
 
     @Override
     public void onRecordingEnd() {
+        isRecording = false;
         Log.d(TEST, "onRecordingEnd");
         voiceView.animateWaitSpinner();
     }

@@ -12,7 +12,6 @@ apply plugin: 'android'
 dependencies {
     implementation fileTree(include: '*.jar', dir: 'libs')
     //noinspection DuplicatePlatformClasses
-    implementation 'org.json:json:20160212'
     implementation 'com.mcxiaoke.volley:library:1.0.19'
     implementation 'com.google.code.gson:gson:2.6.1'
     implementation 'com.google.apis:google-api-services-calendar:v3-rev364-1.25.0'

@@ -7,10 +7,7 @@ import android.location.Geocoder;
 import android.location.Location;
 import android.location.LocationListener;
 import android.os.Bundle;
-import android.view.View;
 import android.widget.EditText;
-import android.widget.TextView;
-
 import java.io.IOException;
 import java.util.List;
 import java.util.Locale;
