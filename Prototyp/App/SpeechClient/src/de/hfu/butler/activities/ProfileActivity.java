@@ -1,8 +1,15 @@
 package de.hfu.butler.activities;
 
+import android.Manifest;
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.location.Location;
+import android.location.LocationListener;
+import android.location.LocationManager;
 import android.os.Bundle;
+import android.support.v4.app.ActivityCompat;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -21,12 +28,16 @@ import org.json.JSONObject;
 
 import de.hfu.butler.MainActivity;
 import de.hfu.butler.R;
+import de.hfu.butler.service.GPSListener;
+import de.hfu.butler.service.ReadCalendar;
 import de.hfu.butler.service.SessionStorage;
 
 public class ProfileActivity extends Activity {
     private final String LOG_TAG = "ProfileActivity";
     private final String baseUrl = "http://192.52.32.250:3000/api/customers/";
     private RequestQueue requestQueue;
+
+    private LocationListener locationListener = new GPSListener(this);
 
     private EditText editFirstname;
     private EditText editLastname;
@@ -62,6 +73,7 @@ public class ProfileActivity extends Activity {
             @Override
             public void onClick(View v) {
                 // set editLocation text based on current position!
+                updateLocation();
             }
         });
 
@@ -69,6 +81,7 @@ public class ProfileActivity extends Activity {
             @Override
             public void onClick(View v) {
                 // send calendar to API
+                updateCalendar();
             }
         });
 
@@ -147,6 +160,27 @@ public class ProfileActivity extends Activity {
                 });
 
         requestQueue.add(updateProfileRequest);
+    }
+
+    private void updateLocation() {
+        int requestPermissionsCode = 50;
+        LocationManager locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
+        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, requestPermissionsCode);
+            return;
+        }
+
+        Location location = locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
+        locationManager.requestSingleUpdate(LocationManager.GPS_PROVIDER, locationListener, null);
+
+    }
+
+    private void updateCalendar(){
+
+        ReadCalendar reader = new ReadCalendar(this);
+
+        reader.requestPermission();
+        reader.readCalendar();
     }
 }
 
