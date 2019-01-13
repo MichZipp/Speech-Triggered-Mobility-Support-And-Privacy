@@ -161,7 +161,7 @@ public class MainActivity extends Activity implements InteractionListener, Inter
                 Log.i(TAG, "isRecording: " + isRecording);
                 if(isRecording == false){
                     stopHotwordDetection();
-                    Log.i(TAG, "Test");
+                    isRecording = true;
                     // Get userID and access_token from storage
                     String user_id = storage.getUserId();
                     String access_token = storage.getSessionToken();
@@ -173,6 +173,7 @@ public class MainActivity extends Activity implements InteractionListener, Inter
                     lexClient.audioInForAudioOut(sessionAttributes);
                 }else{
                     lexClient.cancel();
+                    isRecording = false;
                     startHotwordDetection();
                 }
                 Log.i(TAG, "Microphone Click");
@@ -208,6 +209,7 @@ public class MainActivity extends Activity implements InteractionListener, Inter
                     // Toast.makeText(MainActivity.this, "Active "+activeTimes, Toast.LENGTH_SHORT).show();
                     showToast("Active "+activeTimes);
                     stopHotwordDetection();
+                    isRecording = true;
                     sleep(200);
                     //voiceView.callOnClick();
 
@@ -274,6 +276,7 @@ public class MainActivity extends Activity implements InteractionListener, Inter
     }
 
     private void startHotwordDetection() {
+        isRecording = false;
         recordingThread.startRecording();
         updateLog(" ----> recording started ...", "green");
         record_button.setText(R.string.btn1_stop);

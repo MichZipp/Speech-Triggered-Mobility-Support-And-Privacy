@@ -2,6 +2,8 @@
 
 var _helpers = require("./helpers");
 
+var _responseBuilder = require("./responseBuilder");
+
 var _api = require("./api");
 
 var _constants = _interopRequireDefault(require("./constants"));
@@ -10,9 +12,14 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 
 var dispatch = function dispatch(intentRequest, callback) {
   // var request = JSON.parse(intentRequest);
+  console.log(intentRequest);
   console.log("request received for userId=${intentRequest.userId}, intentName=${intentRequest.currentIntent.intentName}");
   var sessionAttributes = intentRequest.sessionAttributes;
+  console.log(sessionAttributes);
+  var access_token = sessionAttributes.accessToken;
+  var user_id = sessionAttributes.userId;
   var intentName = intentRequest.currentIntent.name;
+  var responseMessage = "This is a default message";
 
   switch (intentName) {
     case _constants.default.NEWDOCAPPOINTMENT:
@@ -20,26 +27,24 @@ var dispatch = function dispatch(intentRequest, callback) {
       break;
 
     case _constants.default.USERNAME:
-      callback((0, _helpers.close)(sessionAttributes, "Are you kiddinng my, your name is: " + (0, _api.getUserName)()));
+      (0, _responseBuilder.getUserName)(access_token, user_id).then(function (response) {
+        callback((0, _helpers.close)(sessionAttributes, response));
+      }).catch(function (error) {
+        callback((0, _helpers.close)(sessionAttributes, error));
+      });
       break;
 
     case _constants.default.USERLOCATION:
-      callback((0, _helpers.close)(sessionAttributes, "Actually you are in " + (0, _api.getUserLocation)()));
-      break;
-
-    case _constants.default.USERPROFILE:
-      callback((0, _helpers.close)(sessionAttributes, "You Profile " + (0, _api.getUserProfileName)() + "is currently activated!"));
+      callback((0, _helpers.close)(sessionAttributes, (0, _responseBuilder.getUserLocation)(access_token, user_id)));
       break;
 
     case _constants.default.DOCS:
-      callback((0, _helpers.close)(sessionAttributes, (0, _api.getDocs)()));
+      callback((0, _helpers.close)(sessionAttributes, "dd"));
       break;
 
     default:
       callback((0, _helpers.close)(sessionAttributes, "Giraffe"));
   }
-
-  callback((0, _helpers.close)(sessionAttributes, "Affe"));
 };
 
 exports.handler = function (event, context, callback) {
