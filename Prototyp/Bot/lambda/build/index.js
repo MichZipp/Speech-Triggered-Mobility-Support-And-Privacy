@@ -43,7 +43,7 @@ var dispatch = function dispatch(intentRequest, callback) {
       break;
 
     case _constants.default.DOCS:
-      (0, _responseBuilder.getDocs)(access_token).then(function (response) {
+      (0, _responseBuilder.getDocs)(access_token, user_id).then(function (response) {
         callback((0, _helpers.close)(sessionAttributes, response));
       }).catch(function (error) {
         callback((0, _helpers.close)(sessionAttributes, error));

@@ -38,7 +38,7 @@ const dispatch = (intentRequest, callback) => {
             }); 
             break;
         case I.DOCS:
-            getDocs(access_token)
+            getDocs(access_token, user_id)
             .then( response => {
                 callback(close(sessionAttributes, response));
             })

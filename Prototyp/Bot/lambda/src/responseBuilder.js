@@ -33,15 +33,62 @@ export const getUserLocation = (access_token, user_id) =>
 
 export const getDocs = (access_token, user_id) => 
     new Promise(function (resolve, reject) {
+        var response= "In furtwangen are the following doctors: ", location, docsNumber = 0;
+        getUserProfile(access_token, user_id)
+        .then( profile => {
+            location = profile.location;
+            console.log("Location: " + profile.location);
+
+            getDocIds(access_token)
+            .then( ids => {
+                const promises = [];
+                for(var i in ids){
+                    promises.push(getUserProfile(access_token, ids[i]));
+                }
+            
+                Promise.all(promises)
+                .then( docs => {
+                    for(var i in docs){
+                        if(docs[i].location === location){
+                            docsNumber++;
+                            response += docs[i].vorname + " " + docs[i].name + ", ";
+                        }                    
+                    }
+
+                    if(docsNumber === 0){
+                        response = "Unfortunately, no doctors were found nearby";
+                    }
+
+                    console.log("Response: " + response);            
+                    resolve(response);
+                })
+                .catch( error => {
+                    console.log(error);
+                    reject(error)
+                });            
+            })
+            .catch( error => {
+                console.log(error);
+                reject(error)
+            });
+        })
+        .catch( error => {
+            response = "Error: " + error;
+            reject(response);
+        });  
+    });
+
+export const getNewDocAppointmet = (access_token, user_id) => 
+    new Promise(function (resolve, reject) {
         var docs = [];
-        var response= "In furtwangen are the following doctors: "
+        var response= "In furtwangen are the following doctors: ";
         getDocIds(access_token, user_id)
-        .then( ids => {
+            .then( ids => {
             const promises = [];
             for(var i in ids){
-                 promises.push(getUserProfile(access_token, ids[i]));
+                promises.push(getUserProfile(access_token, ids[i]));
             }
-           
+        
             Promise.all(promises)
             .then( docs => {
                 for(var i in docs){
@@ -58,5 +105,5 @@ export const getDocs = (access_token, user_id) =>
         .catch( error => {
             console.log(error);
             reject(error)
-        });  
-    });
+        });
+    });  

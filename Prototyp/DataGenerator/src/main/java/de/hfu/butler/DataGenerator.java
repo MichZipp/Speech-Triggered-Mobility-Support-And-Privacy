@@ -8,11 +8,11 @@ public class DataGenerator {
 	public static void main(String[] args) {
 		System.out.println("<---- Programm started! ---->");		
 		
-		createDoc("Dr. med. Barbara", "Weis", "Furtwangen");
-		createDoc("Dr. med. Goetz", "Besenfelder", "Furtwangen");
-		createDoc("Dr. med. Ute", "Scheit", "Furtwangen");
-		createDoc("Dr. med. Martin", "Gellert", "Furtwangen");
-		createDoc("Dr. med. Hans-Peter", "Braendle ", "Furtwangen");
+		createDoc("Dr. med. Barbara", "Weis", "Furtwangen im Schwarzwald");
+		createDoc("Dr. med. Goetz", "Besenfelder", "Furtwangen im Schwarzwald");
+		createDoc("Dr. med. Ute", "Scheit", "Furtwangen im Schwarzwald");
+		createDoc("Dr. med. Martin", "Gellert", "Furtwangen im Schwarzwald");
+		createDoc("Dr. med. Hans-Peter", "Braendle ", "Furtwangen im Schwarzwald");
 		
 		createCarRental("HFU", "e-Carsharing", "Furtwangen");
 		
