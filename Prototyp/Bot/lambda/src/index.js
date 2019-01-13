@@ -38,6 +38,13 @@ const dispatch = (intentRequest, callback) => {
             }); 
             break;
         case I.DOCS:
+            getDocs(access_token)
+            .then( response => {
+                callback(close(sessionAttributes, response));
+            })
+            .catch( error => {
+                callback(close(sessionAttributes, error));            
+            }); 
             callback(close(sessionAttributes, "dd"));
             break;
         default:
