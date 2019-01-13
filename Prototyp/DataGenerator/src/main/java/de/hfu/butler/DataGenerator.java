@@ -16,7 +16,7 @@ public class DataGenerator {
 		
 		createCarRental("HFU", "e-Carsharing", "Furtwangen");
 		
-		System.out.println("<---- Programm started! ---->");		
+		System.out.println("<---- Programm ended! ---->");		
 	}
 	
 	public static void createDoc(final String firstname, final String lastname, final String location) {

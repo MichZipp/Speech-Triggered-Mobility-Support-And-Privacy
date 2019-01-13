@@ -33,14 +33,30 @@ export const getUserLocation = (access_token, user_id) =>
 
 export const getDocs = (access_token, user_id) => 
     new Promise(function (resolve, reject) {
-        var response;
+        var docs = [];
+        var response= "In furtwangen are the following doctors: "
         getDocIds(access_token, user_id)
-        .then( profile => {
-            response = "Actually you are in " + profile.location;
-            resolve(response);
+        .then( ids => {
+            const promises = [];
+            for(var i in ids){
+                 promises.push(getUserProfile(access_token, ids[i]));
+            }
+           
+            Promise.all(promises)
+            .then( docs => {
+                for(var i in docs){
+                    response += docs[i].vorname + " " + docs[i].name + ", ";
+                }
+                console.log("Response: " + response);            
+                resolve(response);
+            })
+            .catch( error => {
+                console.log(error);
+                reject(error)
+            });            
         })
         .catch( error => {
-            response = "Error: " + error;
-            reject(response);
-        });
+            console.log(error);
+            reject(error)
+        });  
     });

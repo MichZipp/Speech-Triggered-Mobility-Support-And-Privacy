@@ -35,11 +35,11 @@ export const getDocIds = (access_token) =>
         .then( data => data.json())
         .then( json => {    
             var ids = [];  
-            console.log(JSON.stringify(json))
             for(var i in json){
-                console.log("Doc: " + JSON.stringify(json[i]));
-                ids.push(json[i].id)
+                console.log("Doc: " + JSON.stringify(json[i].id));
+                ids.push(json[i].id);
             }  
+            console.log("Ids: " + ids);
             resolve(ids);
         })
         .catch( error => {

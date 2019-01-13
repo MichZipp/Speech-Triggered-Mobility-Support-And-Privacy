@@ -48,7 +48,6 @@ var dispatch = function dispatch(intentRequest, callback) {
       }).catch(function (error) {
         callback((0, _helpers.close)(sessionAttributes, error));
       });
-      callback((0, _helpers.close)(sessionAttributes, "dd"));
       break;
 
     default:

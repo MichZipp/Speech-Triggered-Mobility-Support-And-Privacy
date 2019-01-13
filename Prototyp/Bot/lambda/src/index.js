@@ -45,7 +45,6 @@ const dispatch = (intentRequest, callback) => {
             .catch( error => {
                 callback(close(sessionAttributes, error));            
             }); 
-            callback(close(sessionAttributes, "dd"));
             break;
         default:
             callback(close(sessionAttributes, "Giraffe"));
