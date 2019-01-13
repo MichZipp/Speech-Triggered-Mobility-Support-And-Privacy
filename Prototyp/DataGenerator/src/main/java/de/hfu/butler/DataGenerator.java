@@ -6,8 +6,7 @@ import org.json.JSONObject;
 public class DataGenerator {
 
 	public static void main(String[] args) {
-		System.out.println("<---- Programm started! ---->");
-		
+		System.out.println("<---- Programm started! ---->");		
 		
 		createDoc("Dr. med. Barbara", "Weis", "Furtwangen");
 		createDoc("Dr. med. Goetz", "Besenfelder", "Furtwangen");
@@ -17,6 +16,7 @@ public class DataGenerator {
 		
 		createCarRental("HFU", "e-Carsharing", "Furtwangen");
 		
+		System.out.println("<---- Programm started! ---->");		
 	}
 	
 	public static void createDoc(final String firstname, final String lastname, final String location) {

@@ -5,7 +5,6 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
-import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.Bundle;
@@ -13,6 +12,7 @@ import android.support.v4.app.ActivityCompat;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.EditText;
 
 import com.android.volley.Request;
@@ -45,6 +45,10 @@ public class ProfileActivity extends Activity {
     private Button btnUpdateProfile;
     private Button btnUpdateLocation;
     private Button btnUpdateCalendar;
+    private CheckBox checkBoxLocationUpdate;
+    private CheckBox checkBoxCalendarUpdate;
+    private CheckBox checkBoxLocationEvent;
+
 
     private SessionStorage storage;
 
@@ -61,6 +65,9 @@ public class ProfileActivity extends Activity {
         btnUpdateProfile = (Button) findViewById(R.id.buttonUpdateProfile);
         btnUpdateLocation = (Button) findViewById(R.id.buttonUpdateLocation);
         btnUpdateCalendar = (Button) findViewById(R.id.buttonUpdateCalendar);
+        checkBoxLocationUpdate = (CheckBox) findViewById(R.id.checkBoxLocation);
+        checkBoxCalendarUpdate = (CheckBox) findViewById(R.id.checkBoxCalendarUpdate);
+        checkBoxLocationEvent = (CheckBox) findViewById(R.id.checkBoxCalendarEvent);
 
         btnUpdateProfile.setOnClickListener(new View.OnClickListener() {
             @Override

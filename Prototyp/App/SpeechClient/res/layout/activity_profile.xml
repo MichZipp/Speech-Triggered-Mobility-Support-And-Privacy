@@ -74,9 +74,30 @@
         android:layout_height="wrap_content"
         android:text="Update Calendar" />
 
+
+    <CheckBox
+        android:id="@+id/checkBoxLocation"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Update Location automatically" />
+
+    <CheckBox
+        android:id="@+id/checkBoxCalendarUpdate"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Update Calendar automatically" />
+
+    <CheckBox
+        android:id="@+id/checkBoxCalendarEvent"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:checked="true"
+        android:text="Hide Event Title and Description" />
+
     <Button
         android:id="@+id/buttonUpdateProfile"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
         android:text="Update Profile" />
 </LinearLayout>

@@ -491,7 +491,6 @@ public class MainActivity extends Activity implements InteractionListener, Inter
                 return super.onOptionsItemSelected(item);
         }
     }
-
 }
 
 
