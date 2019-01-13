@@ -29,7 +29,13 @@ const dispatch = (intentRequest, callback) => {
             });           
             break;
         case I.USERLOCATION:
-            callback(close(sessionAttributes, getUserLocation(access_token, user_id)));
+            getUserLocation(access_token, user_id)
+            .then( response => {
+                callback(close(sessionAttributes, response));
+            })
+            .catch( error => {
+                callback(close(sessionAttributes, error));            
+            }); 
             break;
         case I.DOCS:
             callback(close(sessionAttributes, "dd"));

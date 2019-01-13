@@ -35,7 +35,11 @@ var dispatch = function dispatch(intentRequest, callback) {
       break;
 
     case _constants.default.USERLOCATION:
-      callback((0, _helpers.close)(sessionAttributes, (0, _responseBuilder.getUserLocation)(access_token, user_id)));
+      (0, _responseBuilder.getUserLocation)(access_token, user_id).then(function (response) {
+        callback((0, _helpers.close)(sessionAttributes, response));
+      }).catch(function (error) {
+        callback((0, _helpers.close)(sessionAttributes, error));
+      });
       break;
 
     case _constants.default.DOCS:

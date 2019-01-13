@@ -16,3 +16,5 @@
 /Prototyp/Bot/lambda/index.zip
 /Prototyp/Bot/lambda/build/*
 .idea
+build
+bin
