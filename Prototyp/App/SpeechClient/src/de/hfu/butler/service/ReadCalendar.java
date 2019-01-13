@@ -69,6 +69,7 @@ public class ReadCalendar
 
 
     public void readCalendar() {
+
         ArrayList<DataCalendar> calendars ;
         ArrayList<DataEvent> events ;
 
