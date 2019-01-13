@@ -15,7 +15,7 @@ var dispatch = function dispatch(intentRequest, callback) {
   console.log(intentRequest);
   console.log("request received for userId=${intentRequest.userId}, intentName=${intentRequest.currentIntent.intentName}");
   var sessionAttributes = intentRequest.sessionAttributes;
-  console.log(sessionAttributes);
+  console.log(JSON.stringify(sessionAttributes));
   var access_token = sessionAttributes.accessToken;
   var user_id = sessionAttributes.userId;
   var intentName = intentRequest.currentIntent.name;
@@ -23,7 +23,7 @@ var dispatch = function dispatch(intentRequest, callback) {
 
   switch (intentName) {
     case _constants.default.NEWDOCAPPOINTMENT:
-      callback((0, _helpers.close)(sessionAttributes, "Affe"));
+      (0, _responseBuilder.getNewDocAppointmet)(access_token, user_id, callback, sessionAttributes);
       break;
 
     case _constants.default.USERNAME:

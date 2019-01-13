@@ -1,5 +1,5 @@
 import { close, elictSlot, delegate } from "./helpers";
-import { getUserName, getUserLocation, getUserProfileName, getDocs } from "./responseBuilder";
+import { getUserName, getUserLocation, getNewDocAppointmet, getDocs } from "./responseBuilder";
 import { getUserSettings } from "./api";
 import I from "./constants";
 
@@ -8,7 +8,7 @@ const dispatch = (intentRequest, callback) => {
     console.log(intentRequest);
     console.log("request received for userId=${intentRequest.userId}, intentName=${intentRequest.currentIntent.intentName}");
     const sessionAttributes = intentRequest.sessionAttributes;
-    console.log(sessionAttributes);
+    console.log(JSON.stringify(sessionAttributes));
     const access_token = sessionAttributes.accessToken;
     const user_id = sessionAttributes.userId;
     const intentName = intentRequest.currentIntent.name;
@@ -17,7 +17,7 @@ const dispatch = (intentRequest, callback) => {
 
     switch(intentName){
         case I.NEWDOCAPPOINTMENT:
-            callback(close(sessionAttributes, "Affe" ));
+            getNewDocAppointmet(access_token, user_id, callback, sessionAttributes);
             break;
         case I.USERNAME:
             getUserName(access_token, user_id)
