@@ -100,7 +100,9 @@ public class SignInActivity extends Activity {
         try {
             basicProfileJson.put("vorname", "Max");
             basicProfileJson.put("name", "Mustermann");
-            basicProfileJson.put("location", "Furtwangen");
+            basicProfileJson.put("location", "Furtwangen im Schwarzwald");
+            basicProfileJson.put("scalamobile", 0);
+            basicProfileJson.put("pickup", 1);
         } catch (JSONException e) {
             e.printStackTrace();
         }

@@ -109,9 +109,9 @@ export const getNewDocAppointmet = (access_token, user_id, callback, sessionAttr
                     if(docsNumber === 0){
                         response = "Unfortunately, no doctors were found nearby";
                     }else{
-                        var randomDocNumber = getRandomInt(0, docNames.length);
-                        var randomDayNumber = getRandomInt(0, weekdays.length);
-                        var randomTimeNumber = getRandomInt(0, times.length);
+                        var randomDocNumber = getRandomInt(0, docNames.length-1);
+                        var randomDayNumber = getRandomInt(0, weekdays.length-1);
+                        var randomTimeNumber = getRandomInt(0, times.length-1);
 
                         response = "I found an appointment to see "
                             + docNames[randomDocNumber] 
@@ -119,7 +119,7 @@ export const getNewDocAppointmet = (access_token, user_id, callback, sessionAttr
                             + weekdays[randomDayNumber]
                             + " at "
                             + times[randomTimeNumber]
-                            + " o'clock! Do you need a car to see a doc?";
+                            + " o'clock! As well i reservated a2 car for you at HFU e-carsharing! You can pick up the car 30 minutes before your appointment!";
                     }
 
                     console.log("Response: " + response);            

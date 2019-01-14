@@ -5,99 +5,138 @@
     android:layout_height="match_parent"
     android:orientation="vertical" >
 
-    <TextView
-        android:id="@+id/textView"
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="10dp"
-        android:text="Profile"
-        android:textSize="30sp"
-        android:textStyle="bold" />
+        android:layout_height="match_parent">
 
-    <TextView
-        android:id="@+id/textViewFirstname"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="10dp"
-        android:text="Vorname:" />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical" >
 
-    <EditText
-        android:id="@+id/editTextFirstname"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="10dp"
-        android:layout_marginBottom="10dp"
-        android:ems="10"
-        android:inputType="textPersonName" />
+            <TextView
+                android:id="@+id/textView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp"
+                android:text="Profile"
+                android:textSize="25sp"
+                android:textStyle="bold" />
 
-    <TextView
-        android:id="@+id/textViewLastname"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="10dp"
-        android:text="Nachname:" />
+            <TextView
+                android:id="@+id/textViewFirstname"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp"
+                android:text="Firstname:" />
 
-    <EditText
-        android:id="@+id/editTextLastname"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="10dp"
-        android:layout_marginBottom="10dp"
-        android:ems="10"
-        android:inputType="textPersonName" />
+            <EditText
+                android:id="@+id/editTextFirstname"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:layout_marginBottom="10dp"
+                android:ems="10"
+                android:inputType="textPersonName" />
 
-    <TextView
-        android:id="@+id/textViewLocation"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="10dp"
-        android:text="Standort:" />
+            <TextView
+                android:id="@+id/textViewLastname"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp"
+                android:text="Lastname:" />
 
-    <EditText
-        android:id="@+id/editTextLocation"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="10dp"
-        android:layout_marginBottom="10dp"
-        android:ems="10"
-        android:inputType="textPersonName" />
+            <EditText
+                android:id="@+id/editTextLastname"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:layout_marginBottom="10dp"
+                android:ems="10"
+                android:inputType="textPersonName" />
 
-    <Button
-        android:id="@+id/buttonUpdateLocation"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Update Location" />
+            <TextView
+                android:id="@+id/textViewLocation"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp"
+                android:text="Location:" />
 
-    <Button
-        android:id="@+id/buttonUpdateCalendar"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Update Calendar" />
+            <EditText
+                android:id="@+id/editTextLocation"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:layout_marginBottom="10dp"
+                android:ems="10"
+                android:inputType="textPersonName" />
+
+            <Button
+                android:id="@+id/buttonUpdateLocation"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Update Location" />
+
+            <CheckBox
+                android:id="@+id/checkBoxLocation"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Update Location automatically" />
+
+            <TextView
+                android:id="@+id/textViewCalendar"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp"
+                android:text="Calendar:" />
+
+            <Button
+                android:id="@+id/buttonUpdateCalendar"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Update Calendar" />
 
 
-    <CheckBox
-        android:id="@+id/checkBoxLocation"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Update Location automatically" />
+            <CheckBox
+                android:id="@+id/checkBoxCalendarUpdate"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Update Calendar automatically" />
 
-    <CheckBox
-        android:id="@+id/checkBoxCalendarUpdate"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Update Calendar automatically" />
+            <CheckBox
+                android:id="@+id/checkBoxCalendarEvent"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:checked="true"
+                android:text="Hide Event Title and Description" />
 
-    <CheckBox
-        android:id="@+id/checkBoxCalendarEvent"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:checked="true"
-        android:text="Hide Event Title and Description" />
+            <TextView
+                android:id="@+id/textViewMobilitySupport"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp"
+                android:text="Mobility Support:" />
 
-    <Button
-        android:id="@+id/buttonUpdateProfile"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
-        android:text="Update Profile" />
+            <CheckBox
+                android:id="@+id/checkBoxScalaMobile"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:checked="false"
+                android:text="Request Scala Mobile" />
+
+            <CheckBox
+                android:id="@+id/checkBoxPickUpService"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:checked="true"
+                android:text="Request Pick Up Service" />
+
+            <Button
+                android:id="@+id/buttonUpdateProfile"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:text="Update Profile" />
+        </LinearLayout>
+    </ScrollView>
 </LinearLayout>

@@ -57,7 +57,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
-        android:text="Profile Type:" />
+        android:text="Profile Type for Registration:" />
 
     <RadioGroup
         android:id="@+id/radioGroupProfileType"
@@ -72,21 +72,21 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:checked="true"
-            android:text="Privat" />
+            android:text="Private" />
 
         <RadioButton
             android:id="@+id/radioButtonDoctor"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="Doctor" />
+            android:text="Physician" />
 
         <RadioButton
             android:id="@+id/radioButtonCarRental"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="Car Rental" />
+            android:text="Mobility Provider" />
     </RadioGroup>
 
     <Button

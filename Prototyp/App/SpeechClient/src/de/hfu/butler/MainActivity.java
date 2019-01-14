@@ -129,7 +129,7 @@ public class MainActivity extends Activity implements InteractionListener, Inter
     private void initHotwordDetechtion(){
         activeTimes = 0;
         recordingThread = new RecordingThread(handle, new AudioDataSaver());
-        recordingThread.setSensitivity(0.55);
+        recordingThread.setSensitivity(0.5);
     }
 
     private void initLex() {
@@ -205,7 +205,7 @@ public class MainActivity extends Activity implements InteractionListener, Inter
             switch(message) {
                 case MSG_ACTIVE:
                     activeTimes++;
-                    updateLog(" ----> Detected " + activeTimes + " times", "green");
+                    Log.i(TAG," ----> Detected " + activeTimes + " times");
                     // Toast.makeText(MainActivity.this, "Active "+activeTimes, Toast.LENGTH_SHORT).show();
                     showToast("Active "+activeTimes);
                     stopHotwordDetection();
@@ -224,16 +224,16 @@ public class MainActivity extends Activity implements InteractionListener, Inter
                     lexClient.audioInForAudioOut(sessionAttributes);
                     break;
                 case MSG_INFO:
-                    updateLog(" ----> "+message);
+                    Log.i(TAG," ----> "+message);
                     break;
                 case MSG_VAD_SPEECH:
-                    updateLog(" ----> normal voice", "blue");
+                    Log.i(TAG," ----> normal voice");
                     break;
                 case MSG_VAD_NOSPEECH:
-                    updateLog(" ----> no speech", "blue");
+                    Log.i(TAG," ----> no speech");
                     break;
                 case MSG_ERROR:
-                    updateLog(" ----> " + msg.toString(), "red");
+                    Log.i(TAG," ----> " + msg.toString());
                     break;
                 default:
                     super.handleMessage(msg);
@@ -245,46 +245,46 @@ public class MainActivity extends Activity implements InteractionListener, Inter
         private void setMaxVolume() {
         AudioManager audioManager = (AudioManager) getSystemService(Context.AUDIO_SERVICE);
         preVolume = audioManager.getStreamVolume(AudioManager.STREAM_MUSIC);
-        updateLog(" ----> preVolume = "+preVolume, "green");
+        Log.i(TAG," ----> preVolume = "+preVolume);
         int maxVolume = audioManager.getStreamMaxVolume(AudioManager.STREAM_MUSIC);
-        updateLog(" ----> maxVolume = "+maxVolume, "green");
+        Log.i(TAG," ----> maxVolume = "+maxVolume);
         audioManager.setStreamVolume(AudioManager.STREAM_MUSIC, maxVolume, 0);
         int currentVolume = audioManager.getStreamVolume(AudioManager.STREAM_MUSIC);
-        updateLog(" ----> currentVolume = "+currentVolume, "green");
+        Log.i(TAG," ----> currentVolume = "+currentVolume);
     }
 
     private void setProperVolume() {
         AudioManager audioManager = (AudioManager) getSystemService(Context.AUDIO_SERVICE);
         preVolume = audioManager.getStreamVolume(AudioManager.STREAM_MUSIC);
-        updateLog(" ----> preVolume = "+preVolume, "green");
+        Log.i(TAG," ----> preVolume = "+preVolume);
         int maxVolume = audioManager.getStreamMaxVolume(AudioManager.STREAM_MUSIC);
-        updateLog(" ----> maxVolume = "+maxVolume, "green");
+        Log.i(TAG," ----> maxVolume = "+maxVolume);
         int properVolume = (int) ((float) maxVolume * 0.2);
         audioManager.setStreamVolume(AudioManager.STREAM_MUSIC, properVolume, 0);
         int currentVolume = audioManager.getStreamVolume(AudioManager.STREAM_MUSIC);
-        updateLog(" ----> currentVolume = "+currentVolume, "green");
+        Log.i(TAG," ----> currentVolume = "+currentVolume);
     }
 
     private void restoreVolume() {
         if(preVolume>=0) {
             AudioManager audioManager = (AudioManager) getSystemService(Context.AUDIO_SERVICE);
             audioManager.setStreamVolume(AudioManager.STREAM_MUSIC, preVolume, 0);
-            updateLog(" ----> set preVolume = "+preVolume, "green");
+            Log.i(TAG," ----> set preVolume = "+preVolume);
             int currentVolume = audioManager.getStreamVolume(AudioManager.STREAM_MUSIC);
-            updateLog(" ----> currentVolume = "+currentVolume, "green");
+            Log.i(TAG," ----> currentVolume = "+currentVolume);
         }
     }
 
     private void startHotwordDetection() {
         isRecording = false;
         recordingThread.startRecording();
-        updateLog(" ----> recording started ...", "green");
+        Log.i(TAG," ----> recording started ...");
         record_button.setText(R.string.btn1_stop);
     }
 
     private void stopHotwordDetection() {
         recordingThread.stopRecording();
-        updateLog(" ----> recording stopped ", "green");
+        Log.i(TAG," ----> recording stopped ");
         record_button.setText(R.string.btn1_start);
     }
 
@@ -301,7 +301,8 @@ public class MainActivity extends Activity implements InteractionListener, Inter
     static int currLogLineNum = 0;
 
     public void updateLog(final String text) {
-         log.post(new Runnable() {
+        final String response = "- " + text + ".";
+        log.post(new Runnable() {
              @Override
              public void run() {
                  if (currLogLineNum >= MAX_LOG_LINE_NUM) {
@@ -310,7 +311,7 @@ public class MainActivity extends Activity implements InteractionListener, Inter
                  } else {
                      currLogLineNum++;
                  }
-                 String str = "<font color='white'>"+text+"</font>"+"<br>";
+                 String str = "<font color='white'>"+response+"</font>"+"<br>";
                  strLog = (strLog == null || strLog.length() == 0) ? str : strLog + str;
                  log.setText(Html.fromHtml(strLog));
              }
@@ -380,7 +381,7 @@ public class MainActivity extends Activity implements InteractionListener, Inter
             isAskResponse = true;
         }
 
-        showToast(text);
+        updateLog(text);
     }
 
     private void doInteractionError(final Exception e){

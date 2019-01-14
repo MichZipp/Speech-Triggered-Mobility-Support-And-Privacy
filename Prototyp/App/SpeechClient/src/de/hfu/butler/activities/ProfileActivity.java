@@ -48,7 +48,8 @@ public class ProfileActivity extends Activity {
     private CheckBox checkBoxLocationUpdate;
     private CheckBox checkBoxCalendarUpdate;
     private CheckBox checkBoxLocationEvent;
-
+    private CheckBox checkBoxScalaMobile;
+    private CheckBox checkBoxPickUpService;
 
     private SessionStorage storage;
 
@@ -68,6 +69,8 @@ public class ProfileActivity extends Activity {
         checkBoxLocationUpdate = (CheckBox) findViewById(R.id.checkBoxLocation);
         checkBoxCalendarUpdate = (CheckBox) findViewById(R.id.checkBoxCalendarUpdate);
         checkBoxLocationEvent = (CheckBox) findViewById(R.id.checkBoxCalendarEvent);
+        checkBoxScalaMobile = (CheckBox) findViewById(R.id.checkBoxScalaMobile);
+        checkBoxPickUpService = (CheckBox) findViewById(R.id.checkBoxPickUpService);
 
         btnUpdateProfile.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -106,17 +109,32 @@ public class ProfileActivity extends Activity {
                 public void onResponse(JSONArray response) {
                     Log.i(LOG_TAG, "RESPONSE: " + response.toString());
                     String firstname, lastname, location, id;
+                    int pickUp, scalaMobile;
                     try {
                     JSONObject profile = (JSONObject) response.get(0);
                     firstname = profile.getString("vorname");
                     lastname = profile.getString("name");
                     location = profile.getString("location");
+                    pickUp = profile.getInt("pickup");
+                    scalaMobile = profile.getInt("scalamobile");
                     id = profile.getString("id");
                     storage.setProfileId(id);
 
                     editFirstname.setText(firstname);
                     editLastname.setText(lastname);
                     editLocation.setText(location);
+
+                    if(pickUp == 0){
+                        checkBoxPickUpService.setChecked(false);
+                    } else {
+                        checkBoxPickUpService.setChecked(true);
+                    }
+
+                    if(scalaMobile == 0){
+                        checkBoxScalaMobile.setChecked(false);
+                    } else {
+                        checkBoxScalaMobile.setChecked(true);
+                    }
 
                     } catch (JSONException e) {
                         e.printStackTrace();
@@ -139,12 +157,22 @@ public class ProfileActivity extends Activity {
         String firstname = editFirstname.getText().toString();
         String lastname = editLastname.getText().toString();
         String location = editLocation.getText().toString();
+        int scalaMobile = 0, pickUp = 0;
+        if(checkBoxScalaMobile.isChecked()){
+            scalaMobile = 1;
+        }
+        if(checkBoxPickUpService.isChecked()){
+            pickUp = 1;
+        }
+
 
         JSONObject profileJson = new JSONObject();
         try {
             profileJson.put("vorname", firstname);
             profileJson.put("name", lastname);
             profileJson.put("location", location);
+            profileJson.put("scalamobile", scalaMobile);
+            profileJson.put("pickup", pickUp);
         } catch (JSONException e) {
             e.printStackTrace();
         }
