@@ -89,7 +89,7 @@ public class MainActivity extends Activity implements InteractionListener, Inter
         setContentView(R.layout.activity_main);
 
         ActionBar bar = getActionBar();
-        // bar.setTitle("Menü:");
+        // bar.setTitle("Menï¿½:");
         bar.setBackgroundDrawable(new ColorDrawable(Color.GRAY));
 
         appContext = getApplicationContext();
@@ -301,7 +301,7 @@ public class MainActivity extends Activity implements InteractionListener, Inter
     static int currLogLineNum = 0;
 
     public void updateLog(final String text) {
-        final String response = "- " + text + ".";
+        final String response = "- " + text;
         log.post(new Runnable() {
              @Override
              public void run() {
