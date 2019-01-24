@@ -47,7 +47,7 @@ const dispatch = (intentRequest, callback) => {
             }); 
             break;
         default:
-            callback(close(sessionAttributes, "Giraffe"));
+            callback(close(sessionAttributes, "Test"));
     }
 }
 

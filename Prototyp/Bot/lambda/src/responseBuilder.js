@@ -53,7 +53,10 @@ export const getDocs = (access_token, user_id) =>
                     for(var i in docs){
                         if(docs[i].location === location){
                             docsNumber++;
-                            response += docs[i].vorname + " " + docs[i].name + ", ";
+                            response += docs[i].vorname + " " + docs[i].name;
+                            if(docs.length !== docsNumber){
+                                response += ", ";
+                            } 
                         }                    
                     }
 
@@ -128,7 +131,7 @@ export const getNewDocAppointmet = (access_token, user_id, callback, sessionAttr
                             response += "In addition, Scala Mobile will come to help you walk down the stairs.";
                         }
 
-                        response += "That's it. I wish you a comfortable doctor visit!";
+                        response += "I wish you a comfortable doctor visit!";
                     }
 
                     console.log("Response: " + response);            
