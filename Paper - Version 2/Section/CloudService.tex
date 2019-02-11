@@ -1,0 +1,9 @@
+\subsection{Cloud Service}
+Sobald das Signalwort \glqq Butler\grqq{} von der Hotword Detection erkannt wurde, wird die weitere Verarbeitung der Spracheingabe eines Nutzers in der Cloud durchgeführt. Zur Realisierung wurden folgende \ac{aws} eingesetzt:
+
+\begin{itemize}
+    \item Amazon Lex: Amazon Lex dient als Konversations-Schnittstelle für Sprache und Text. Durch fortschrittliches Deep Learning kann Sprache zu Text umgewandelt und die Textabsicht ermittelt werden. Anhand der Textabsicht kann eine Ausgabe erzeugt werden, welche anschließend von Text zu Sprache konvertiert wird \cite{AmazonLex}. Im Prototyp wird Amazon Lex für die o.g. Funktionalitäten eingesetzt. Zur Erzeugung einer Antwort auf eine Textabsicht wird eine Amazon Lambda Funktion gestartet.
+    \item Amazon Lambda: Amazon Lambda bietet eine Plattform in der Cloud, auf der eine Anwendung bzw. Programmcode ausgeführt werden kann, ohne dass ein Server manuell bereitgestellt und verwaltet werden muss. Die Anwendung wird durch ein Event gestartet und nach der Beendigung dieser werden die Ressourcen wieder freigegeben. Amazon Lambda skaliert automatisch anhand der Anzahl an Events \cite{AmazonLambda}. Somit wurde auf Basis von Amazon Lambda eine Anwendung entwickelt, die anhand der Textabsicht des Nutzers, eine dynamische Antwort erzeugt. Durch den Access Token des Nutzers kann die Anwendung auf den Privacy Provider zugreifen, um die notwendigen Information zur Erzeugung der Antwort abzurufen. Somit konnte durch die Anwendungen die Aushandlungen eines freien Arzttermins zwischen Arzt und Nutzer realisiert werden.
+\end{itemize}
+
+Durch die Auslagerung der ressourcenintensiven Sprachverarbeitung in die Cloud kann dem Nutzer eine hohe Performance und Benutzerfreundlichkeit gewährleistet werden.
